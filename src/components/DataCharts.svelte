@@ -11,10 +11,6 @@
     drawCharts();
   }
 
-  onMount(() => {
-    drawCharts();
-  });
-
   function drawCharts() {
     drawBarChart();
     drawPieChart();
