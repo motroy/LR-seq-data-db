@@ -32,8 +32,8 @@ def fetch_data():
         # Handle potential missing values
         df.dropna(subset=['first_public'], inplace=True)
 
-        # Take a subset of 100 samples
-        df_subset = df.head(100)
+        # Take a subset of 1000 samples
+        df_subset = df.head(1000)
 
         # Save to JSON
         df_subset.to_json("public/dashboard_data.json", orient="records")
