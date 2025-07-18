@@ -27,7 +27,7 @@ This prompt focuses on creating the Python script to fetch the necessary metadat
 >    * Ensure the first_public column is a valid date.
 >    * Handle any potential missing values.
 >  * Save the cleaned DataFrame to public/dashboard_data.json using the orient='records' format.
-> 
+
 ## 3. Frontend Dashboard Development
 These prompts build the user-facing dashboard components.
 ### Prompt 3.1: Layout and Data Loading
@@ -35,13 +35,11 @@ These prompts build the user-facing dashboard components.
 >  * Use a simple CSS grid for the layout with a header, a sidebar for filters, and a main content area. Style it using pico.css.
 >  * In the script section, use onMount and fetch to load the dashboard_data.json file into a local variable.
 >  * Display a loading message while the data is being fetched and an error message if the fetch fails.
-
 ### Prompt 3.2: Interactive Data Table
 > Create a new Svelte component named src/components/DataTable.svelte.
 >  * This component should accept the loaded sequence data as a prop.
 >  * Render an HTML <table> showing key data fields like Run Accession, Organism, Platform, and Publication Date.
 >  * Add input fields above the table to allow users to search by organism name and filter by platform. The table should reactively update as the user types or selects a filter.
-
 ### Prompt 3.3: Data Visualizations
 > Create a new Svelte component named src/components/DataCharts.svelte.
 >  * This component should accept the filtered data as a prop.
@@ -49,7 +47,6 @@ These prompts build the user-facing dashboard components.
 >    * A bar chart showing the number of datasets per year.
 >    * A pie chart showing the proportion of datasets from 'Oxford Nanopore' vs. 'PacBio'.
 >  * Ensure the charts are reactive and automatically update whenever the filtered data prop changes.
-
 ### Prompt 3.4: Assembling the Dashboard
 > Update src/App.svelte to integrate the new components.
 >  * Import DataTable.svelte and DataCharts.svelte.
