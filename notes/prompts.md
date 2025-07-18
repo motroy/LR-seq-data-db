@@ -31,36 +31,36 @@ This prompt focuses on creating the Python script to fetch the necessary metadat
 ## 3. Frontend Dashboard Development
 These prompts build the user-facing dashboard components.
 ### Prompt 3.1: Layout and Data Loading
-> "Modify src/App.svelte to create the dashboard layout.
+> Modify src/App.svelte to create the dashboard layout.
 >  * Use a simple CSS grid for the layout with a header, a sidebar for filters, and a main content area. Style it using pico.css.
 >  * In the script section, use onMount and fetch to load the dashboard_data.json file into a local variable.
->  * Display a loading message while the data is being fetched and an error message if the fetch fails."
+>  * Display a loading message while the data is being fetched and an error message if the fetch fails.
 
 ### Prompt 3.2: Interactive Data Table
-> "Create a new Svelte component named src/components/DataTable.svelte.
+> Create a new Svelte component named src/components/DataTable.svelte.
 >  * This component should accept the loaded sequence data as a prop.
 >  * Render an HTML <table> showing key data fields like Run Accession, Organism, Platform, and Publication Date.
->  * Add input fields above the table to allow users to search by organism name and filter by platform. The table should reactively update as the user types or selects a filter."
+>  * Add input fields above the table to allow users to search by organism name and filter by platform. The table should reactively update as the user types or selects a filter.
 
 ### Prompt 3.3: Data Visualizations
-> "Create a new Svelte component named src/components/DataCharts.svelte.
+> Create a new Svelte component named src/components/DataCharts.svelte.
 >  * This component should accept the filtered data as a prop.
 >  * Using D3.js, create two SVG-based charts:
 >    * A bar chart showing the number of datasets per year.
 >    * A pie chart showing the proportion of datasets from 'Oxford Nanopore' vs. 'PacBio'.
->  * Ensure the charts are reactive and automatically update whenever the filtered data prop changes."
+>  * Ensure the charts are reactive and automatically update whenever the filtered data prop changes.
 
 ### Prompt 3.4: Assembling the Dashboard
-> "Update src/App.svelte to integrate the new components.
+> Update src/App.svelte to integrate the new components.
 >  * Import DataTable.svelte and DataCharts.svelte.
 >  * Implement the filtering logic. Create stores or state variables for the filters (e.g., search term, platform selection).
 >  * Pass the full dataset to the DataTable and the filtering controls.
->  * Pass the filtered data to both the DataTable and the DataCharts components so that everything updates in sync."
+>  * Pass the filtered data to both the DataTable and the DataCharts components so that everything updates in sync.
 
 ## 4. Automation and Deployment
 This prompt sets up GitHub Actions to automate data updates and deployment to GitHub Pages.
 ### Prompt 4:
-> "Create a GitHub Actions workflow file at .github/workflows/deploy.yml. This workflow should automate the entire process of updating the data and deploying the website.
+> Create a GitHub Actions workflow file at .github/workflows/deploy.yml. This workflow should automate the entire process of updating the data and deploying the website.
 > The workflow should have two triggers: on: push to the main branch and a schedule: cron to run weekly.
 > The job should consist of the following steps:
 >  * Checkout the repository code.
@@ -69,15 +69,14 @@ This prompt sets up GitHub Actions to automate data updates and deployment to Gi
 >  * Build the Svelte app using npm run build. This will create a dist directory.
 >  * Configure Git to commit and push on behalf of an action.
 >  * Commit and push the newly generated public/dashboard_data.json file back to the main branch if it has changed.
->  * Use the actions/deploy-pages@v4 action to deploy the contents of the dist directory to GitHub Pages."
+>  * Use the actions/deploy-pages@v4 action to deploy the contents of the dist directory to GitHub Pages.
 
 ## 5. Documentation
 The final prompt creates the user-facing documentation for the project.
 ### Prompt 5:
-> "Generate a comprehensive README.md file for this GitHub project. The file must include the following sections:
+> Generate a comprehensive README.md file for this GitHub project. The file must include the following sections:
 >  * Project Title and Description: A brief overview of the interactive dashboard.
 >  * Live Demo: A placeholder link to the GitHub Pages URL.
 >  * Features: A bulleted list of features (e.g., SRA/ENA data, interactive charts, filtering, automated updates).
 >  * How It Works: A short explanation of the data pipeline (GitHub Action -> Python Script -> JSON -> Svelte Dashboard).
->  * Local Development: Step-by-step instructions on how to clone the repository, install dependencies (npm install and pip install), and run the development server locally (npm run dev)."
-> 
+>  * Local Development: Step-by-step instructions on how to clone the repository, install dependencies (npm install and pip install), and run the development server locally (npm run dev).
