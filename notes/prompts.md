@@ -2,7 +2,7 @@
 ## 1. Project Scaffolding & Initial Setup
 This prompt establishes the project's foundation, including the file structure and core technologies.
 ### Prompt 1:
-> "Generate the complete file structure for a static website project that will be hosted on GitHub Pages. The project is an interactive data dashboard. For the frontend, use Svelte and for data visualization, use D3.js.
+> Generate the complete file structure for a static website project that will be hosted on GitHub Pages. The project is an interactive data dashboard. For the frontend, use Svelte and for data visualization, use D3.js.
 > Create the following initial files:
 >  * package.json: Include dependencies for svelte, vite, d3, and pico.css (for simple styling).
 >  * vite.config.js: Configure it for a Svelte project.
@@ -11,12 +11,12 @@ This prompt establishes the project's foundation, including the file structure a
 >  * index.html: The main HTML file with a root element for the Svelte app.
 >  * .gitignore: A standard file for a Node.js project.
 >  * scripts/: An empty directory for data processing scripts.
->  * public/: An empty directory for static assets, including the final data file."
+>  * public/: An empty directory for static assets, including the final data file.
 
 ## 2. Data Acquisition Script
 This prompt focuses on creating the Python script to fetch the necessary metadata from public databases.
 ### Prompt 2:
-> "Write a Python script named scripts/fetch_data.py. This script will query the ENA (European Nucleotide Archive) API to find all public bacterial genome and metagenome datasets sequenced with 'Oxford Nanopore' or 'PacBio' technologies.
+> Write a Python script named scripts/fetch_data.py. This script will query the ENA (European Nucleotide Archive) API to find all public bacterial genome and metagenome datasets sequenced with 'Oxford Nanopore' or 'PacBio' technologies.
 > The script must:
 >  * Use the requests library to query the ENA Portal API's search endpoint.
 >  * Construct a query to search for records where tax_tree(2) (bacteria) is true AND instrument_platform is 'ONT' or 'PACBIO_SMRT'. The result type should be read_run.
@@ -26,7 +26,7 @@ This prompt focuses on creating the Python script to fetch the necessary metadat
 >    * Standardize the instrument_platform column to simple 'Oxford Nanopore' and 'PacBio' values.
 >    * Ensure the first_public column is a valid date.
 >    * Handle any potential missing values.
->  * Save the cleaned DataFrame to public/dashboard_data.json using the orient='records' format."
+>  * Save the cleaned DataFrame to public/dashboard_data.json using the orient='records' format.
 > 
 ## 3. Frontend Dashboard Development
 These prompts build the user-facing dashboard components.
