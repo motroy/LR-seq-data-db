@@ -99,7 +99,7 @@ __sapper__
 
 # Gatsby build output
 .cache/
-public
+#public
 
 # vuepress build output
 .vuepress/dist
