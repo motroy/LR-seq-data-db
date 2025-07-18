@@ -52,7 +52,11 @@ jobs:
           git add public/dashboard_data.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update data" && git push)
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: dist
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
