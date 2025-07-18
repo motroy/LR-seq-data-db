@@ -35,11 +35,13 @@ These prompts build the user-facing dashboard components.
 >  * Use a simple CSS grid for the layout with a header, a sidebar for filters, and a main content area. Style it using pico.css.
 >  * In the script section, use onMount and fetch to load the dashboard_data.json file into a local variable.
 >  * Display a loading message while the data is being fetched and an error message if the fetch fails."
+
 > Prompt 3.2: Interactive Data Table
 > "Create a new Svelte component named src/components/DataTable.svelte.
 >  * This component should accept the loaded sequence data as a prop.
 >  * Render an HTML <table> showing key data fields like Run Accession, Organism, Platform, and Publication Date.
 >  * Add input fields above the table to allow users to search by organism name and filter by platform. The table should reactively update as the user types or selects a filter."
+
 > Prompt 3.3: Data Visualizations
 > "Create a new Svelte component named src/components/DataCharts.svelte.
 >  * This component should accept the filtered data as a prop.
@@ -47,13 +49,14 @@ These prompts build the user-facing dashboard components.
 >    * A bar chart showing the number of datasets per year.
 >    * A pie chart showing the proportion of datasets from 'Oxford Nanopore' vs. 'PacBio'.
 >  * Ensure the charts are reactive and automatically update whenever the filtered data prop changes."
+
 > Prompt 3.4: Assembling the Dashboard
 > "Update src/App.svelte to integrate the new components.
 >  * Import DataTable.svelte and DataCharts.svelte.
 >  * Implement the filtering logic. Create stores or state variables for the filters (e.g., search term, platform selection).
 >  * Pass the full dataset to the DataTable and the filtering controls.
 >  * Pass the filtered data to both the DataTable and the DataCharts components so that everything updates in sync."
-> 
+
 4. Automation and Deployment
 This prompt sets up GitHub Actions to automate data updates and deployment to GitHub Pages.
 > Prompt 4:
@@ -67,7 +70,7 @@ This prompt sets up GitHub Actions to automate data updates and deployment to Gi
 >  * Configure Git to commit and push on behalf of an action.
 >  * Commit and push the newly generated public/dashboard_data.json file back to the main branch if it has changed.
 >  * Use the actions/deploy-pages@v4 action to deploy the contents of the dist directory to GitHub Pages."
-> 
+
 5. Documentation
 The final prompt creates the user-facing documentation for the project.
 > Prompt 5:
