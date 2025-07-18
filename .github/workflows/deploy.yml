@@ -10,6 +10,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
