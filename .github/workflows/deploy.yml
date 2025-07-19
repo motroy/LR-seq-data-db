@@ -44,7 +44,8 @@ jobs:
       - name: Commit and push data file
         run: |
           git add public/dashboard_data.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update data" && git push)
+          git add public/dashboard
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update data and dashboard" && git push)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
