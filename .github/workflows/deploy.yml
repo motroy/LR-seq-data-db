@@ -36,17 +36,6 @@ jobs:
       - name: Build Panel app
         run: panel convert src/dashboard.py --to pyodide-worker --out public/dashboard
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install npm dependencies
-        run: npm install
-
-      - name: Build Svelte app
-        run: npm run build
-
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -60,7 +49,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './public'
 
       - name: Deploy to GitHub Pages
         id: deployment
