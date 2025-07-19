@@ -33,6 +33,9 @@ jobs:
       - name: Fetch data
         run: python scripts/fetch_data.py
 
+      - name: Build Panel app
+        run: panel convert src/dashboard.py --to pyodide-worker --out public/dashboard
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
