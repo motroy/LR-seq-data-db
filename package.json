@@ -6,8 +6,9 @@
   "homepage": "https://motroy.github.io/LR-seq-data-db",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "npm run build:dashboard && vite build",
+    "preview": "vite preview",
+    "build:dashboard": "python3 build.py"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
