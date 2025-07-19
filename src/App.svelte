@@ -1,26 +1,12 @@
 <script>
-  import { onMount } from 'svelte';
   import DataTable from './components/DataTable.svelte';
   import DataCharts from './components/DataCharts.svelte';
+  import data from './dashboard_data.json';
 
-  let data = [];
-  let filteredData = [];
+  let filteredData = data;
   let error = null;
   let searchTerm = '';
   let platformFilter = '';
-
-  onMount(async () => {
-    try {
-      const response = await fetch('dashboard_data.json');
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
-      }
-      data = await response.json();
-      filteredData = data;
-    } catch (e) {
-      error = e.message;
-    }
-  });
 
   $: {
     if (data) {
