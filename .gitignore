@@ -35,8 +35,8 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
+# Compiled binary addons #(https://nodejs.org/api/addons.html)
+#build/Release
 
 # Dependency directories
 node_modules/
@@ -85,11 +85,11 @@ out
 
 # Nuxt.js build output
 .nuxt
-dist
+#dist
 
 # Svelte build output
 .svelte-kit
-build
+#build
 
 # Sapper build output
 __sapper__
@@ -120,4 +120,4 @@ __sapper__
 .DS_Store
 
 # Vite build output
-dist
+#dist
