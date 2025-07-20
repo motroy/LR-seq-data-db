@@ -50,7 +50,7 @@ def fetch_ena(platform, size=500, tax_id="2"):
     return results
 
 def main():
-    nanopore_data = fetch_ena("ONT", 500)
+    nanopore_data = fetch_ena("OXFORD_NANOPORE", 500)
     pacbio_data = fetch_ena("PACBIO_SMRT", 500)
 
     combined = nanopore_data + pacbio_data

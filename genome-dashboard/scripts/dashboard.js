@@ -32,7 +32,7 @@ fetch("sample_data.json")
 
 function summarize(data) {
   const organisms = {};
-  const techCounts = { "ONP": 0, "PACBIO_SMRT": 0 };
+  const techCounts = { "OXFORD_NANOPORE": 0, "PACBIO_SMRT": 0 };
 
   data.forEach(item => {
     organisms[item.organism] = (organisms[item.organism] || 0) + 1;
@@ -46,7 +46,7 @@ function summarize(data) {
   document.getElementById("stats").innerHTML = `
     <h3>📈 Summary Stats</h3>
     <p><strong>Total Samples:</strong> ${data.length}</p>
-    <p><strong>Oxford Nanopore:</strong> ${techCounts["ONP"]}</p>
+    <p><strong>Oxford Nanopore:</strong> ${techCounts["OXFORD_NANOPORE"]}</p>
     <p><strong>PacBio:</strong> ${techCounts["PACBIO_SMRT"]}</p>
     <p><strong>Top Organisms:</strong><br>${topOrganisms.map(([org, count]) => `${org} (${count})`).join('<br>')}</p>
   `;
