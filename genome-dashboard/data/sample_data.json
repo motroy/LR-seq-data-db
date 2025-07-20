@@ -1,0 +1,17 @@
+[
+  {
+    "sample_id": "ERR123456",
+    "organism": "Escherichia coli",
+    "tech": "Oxford Nanopore",
+    "study": "PRJEB12345",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR789101",
+    "organism": "Bacillus subtilis",
+    "tech": "PacBio",
+    "study": "SRP345678",
+    "source": "SRA"
+  }
+  // …more records
+]
