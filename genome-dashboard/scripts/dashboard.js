@@ -44,6 +44,10 @@ fetch("sample_data.json")
     organismFilter.addEventListener("input", updateFilters);
     techFilter.addEventListener("change", updateFilters);
 
+    table.on("dataFiltered", function(filters, rows) {
+      summarize(rows.map(row => row.getData()));
+    });
+
     document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
     document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
   });
