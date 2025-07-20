@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Panel</title>
-<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.holoviz.org/panel/1.7.4/dist/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://cdn.holoviz.org/panel/1.7.4/dist/images/favicon.ico"><link rel="apple-touch-icon" href="">    <style>
+    <title>Panel Application</title>
+    <style>
       html, body {
-	display: flow-root;
         box-sizing: border-box;
+        display: flow-root;
         height: 100%;
         margin: 0;
         padding: 0;
       }
     </style>
-<script type="esms-options">{"shimMode": true}</script>
+
+<link rel="stylesheet" href="https://cdn.holoviz.org/panel/1.7.4/dist/css/loading.css" type="text/css" />
+<style type="text/css">
+
+:host(.pn-loading):before, .pn-loading:before {
+  background-color: #c3c3c3;
+  mask-size: auto calc(min(50%, 400px));
+  -webkit-mask-size: auto calc(min(50%, 400px));
+}
+.py-error { display: none; }</style><script type="esms-options">{"shimMode": true}</script>
 
 <script type="text/javascript" src="https://cdn.holoviz.org/panel/1.7.4/dist/bundled/reactiveesm/es-module-shims@^1.10.0/dist/es-module-shims.min.js"></script>
 <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.7.3.min.js"></script>
