@@ -2,8 +2,8 @@ name: Refresh genome dashboard data
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
-  workflow_dispatch:     # Allow manual trigger via GitHub UI
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
 
 jobs:
   update-data:
