@@ -3,19 +3,20 @@ fetch("assets/data/sample_data.json")
   .then(data => {
     const table = new Tabulator("#genome-table", {
       data,
-      layout: "fitDataFill",
-      responsiveLayout: true,
+      layout: "fitColumns",
+      responsiveLayout: "hide",
+      pagination: "local",
+      paginationSize: 25,
+      movableColumns: true,
       columns: [
-        { title: "Sample ID", field: "sample_id" },
-        { title: "Organism", field: "organism" },
-        { title: "Technology", field: "tech" },
-        { title: "Study", field: "study" },
-        { title: "Source DB", field: "source" },
+        { title: "Sample ID", field: "sample_id", headerMenu: true },
+        { title: "Organism", field: "organism", headerMenu: true },
+        { title: "Technology", field: "tech", headerMenu: true },
+        { title: "Study", field: "study", headerMenu: true },
+        { title: "Source DB", field: "source", headerMenu: true }
       ],
-      columnDefaults: { headerFilter: true },
-      height: "600px",
+      height: "600px"
     });
-
     document.getElementById("organism-filter").addEventListener("input", e => {
       table.setFilter("organism", "like", e.target.value);
     });
