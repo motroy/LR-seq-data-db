@@ -14,7 +14,7 @@ def get_data():
 
 data = get_data()
 
-organism_filter = pn.widgets.CrossSelector(name="Search by Organism", options=sorted(data['scientific_name'].unique().tolist()), filter_placeholder='Search...')
+organism_filter = pn.widgets.CrossSelector(name="Search by Organism", options=sorted(data['scientific_name'].unique().tolist()))
 platform_filter = pn.widgets.Select(name="Filter by Platform", options=['All'] + sorted(data['instrument_platform'].unique().tolist()))
 
 @pn.depends(organism_filter.param.value, platform_filter.param.value)
