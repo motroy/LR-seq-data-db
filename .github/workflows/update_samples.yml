@@ -1,0 +1,33 @@
+name: Refresh genome dashboard data
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at 00:00 UTC
+  workflow_dispatch:     # Allow manual trigger via GitHub UI
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install requests
+
+    - name: Run data extraction
+      run: python extract_ena_genomes.py
+
+    - name: Commit and push updated data
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add sample_data.json
+        git commit -m "📦 Update ENA genome data"
+        git push
