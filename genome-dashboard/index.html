@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Genome Dashboard</title>
+  <link href="assets/styles.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Oxford Nanopore & PacBio Genome Dataset</h1>
+  <div id="filter-controls">
+    <input id="organism-filter" placeholder="Filter by organism name..."/>
+    <select id="tech-filter">
+      <option value="">All Technologies</option>
+      <option value="Oxford Nanopore">Oxford Nanopore</option>
+      <option value="PacBio">PacBio</option>
+    </select>
+  </div>
+  <div id="genome-table"></div>
+  <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+  <script src="scripts/dashboard.js"></script>
+</body>
+</html>
