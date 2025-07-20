@@ -1,1 +1,3502 @@
-[{"run_accession":"ERR1246941","sample_accession":"SAMEA3649021","study_accession":"PRJEB6403","scientific_name":"Fusobacterium necrogenes","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"ERR1246946","sample_accession":"SAMEA3649028","study_accession":"PRJEB6403","scientific_name":"Streptococcus pyogenes","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"ERR1246948","sample_accession":"SAMEA3643316","study_accession":"PRJEB6403","scientific_name":"Neisseria animalis","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"ERR1246958","sample_accession":"SAMEA3638247","study_accession":"PRJEB9562","scientific_name":"Salmonella sp.","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"ERR1246961","sample_accession":"SAMEA3638250","study_accession":"PRJEB9562","scientific_name":"Salmonella sp.","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"ERR1246962","sample_accession":"SAMEA3638251","study_accession":"PRJEB9562","scientific_name":"Salmonella sp.","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"DRR518168","sample_accession":"SAMD00023967","study_accession":"PRJDB3291","scientific_name":"Bacillus subtilis","instrument_platform":"PacBio","read_count":367118,"base_count":3548728981,"first_public":1703116800000},{"run_accession":"ERR10087056","sample_accession":"SAMEA8746428","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1238419,"base_count":7640688912,"first_public":1660608000000},{"run_accession":"ERR10087058","sample_accession":"SAMEA8746430","study_accession":"PRJEB27342","scientific_name":"Klebsiella michiganensis","instrument_platform":"PacBio","read_count":1422207,"base_count":7876528999,"first_public":1660608000000},{"run_accession":"ERR10087060","sample_accession":"SAMEA8746432","study_accession":"PRJEB27342","scientific_name":"Klebsiella quasipneumoniae subsp. quasipneumoniae","instrument_platform":"PacBio","read_count":1509602,"base_count":9347087805,"first_public":1660608000000},{"run_accession":"ERR10087064","sample_accession":"SAMEA8746436","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1274400,"base_count":7724480303,"first_public":1660608000000},{"run_accession":"ERR10087066","sample_accession":"SAMEA8746438","study_accession":"PRJEB27342","scientific_name":"Klebsiella oxytoca","instrument_platform":"PacBio","read_count":1044160,"base_count":6594405146,"first_public":1660608000000},{"run_accession":"ERR10087067","sample_accession":"SAMEA8746439","study_accession":"PRJEB27342","scientific_name":"Klebsiella grimontii","instrument_platform":"PacBio","read_count":1565969,"base_count":9677332992,"first_public":1660608000000},{"run_accession":"ERR10087068","sample_accession":"SAMEA8746440","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":864518,"base_count":5342761277,"first_public":1660608000000},{"run_accession":"ERR10087069","sample_accession":"SAMEA8746441","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1172871,"base_count":7518207711,"first_public":1660608000000},{"run_accession":"ERR10087073","sample_accession":"SAMEA8746445","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1229178,"base_count":7377834431,"first_public":1660608000000},{"run_accession":"ERR10087076","sample_accession":"SAMEA8746410","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":822874,"base_count":6209054997,"first_public":1660608000000},{"run_accession":"ERR10087078","sample_accession":"SAMEA8746412","study_accession":"PRJEB27342","scientific_name":"Klebsiella pasteurii","instrument_platform":"PacBio","read_count":975670,"base_count":7263329128,"first_public":1660608000000},{"run_accession":"ERR10087081","sample_accession":"SAMEA8746415","study_accession":"PRJEB27342","scientific_name":"Klebsiella variicola subsp. variicola","instrument_platform":"PacBio","read_count":806047,"base_count":5799481845,"first_public":1660608000000},{"run_accession":"ERR10452879","sample_accession":"SAMEA9065764","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1341096,"base_count":4611256359,"first_public":1668384000000},{"run_accession":"ERR10452894","sample_accession":"SAMEA9065791","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":916746,"base_count":5448333288,"first_public":1668384000000},{"run_accession":"ERR10452901","sample_accession":"SAMEA9065805","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1150146,"base_count":6203292486,"first_public":1668384000000},{"run_accession":"ERR10452925","sample_accession":"SAMEA9065624","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":33263,"base_count":250996883,"first_public":1668384000000},{"run_accession":"ERR10452929","sample_accession":"SAMEA9066830","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":30630,"base_count":206309293,"first_public":1668384000000},{"run_accession":"ERR10452930","sample_accession":"SAMEA9066832","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":40591,"base_count":265179626,"first_public":1668384000000},{"run_accession":"ERR10452942","sample_accession":"SAMEA9065720","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":49616,"base_count":361801447,"first_public":1668384000000},{"run_accession":"ERR10452958","sample_accession":"SAMEA9065640","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":56081,"base_count":381493120,"first_public":1668384000000},{"run_accession":"ERR10452960","sample_accession":"SAMEA9065645","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":56465,"base_count":311825002,"first_public":1668384000000},{"run_accession":"ERR10452973","sample_accession":"SAMEA9065710","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":70271,"base_count":436947838,"first_public":1668384000000},{"run_accession":"ERR10854362","sample_accession":"SAMEA9633669","study_accession":"PRJEB27342","scientific_name":"Klebsiella oxytoca","instrument_platform":"PacBio","read_count":992579,"base_count":4787848401,"first_public":1675900800000},{"run_accession":"ERR10854365","sample_accession":"SAMEA9633596","study_accession":"PRJEB27342","scientific_name":"Raoultella planticola","instrument_platform":"PacBio","read_count":1671624,"base_count":5775441964,"first_public":1675900800000},{"run_accession":"ERR10854404","sample_accession":"SAMEA9633693","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1945412,"base_count":8519711314,"first_public":1675900800000},{"run_accession":"ERR10854414","sample_accession":"SAMEA9633719","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1199246,"base_count":6708642282,"first_public":1675900800000},{"run_accession":"ERR10854417","sample_accession":"SAMEA9633726","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":2022304,"base_count":7322671340,"first_public":1675900800000},{"run_accession":"ERR10854419","sample_accession":"SAMEA9633730","study_accession":"PRJEB27342","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":1311002,"base_count":7161061018,"first_public":1675900800000},{"run_accession":"ERR10854448","sample_accession":"SAMEA10104883","study_accession":"PRJEB27342","scientific_name":"Klebsiella aerogenes","instrument_platform":"PacBio","read_count":1612140,"base_count":4919284318,"first_public":1675900800000},{"run_accession":"ERR10854461","sample_accession":"SAMEA10104896","study_accession":"PRJEB27342","scientific_name":"Klebsiella grimontii","instrument_platform":"PacBio","read_count":4075005,"base_count":9949687569,"first_public":1675900800000},{"run_accession":"ERR1246943","sample_accession":"SAMEA3649023","study_accession":"PRJEB6403","scientific_name":"Campylobacter coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1454371200000},{"run_accession":"ERR1424488","sample_accession":"SAMEA3893446","study_accession":"PRJEB6403","scientific_name":"Corynebacterium ulcerans","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1464048000000},{"run_accession":"ERR1424492","sample_accession":"SAMEA3893454","study_accession":"PRJEB6403","scientific_name":"Bordetella parapertussis","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1464048000000},{"run_accession":"ERR1424494","sample_accession":"SAMEA3893457","study_accession":"PRJEB6403","scientific_name":"Legionella pneumophila","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1464048000000},{"run_accession":"ERR1424497","sample_accession":"SAMEA3893450","study_accession":"PRJEB6403","scientific_name":"Bordetella parapertussis","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1464048000000},{"run_accession":"ERR1894928","sample_accession":"SAMEA3876906","study_accession":"PRJEB12785","scientific_name":"Burkholderia multivorans","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1491782400000},{"run_accession":"ERR2337419","sample_accession":"SAMEA104628733","study_accession":"PRJEB23647","scientific_name":"Mycobacterium basiliense","instrument_platform":"PacBio","read_count":54601,"base_count":420270050,"first_public":1544400000000},{"run_accession":"ERR2819212","sample_accession":"SAMEA104216699","study_accession":"PRJEB17615","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1538438400000},{"run_accession":"ERR3046648","sample_accession":"SAMEA5202067","study_accession":"PRJEB30480","scientific_name":"Altererythrobacter sp. S1-5","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1555200000000},{"run_accession":"ERR4766799","sample_accession":"SAMEA4682258","study_accession":"PRJEB21499","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":198065,"base_count":817223955,"first_public":1603843200000},{"run_accession":"ERR584382","sample_accession":"SAMEA2564022","study_accession":"PRJEB5919","scientific_name":"Salmonella enterica subsp. enterica serovar Typhi","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1409097600000},{"run_accession":"ERR654492","sample_accession":"SAMEA2582191","study_accession":"PRJEB3186","scientific_name":"Salmonella enterica subsp. enterica serovar Enteritidis","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1413158400000},{"run_accession":"ERR654507","sample_accession":"SAMEA2582195","study_accession":"PRJEB3186","scientific_name":"Salmonella enterica subsp. enterica serovar Enteritidis","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1413158400000},{"run_accession":"ERR654509","sample_accession":"SAMEA2564023","study_accession":"PRJEB5919","scientific_name":"Salmonella enterica subsp. enterica serovar Typhi","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1413158400000},{"run_accession":"ERR654510","sample_accession":"SAMEA2587599","study_accession":"PRJEB6454","scientific_name":"Corynebacterium diphtheriae","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1413158400000},{"run_accession":"ERR980615","sample_accession":"SAMEA3376918","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980627","sample_accession":"SAMEA3376929","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980628","sample_accession":"SAMEA3376930","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980630","sample_accession":"SAMEA3376906","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980632","sample_accession":"SAMEA3376932","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980634","sample_accession":"SAMEA3400771","study_accession":"PRJEB6403","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980636","sample_accession":"SAMEA3400773","study_accession":"PRJEB6403","scientific_name":"Klebsiella pneumoniae","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980637","sample_accession":"SAMEA3400774","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"ERR980638","sample_accession":"SAMEA3400775","study_accession":"PRJEB6403","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":0,"base_count":0,"first_public":1439337600000},{"run_accession":"SRR10100070","sample_accession":"SAMN12724284","study_accession":"PRJNA564826","scientific_name":"Escherichia coli","instrument_platform":"PacBio","read_count":163482,"base_count":1239890834,"first_public":1602201600000},{"run_accession":"SRR10294117","sample_accession":"SAMN09742414","study_accession":"PRJNA483500","scientific_name":"Escherichia coli O145","instrument_platform":"PacBio","read_count":163482,"base_count":3011467035,"first_public":1604448000000},{"run_accession":"SRR1087904","sample_accession":"SAMN00809110","study_accession":"PRJNA88839","scientific_name":"Enterococcus malodoratus ATCC 43197","instrument_platform":"PacBio","read_count":81741,"base_count":106708778,"first_public":1392249600000},{"run_accession":"SRR1087906","sample_accession":"SAMN00809111","study_accession":"PRJNA88841","scientific_name":"Enterococcus raffinosus ATCC 49464","instrument_platform":"PacBio","read_count":81741,"base_count":46220334,"first_public":1392249600000},{"run_accession":"SRR1087907","sample_accession":"SAMN00809111","study_accession":"PRJNA88841","scientific_name":"Enterococcus raffinosus ATCC 49464","instrument_platform":"PacBio","read_count":81741,"base_count":91065650,"first_public":1392249600000},{"run_accession":"SRR1087908","sample_accession":"SAMN00809111","study_accession":"PRJNA88841","scientific_name":"Enterococcus raffinosus ATCC 49464","instrument_platform":"PacBio","read_count":81741,"base_count":97946096,"first_public":1392249600000},{"run_accession":"SRR10882607","sample_accession":"SAMN13832016","study_accession":"PRJNA600798","scientific_name":"Enterobacter hormaechei","instrument_platform":"PacBio","read_count":324944,"base_count":2504322846,"first_public":1599004800000},{"run_accession":"SRR11058528","sample_accession":"SAMN12024773","study_accession":"PRJNA547291","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":915014,"base_count":2932318052,"first_public":1581984000000},{"run_accession":"SRR11058700","sample_accession":"SAMN09065109","study_accession":"PRJNA459243","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":122333,"base_count":445363211,"first_public":1581984000000},{"run_accession":"SRR11058702","sample_accession":"SAMN09065109","study_accession":"PRJNA459243","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":269628,"base_count":835849164,"first_public":1581984000000},{"run_accession":"SRR11058967","sample_accession":"SAMN09065399","study_accession":"PRJNA459245","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":218742,"base_count":923930834,"first_public":1581984000000},{"run_accession":"SRR11059437","sample_accession":"SAMN09065116","study_accession":"PRJNA459256","scientific_name":"Clostridium acetobutylicum","instrument_platform":"PacBio","read_count":179699,"base_count":554822156,"first_public":1581984000000},{"run_accession":"SRR11060105","sample_accession":"SAMN13170838","study_accession":"PRJNA585397","scientific_name":"Serratia fonticola","instrument_platform":"PacBio","read_count":188591,"base_count":556915237,"first_public":1581984000000},{"run_accession":"SRR11060231","sample_accession":"SAMN12024952","study_accession":"PRJNA546922","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":24739,"base_count":45331664,"first_public":1581984000000},{"run_accession":"SRR11060234","sample_accession":"SAMN12024952","study_accession":"PRJNA546922","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":27915,"base_count":49158953,"first_public":1581984000000},{"run_accession":"SRR11060235","sample_accession":"SAMN12024952","study_accession":"PRJNA546922","scientific_name":"Clostridium beijerinckii","instrument_platform":"PacBio","read_count":25889,"base_count":48549392,"first_public":1581984000000},{"run_accession":"SRR11213620","sample_accession":"SAMN13921532","study_accession":"PRJNA603163","scientific_name":"Candidatus Kuenenia stuttgartensis","instrument_platform":"PacBio","read_count":163482,"base_count":3063226983,"first_public":1590796800000},{"run_accession":"SRR11462379","sample_accession":"SAMN14516928","study_accession":"PRJNA622435","scientific_name":"Streptomyces griseofuscus","instrument_platform":"PacBio","read_count":191463,"base_count":1966106571,"first_public":1600819200000},{"run_accession":"SRR11507305","sample_accession":"SAMN14530202","study_accession":"PRJNA622823","scientific_name":"Chryseobacterium sp. NEB161","instrument_platform":"PacBio","read_count":163482,"base_count":222927722,"first_public":1586822400000},{"run_accession":"SRR11509892","sample_accession":"SAMN14533640","study_accession":"PRJNA622823","scientific_name":"Aeromonas hydrophila","instrument_platform":"PacBio","read_count":163482,"base_count":1030778757,"first_public":1586822400000},{"run_accession":"SRR1284631","sample_accession":"SAMN02713684","study_accession":"PRJNA202883","scientific_name":"Citrobacter freundii CFNIH1","instrument_platform":"PacBio","read_count":163482,"base_count":405607652,"first_public":1408492800000},{"run_accession":"SRR1284632","sample_accession":"SAMN02713684","study_accession":"PRJNA202883","scientific_name":"Citrobacter freundii CFNIH1","instrument_platform":"PacBio","read_count":163482,"base_count":437924027,"first_public":1408492800000},{"run_accession":"SRR13399734","sample_accession":"SAMN15941323","study_accession":"PRJNA660205","scientific_name":"Klebsiella variicola","instrument_platform":"PacBio","read_count":220724,"base_count":1701195055,"first_public":1610409600000},{"run_accession":"SRR13708672","sample_accession":"SAMN17843035","study_accession":"PRJNA622823","scientific_name":"Lysinibacillus fusiformis","instrument_platform":"PacBio","read_count":163482,"base_count":1192308773,"first_public":1613347200000},{"run_accession":"SRR13708673","sample_accession":"SAMN17843035","study_accession":"PRJNA622823","scientific_name":"Lysinibacillus fusiformis","instrument_platform":"PacBio","read_count":163482,"base_count":1164097486,"first_public":1613347200000},{"run_accession":"SRR14198828","sample_accession":"SAMN18676188","study_accession":"PRJNA622823","scientific_name":"Comamonas aquatica","instrument_platform":"PacBio","read_count":163482,"base_count":1744358160,"first_public":1618272000000},{"run_accession":"SRR14871127","sample_accession":"SAMN19647726","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":142252,"base_count":710154577,"first_public":1633132800000},{"run_accession":"SRR14871129","sample_accession":"SAMN19647724","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":96349,"base_count":565543322,"first_public":1633132800000},{"run_accession":"SRR14871135","sample_accession":"SAMN19647718","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":129004,"base_count":783807801,"first_public":1633132800000},{"run_accession":"SRR14871142","sample_accession":"SAMN19647712","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":138991,"base_count":840514576,"first_public":1633132800000},{"run_accession":"SRR14871143","sample_accession":"SAMN19647711","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":129077,"base_count":768030104,"first_public":1633132800000},{"run_accession":"SRR14871145","sample_accession":"SAMN19647709","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":235911,"base_count":1493261412,"first_public":1633132800000},{"run_accession":"SRR14871147","sample_accession":"SAMN19647707","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":162771,"base_count":1079967144,"first_public":1633132800000},{"run_accession":"SRR14871149","sample_accession":"SAMN19647706","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":144980,"base_count":965361018,"first_public":1633132800000},{"run_accession":"SRR14871150","sample_accession":"SAMN19647705","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":135255,"base_count":853523811,"first_public":1633132800000},{"run_accession":"SRR14871152","sample_accession":"SAMN19647703","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":109096,"base_count":702866039,"first_public":1633132800000},{"run_accession":"SRR14871153","sample_accession":"SAMN19647702","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":124895,"base_count":803922588,"first_public":1633132800000},{"run_accession":"SRR14871158","sample_accession":"SAMN19647697","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. zooepidemicus","instrument_platform":"PacBio","read_count":47676,"base_count":270000635,"first_public":1633132800000},{"run_accession":"SRR14871159","sample_accession":"SAMN19647634","study_accession":"PRJNA736470","scientific_name":"Streptococcus equi subsp. equi","instrument_platform":"PacBio","read_count":251901,"base_count":1466923693,"first_public":1633132800000}]
+[
+  {
+    "sample_id": "SRR14108839",
+    "organism": "Xanthomonas campestris pv. incanae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094541",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827394",
+    "organism": "Delftia acidovorans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1448919",
+    "organism": "Listeria monocytogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA215355",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509541",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854427",
+    "organism": "Klebsiella oxytoca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790238",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13977966",
+    "organism": "Xanthomonas citri pv. phaseoli var. fuscans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA384160",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910098",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757239",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910117",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094573",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910129",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1417248",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "DRR514964",
+    "organism": "Chryseobacterium gambrini",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJDB17029",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1284633",
+    "organism": "Citrobacter freundii CFNIH1",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA202883",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108829",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757236",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094595",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294771",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108810",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14576260",
+    "organism": "Listeria monocytogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718477",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108817",
+    "organism": "Xanthomonas campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846878",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087077",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094106",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR2212609",
+    "organism": "Ralstonia mannitolilytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12826211",
+    "organism": "Staphylococcus pseudintermedius",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13670000",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108841",
+    "organism": "Xanthomonas campestris pv. incanae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR2212610",
+    "organism": "Pasteurella canis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108858",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1417235",
+    "organism": "Pseudomonas fluorescens",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14719430",
+    "organism": "Bacillus velezensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734708",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR569656",
+    "organism": "Shigella flexneri",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6012",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825962",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1417236",
+    "organism": "Pseudomonas fluorescens",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910123",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910106",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1283861",
+    "organism": "Burkholderia pseudomallei MSHR491",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA238260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846848",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674002",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509680",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14584899",
+    "organism": "Mycobacterium canetti",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA665366",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094149",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509639",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1378618",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA248655",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR5693749",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB44202",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13648750",
+    "organism": "Lactococcus lactis subsp. lactis bv. diacetylactis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA699238",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094539",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509558",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1200665",
+    "organism": "Bordetella pertussis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825893",
+    "organism": "Peptoniphilus harei",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14430901",
+    "organism": "Bacillus velezensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA727480",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827779",
+    "organism": "Paraburkholderia ginsengisoli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910184",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087057",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094164",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846859",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910192",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1422145",
+    "organism": "Bacillus pumilus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA239250",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910093",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294785",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094572",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR980666",
+    "organism": "Mycobacteroides abscessus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB9167",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1397211",
+    "organism": "Streptococcus mutans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094143",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13617000",
+    "organism": "Saccharopolyspora erythraea",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA699044",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14695234",
+    "organism": "Novosphingobium terrae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA624997",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13668387",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14069006",
+    "organism": "Bradyrhizobium barranii subsp. barranii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714589",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094174",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14584529",
+    "organism": "Sinorhizobium meliloti",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA705832",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1427246",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae KPNIH27",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA198783",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674228",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955666",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13950629",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA713973",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790251",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1173494",
+    "organism": "Streptococcus pyogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR690970",
+    "organism": "Salmonella enterica subsp. enterica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13296938",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA554345",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14256340",
+    "organism": "Acinetobacter sp. NEB 394",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA638470",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674416",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910191",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766082",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13762779",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA605961",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14584531",
+    "organism": "Sinorhizobium meliloti",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA705832",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108816",
+    "organism": "Xanthomonas campestris pv. incanae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13668437",
+    "organism": "Klebsiella oxytoca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094557",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14492204",
+    "organism": "Bacillus altitudinis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728184",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13966312",
+    "organism": "Bacillus amyloliquefaciens",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714452",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910141",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766098",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13708353",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA701733",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509538",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766094",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846856",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846815",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094146",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846840",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1427244",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae KPNIH27",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA198783",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14584533",
+    "organism": "Sinorhizobium meliloti",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA705832",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108812",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955657",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094527",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825851",
+    "organism": "Yersinia pseudotuberculosis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14150359",
+    "organism": "Brucella pinnipedialis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA664313",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12701095",
+    "organism": "Agrobacterium vitis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA664275",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13950628",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium str. SL1344",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA713973",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846851",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR11558427",
+    "organism": "Paracoccus sanguinis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094108",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452914",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910147",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846869",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1395320",
+    "organism": "Listeria monocytogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA215355",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674216",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1173486",
+    "organism": "Streptococcus viridans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094160",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910133",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854371",
+    "organism": "Raoultella ornithinolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108844",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790243",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR3046650",
+    "organism": "Altererythrobacter sp. S1-5",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB30480",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12455217",
+    "organism": "Cetobacterium sp. 8H",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA646690",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1417242",
+    "organism": "Lactobacillus paragasseri",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674457",
+    "organism": "Bordetella pertussis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094579",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108814",
+    "organism": "Xanthomonas campestris pv. raphani",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13695047",
+    "organism": "Parageobacillus toebii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509645",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825882",
+    "organism": "Leuconostoc mesenteroides",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846886",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13873708",
+    "organism": "Streptococcus pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA695191",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294772",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674447",
+    "organism": "Acinetobacter baumannii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13962167",
+    "organism": "Wolbachia pipientis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA713538",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14511408",
+    "organism": "Synechococcus sp. LA31",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA566206",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757230",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757235",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094163",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13708666",
+    "organism": "Lysinibacillus fusiformis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14576016",
+    "organism": "Escherichia coli BL21(DE3)",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA730534",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1173490",
+    "organism": "Streptococcus uberis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827391",
+    "organism": "Corynebacterium urealyticum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846826",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509664",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094177",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13722032",
+    "organism": "Rhodococcus qingshengii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA702129",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509656",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094547",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955695",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14859978",
+    "organism": "Streptococcus pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734910",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "DRR517365",
+    "organism": "Bacillus stercoris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJDB16835",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094145",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955659",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087079",
+    "organism": "Raoultella ornithinolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094162",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14318404",
+    "organism": "Streptomyces sp. A2-16",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA671550",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509634",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955656",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825859",
+    "organism": "Bacteroides fragilis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1427249",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae KPNIH27",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA198783",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13669074",
+    "organism": "Klebsiella oxytoca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13642250",
+    "organism": "Bradyrhizobium septentrionale",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA640156",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094569",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14430902",
+    "organism": "Bacillus velezensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA727480",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR11558428",
+    "organism": "Paracoccus sanguinis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14693198",
+    "organism": "Mycobacterium intracellulare ATCC 13950",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA733007",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108826",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14464902",
+    "organism": "Paraburkholderia sacchari",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA503302",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12826216",
+    "organism": "Achromobacter xylosoxidans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087059",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14576004",
+    "organism": "Escherichia coli BL21(DE3)",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA730534",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509548",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955710",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955714",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825899",
+    "organism": "Streptococcus constellatus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094119",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13587125",
+    "organism": "Bacillus sp. CQMU-D",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA697930",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13670661",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955699",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14859993",
+    "organism": "Streptococcus pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734910",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509537",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108853",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846860",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13517978",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA694476",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294789",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674234",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766083",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294786",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12649590",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA663694",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846852",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509682",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757221",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854381",
+    "organism": "Klebsiella aerogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452935",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790226",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766087",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846847",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1424730",
+    "organism": "Pseudomonas chlororaphis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA247768",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910166",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294784",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854382",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846845",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13606973",
+    "organism": "Cupriavidus oxalaticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA695296",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674021",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14419388",
+    "organism": "Escherichia coli O157:H7",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA280853",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14692236",
+    "organism": "Streptomyces sp. COG21",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732274",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955672",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854460",
+    "organism": "Klebsiella variicola subsp. variicola",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910162",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846823",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825896",
+    "organism": "Staphylococcus felis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910108",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827768",
+    "organism": "Pediococcus pentosaceus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955662",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1424715",
+    "organism": "Pseudomonas brassicacearum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA239581",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955675",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955688",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR690976",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13716882",
+    "organism": "Rhodococcus coprophilus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA695735",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13670131",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674405",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13708346",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA701733",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13517982",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA694476",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790237",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673796",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846816",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509678",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13616443",
+    "organism": "Lactobacillus acidophilus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA657145",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846881",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955681",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108836",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854449",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108861",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846879",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13669072",
+    "organism": "Klebsiella oxytoca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1424716",
+    "organism": "Pseudomonas brassicacearum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA239581",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14827057",
+    "organism": "Cupriavidus sp. EM10",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA733020",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13950633",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA713973",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094121",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955676",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094150",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825902",
+    "organism": "Streptococcus dysgalactiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087070",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1397207",
+    "organism": "Neisseria canis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14651725",
+    "organism": "Mycoplasmopsis agalactiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA717738",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13705504",
+    "organism": "Rhodococcus koreensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA700828",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854364",
+    "organism": "Klebsiella variicola subsp. variicola",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087082",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825938",
+    "organism": "Achromobacter deleyi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1424718",
+    "organism": "Pseudomonas brassicacearum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA239581",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "DRR514873",
+    "organism": "Geobacter sp. 60473",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJDB16782",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13907619",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA589028",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13587039",
+    "organism": "Metabacillus sp. cB07",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA696874",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509535",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910180",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674007",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825838",
+    "organism": "Providencia stuartii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674424",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910130",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12826197",
+    "organism": "Staphylococcus equorum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13642592",
+    "organism": "Bradyrhizobium septentrionale",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA612041",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673900",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827389",
+    "organism": "Corynebacterium urealyticum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910167",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14827055",
+    "organism": "Cupriavidus sp. EM10",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA733020",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14419380",
+    "organism": "Escherichia coli O157:H7",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA280853",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087080",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14028187",
+    "organism": "Xanthomonas citri pv. glycines",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA716183",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14793656",
+    "organism": "Rhodopseudomonas palustris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA737057",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13716977",
+    "organism": "Rhodococcus opacus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA696866",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13668103",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094536",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910189",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14576015",
+    "organism": "Escherichia coli BL21(DE3)",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA730534",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR569657",
+    "organism": "Shigella flexneri",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6012",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108827",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1417239",
+    "organism": "Streptococcus pyogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757234",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910094",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13703362",
+    "organism": "Clostridium acetobutylicum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094525",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094118",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14729170",
+    "organism": "Xanthomonas campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR11059512",
+    "organism": "Clostridium beijerinckii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA462563",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR980620",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1284073",
+    "organism": "Escherichia coli str. K-12 substr. MG1655",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA237120",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673895",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825947",
+    "organism": "Corynebacterium glucuronolyticum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14028219",
+    "organism": "Xanthomonas citri pv. glycines CFBP 2526",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA716184",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825957",
+    "organism": "Enterobacter asburiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13762777",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA605961",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825874",
+    "organism": "Cupriavidus necator",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825887",
+    "organism": "Pediococcus pentosaceus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790225",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13708347",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA701733",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1391281",
+    "organism": "Listeria monocytogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA215355",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790242",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825951",
+    "organism": "Corynebacterium striatum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14069053",
+    "organism": "Bradyrhizobium barranii subsp. apii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA612001",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674004",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094141",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766079",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509646",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509660",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094567",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854434",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12826219",
+    "organism": "Schaalia meyeri",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910140",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094582",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509677",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR10340775",
+    "organism": "Pseudomonas chlororaphis subsp. aurantiaca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA542228",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846846",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094544",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674435",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509668",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14311537",
+    "organism": "Mycoplasmoides gallisepticum S6",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA723755",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094546",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910158",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094532",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14103433",
+    "organism": "Brevibacillus laterosporus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718542",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13672859",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955712",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673803",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13962169",
+    "organism": "Wolbachia pipientis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA713538",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509665",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827469",
+    "organism": "Fusobacterium canifelinum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674421",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14859975",
+    "organism": "Streptococcus pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734910",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094588",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955658",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955692",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509669",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13966313",
+    "organism": "Bacillus amyloliquefaciens",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714445",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825860",
+    "organism": "Brevundimonas diminuta",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452906",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854464",
+    "organism": "Klebsiella michiganensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13950630",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA713973",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955673",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094562",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "DRR461518",
+    "organism": "Janibacter anophelis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJDB15426",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757245",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509651",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR980631",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674460",
+    "organism": "Bordetella pertussis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1422861",
+    "organism": "Bacillus pumilus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA239250",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108864",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509540",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14766097",
+    "organism": "Vibrio alginolyticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA735604",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12605118",
+    "organism": "Actinopolymorpha pittospori",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622102",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13838094",
+    "organism": "Fibrella sp. USSR17",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704274",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094535",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757255",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1391282",
+    "organism": "Listeria monocytogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA215355",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094566",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509549",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673805",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14696643",
+    "organism": "Bacillus velezensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734044",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1427245",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae KPNIH27",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA198783",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846829",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13669077",
+    "organism": "Klebsiella oxytoca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955669",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846837",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1344890",
+    "organism": "Streptococcus gordonii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094126",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955667",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR1427251",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae KPNIH27",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA198783",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13703359",
+    "organism": "Clostridium acetobutylicum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13697404",
+    "organism": "Acinetobacter calcoaceticus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA695733",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14294783",
+    "organism": "Bartonella henselae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA720375",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094161",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452917",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854389",
+    "organism": "Klebsiella oxytoca",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825950",
+    "organism": "Corynebacterium striatum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13817278",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA605961",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790218",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955707",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846817",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846855",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509641",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14651720",
+    "organism": "Mycoplasmopsis agalactiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA717738",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13450788",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA605961",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14576250",
+    "organism": "Pseudomonas sp. IsoF",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA702902",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14069623",
+    "organism": "Bradyrhizobium quebecense",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714947",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14576014",
+    "organism": "Escherichia coli BL21(DE3)",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA730534",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094558",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14419390",
+    "organism": "Escherichia coli O157:H7",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA280853",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790244",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094173",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13988821",
+    "organism": "Xanthomonas citri pv. fuscans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA715109",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12826232",
+    "organism": "Corynebacterium amycolatum",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955684",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14584530",
+    "organism": "Sinorhizobium meliloti",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA705832",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757210",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955713",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14651726",
+    "organism": "Mycoplasmopsis agalactiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA717738",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674442",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509559",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13640827",
+    "organism": "Bradyrhizobium quebecense",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA640100",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13716975",
+    "organism": "Rhodococcus ruber",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA696867",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108865",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790232",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14293195",
+    "organism": "Klebsiella pneumoniae subsp. pneumoniae Ecl8",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA721588",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14747437",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094144",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846887",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854440",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673898",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13907618",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA589028",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757226",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14730345",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790220",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13668389",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827467",
+    "organism": "Enterococcus casseliflavus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674408",
+    "organism": "Coprococcus comes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846880",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13950595",
+    "organism": "Wolbachia pipientis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA712975",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR569658",
+    "organism": "Shigella flexneri",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6012",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674236",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757251",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790219",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673738",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846849",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673605",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13837247",
+    "organism": "Bacillus velezensis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA700378",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854423",
+    "organism": "Raoultella planticola",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13907621",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA589028",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13708667",
+    "organism": "Lysinibacillus fusiformis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622823",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790222",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910122",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13673971",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13927891",
+    "organism": "Thiothrix fructosivorans",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA631701",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14859999",
+    "organism": "Streptococcus pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734910",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108820",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674452",
+    "organism": "Staphylococcus epidermidis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910171",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825888",
+    "organism": "Pediococcus pentosaceus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094543",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094586",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094559",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14859989",
+    "organism": "Streptococcus pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA734910",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094565",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509546",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108822",
+    "organism": "Xanthomonas campestris pv. raphani",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087074",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910097",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854384",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12827749",
+    "organism": "Leuconostoc pseudomesenteroides",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910161",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14419376",
+    "organism": "Escherichia coli O157:H7",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA280853",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674459",
+    "organism": "Bordetella pertussis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR10099401",
+    "organism": "Vibrio cholerae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA560225",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14419386",
+    "organism": "Escherichia coli O157:H7",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA280853",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14651674",
+    "organism": "Mycoplasmopsis agalactiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA717738",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094574",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR12825873",
+    "organism": "Citrobacter koseri",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13674020",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA231221",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094598",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087087",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14075991",
+    "organism": "Kutzneria sp. CA-103260",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA691205",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087085",
+    "organism": "Klebsiella quasivariicola",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094584",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509652",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14619782",
+    "organism": "Listeria monocytogenes",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA731068",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14322309",
+    "organism": "Methylomonas paludis",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA724036",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR11558401",
+    "organism": "Streptomyces fulvorobeus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA622034",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452881",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094575",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910177",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13790230",
+    "organism": "Streptococcus equi subsp. equi",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA704656",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13978588",
+    "organism": "Xanthomonas phaseoli pv. phaseoli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA384159",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094113",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR1173492",
+    "organism": "Enterococcus casseliflavus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452924",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR4910188",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB38289",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14793653",
+    "organism": "Rhodopseudomonas palustris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA737057",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14757250",
+    "organism": "Staphylococcus aureus",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA732579",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108857",
+    "organism": "Xanthomonas campestris pv. campestris",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10452877",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094154",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718260",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13862304",
+    "organism": "Weissella confusa",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA672834",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955665",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14651675",
+    "organism": "Mycoplasmopsis agalactiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA717738",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14419378",
+    "organism": "Escherichia coli O157:H7",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA280853",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509650",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14509543",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA728709",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10854400",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR690973",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB6403",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13762775",
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA605961",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094577",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14108819",
+    "organism": "Xanthomonas campestris pv. incanae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA689092",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14684535",
+    "organism": "Enterobacter asburiae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA729118",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14094554",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA718264",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "ERR10087075",
+    "organism": "Klebsiella pneumoniae",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJEB27342",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR14140303",
+    "organism": "Ralstonia syzygii",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA594455",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13846825",
+    "organism": "Escherichia coli",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA706377",
+    "source": "ENA"
+  },
+  {
+    "sample_id": "SRR13955674",
+    "organism": "Mannheimia haemolytica",
+    "tech": "PACBIO_SMRT",
+    "study": "PRJNA714107",
+    "source": "ENA"
+  }
+]

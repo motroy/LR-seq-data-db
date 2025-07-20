@@ -1,49 +1,65 @@
 import requests
-import pandas as pd
+import json
+import random
+import time
 
-def fetch_data():
-    """
-    Fetches data from the ENA API and saves it as a JSON file.
-    """
-    url = "https://www.ebi.ac.uk/ena/portal/api/search"
+def fetch_ena(platform, size=500, tax_id="2"):
+    print(f"🔍 Fetching {platform} samples from ENA...")
+
+    ena_url = "https://www.ebi.ac.uk/ena/portal/api/search"
+    query = f'instrument_platform="{platform}" AND tax_tree({tax_id})'
+    fields = "accession,scientific_name,instrument_platform,study_accession"
     params = {
         "result": "read_run",
-        "query": "tax_tree(2) AND (instrument_platform=\"ONT\" OR instrument_platform=\"PACBIO_SMRT\")",
-        "fields": "study_accession,sample_accession,run_accession,scientific_name,instrument_platform,read_count,base_count,first_public",
-        "format": "tsv",
-        "limit": 0  # Fetch all records
+        "query": query,
+        "fields": fields,
+        "format": "json",
+        "limit": size
     }
+    #url = "https://www.ebi.ac.uk/ena/portal/api/search"
+    #params = {
+    #    "result": "read_run",
+    #    "query": "tax_tree(2) AND (instrument_platform=\"ONT\" OR instrument_platform=\"PACBIO_SMRT\")",
+    #    "fields": "study_accession,sample_accession,run_accession,scientific_name,instrument_platform,read_count,base_count,first_public",
+    #    "format": "tsv",
+    #    "limit": 0  # Fetch all records
+    #}
 
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
+    for attempt in range(3):
+        try:
+            response = requests.get(ena_url, params=params, timeout=20)
+            response.raise_for_status()
+            data = response.json()
+            break
+        except requests.exceptions.RequestException as err:
+            print(f"⚠️ Attempt {attempt+1} failed: {err}")
+            time.sleep(5)
+    else:
+        print(f"❌ Failed to retrieve data for {platform}")
+        return []
 
-        df = pd.read_csv(pd.io.common.StringIO(response.text), sep='\\t')
-
-        # Standardize instrument_platform
-        df['instrument_platform'] = df['instrument_platform'].replace({
-            'ONT': 'Oxford Nanopore',
-            'PACBIO_SMRT': 'PacBio'
+    results = []
+    for item in data:
+        results.append({
+            "sample_id": item.get("accession"),
+            "organism": item.get("scientific_name", "Unknown"),
+            "tech": item.get("instrument_platform", platform),
+            "study": item.get("study_accession", "NA"),
+            "source": "ENA"
         })
+    return results
 
-        # Ensure first_public is a valid date
-        df['first_public'] = pd.to_datetime(df['first_public'], errors='coerce')
+def main():
+    nanopore_data = fetch_ena("ONT", 500)
+    pacbio_data = fetch_ena("PACBIO_SMRT", 500)
 
-        # Handle potential missing values
-        df.dropna(subset=['first_public'], inplace=True)
+    combined = nanopore_data + pacbio_data
+    random.shuffle(combined)
 
-        # Take a subset of 100 samples
-        df_subset = df.head(100)
+    with open("sample_data.json", "w", encoding="utf-8") as f:
+        json.dump(combined, f, indent=2)
 
-        # Save to JSON
-        df_subset.to_json("sample_data.json", orient="records")
-
-        print("Data fetched and saved successfully.")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data: {e}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    print(f"✅ Saved {len(combined)} samples to sample_data.json")
 
 if __name__ == "__main__":
-    fetch_data()
+    main()
