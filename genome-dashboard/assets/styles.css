@@ -1,1 +1,14 @@
+body {
+  background-color: #f9f9fc;
+}
 
+h1 {
+  font-weight: bold;
+}
+
+#stats {
+  background-color: #fff3cd;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ffeeba;
+}
