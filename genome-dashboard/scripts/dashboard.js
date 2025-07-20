@@ -1,6 +1,8 @@
-fetch("assets/data/sample_data.json")
+fetch("sample_data.json")
   .then(res => res.json())
   .then(data => {
+    summarize(data);
+
     const table = new Tabulator("#genome-table", {
       data,
       layout: "fitColumns",
@@ -17,6 +19,7 @@ fetch("assets/data/sample_data.json")
       ],
       height: "600px"
     });
+
     document.getElementById("organism-filter").addEventListener("input", e => {
       table.setFilter("organism", "like", e.target.value);
     });
@@ -26,3 +29,25 @@ fetch("assets/data/sample_data.json")
       table.setFilter("tech", val ? "=" : null, val);
     });
   });
+
+function summarize(data) {
+  const organisms = {};
+  const techCounts = { "Oxford Nanopore": 0, "PacBio": 0 };
+
+  data.forEach(item => {
+    organisms[item.organism] = (organisms[item.organism] || 0) + 1;
+    if (techCounts[item.tech] !== undefined) techCounts[item.tech]++;
+  });
+
+  const topOrganisms = Object.entries(organisms)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  document.getElementById("stats").innerHTML = `
+    <h3>📈 Summary Stats</h3>
+    <p><strong>Total Samples:</strong> ${data.length}</p>
+    <p><strong>Oxford Nanopore:</strong> ${techCounts["Oxford Nanopore"]}</p>
+    <p><strong>PacBio:</strong> ${techCounts["PacBio"]}</p>
+    <p><strong>Top Organisms:</strong><br>${topOrganisms.map(([org, count]) => `${org} (${count})`).join('<br>')}</p>
+  `;
+}
