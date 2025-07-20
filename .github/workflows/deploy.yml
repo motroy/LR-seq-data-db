@@ -21,8 +21,22 @@ jobs:
       - name: Install wasm-pack
         run: cargo install wasm-pack
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch data
+        run: python ena-explorer/fetch_data.py
+
       - name: Build
         run: cd ena-explorer && wasm-pack build --out-dir pkg
+
+      - name: Move data
+        run: mv ena_data.json ena-explorer/pkg
 
       - name: Copy index.html
         run: cp ena-explorer/index.html ena-explorer/pkg/index.html
