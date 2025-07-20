@@ -24,6 +24,9 @@ jobs:
       - name: Build
         run: cd ena-explorer && wasm-pack build --out-dir pkg
 
+      - name: Copy index.html
+        run: cp ena-explorer/index.html ena-explorer/pkg/index.html
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
