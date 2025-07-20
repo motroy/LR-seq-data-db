@@ -4,9 +4,14 @@ import hvplot.pandas
 
 pn.extension(sizing_mode="stretch_width")
 
+import os
+
 @pn.cache
 def get_data():
-    return pd.read_json('public/dashboard_data.json')
+    # Construct the path to the data file relative to this script's location
+    script_dir = os.path.dirname(__file__)
+    data_path = os.path.join(script_dir, '..', 'public', 'dashboard_data.json')
+    return pd.read_json(data_path)
 
 data = get_data()
 
