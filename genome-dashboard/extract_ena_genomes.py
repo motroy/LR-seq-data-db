@@ -1,44 +1,49 @@
 import requests
-import json
-import random
+import pandas as pd
 
-def fetch_ena_samples(tech="Oxford Nanopore", size=500):
-    print(f"🔍 Searching ENA for {tech} bacterial samples...")
-    ena_url = "https://www.ebi.ac.uk/ena/portal/api/search"
-    query = f'platform="{tech}" AND tax_tree(bacteria)'
-    fields = "accession,scientific_name,platform,study_accession"
+def fetch_data():
+    """
+    Fetches data from the ENA API and saves it as a JSON file.
+    """
+    url = "https://www.ebi.ac.uk/ena/portal/api/search"
     params = {
         "result": "read_run",
-        "query": query,
-        "fields": fields,
-        "format": "json",
-        "limit": size
+        "query": "tax_tree(2) AND (instrument_platform=\"ONT\" OR instrument_platform=\"PACBIO_SMRT\")",
+        "fields": "study_accession,sample_accession,run_accession,scientific_name,instrument_platform,read_count,base_count,first_public",
+        "format": "tsv",
+        "limit": 0  # Fetch all records
     }
-    response = requests.get(ena_url, params=params)
-    response.raise_for_status()
-    data = response.json()
-    results = []
 
-    for item in data:
-        results.append({
-            "sample_id": item.get("accession"),
-            "organism": item.get("scientific_name", "Unknown"),
-            "tech": item.get("platform", tech),
-            "study": item.get("study_accession", "NA"),
-            "source": "ENA"
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+
+        df = pd.read_csv(pd.io.common.StringIO(response.text), sep='\\t')
+
+        # Standardize instrument_platform
+        df['instrument_platform'] = df['instrument_platform'].replace({
+            'ONT': 'Oxford Nanopore',
+            'PACBIO_SMRT': 'PacBio'
         })
-    return results
 
-def main():
-    nanopore_data = fetch_ena_samples("Oxford Nanopore", size=500)
-    pacbio_data = fetch_ena_samples("PacBio", size=500)
+        # Ensure first_public is a valid date
+        df['first_public'] = pd.to_datetime(df['first_public'], errors='coerce')
 
-    all_data = nanopore_data + pacbio_data
-    random.shuffle(all_data)
+        # Handle potential missing values
+        df.dropna(subset=['first_public'], inplace=True)
 
-    with open("sample_data.json", "w") as f:
-        json.dump(all_data, f, indent=2)
-    print(f"✅ Saved {len(all_data)} ENA samples to sample_data.json")
+        # Take a subset of 100 samples
+        df_subset = df.head(100)
+
+        # Save to JSON
+        df_subset.to_json("sample_data.json", orient="records")
+
+        print("Data fetched and saved successfully.")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-    main()
+    fetch_data()
