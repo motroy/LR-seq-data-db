@@ -25,9 +25,21 @@
   </div>
 
   <div id="stats" class="mb-4"></div>
+  <div id="plots" class="row mb-4">
+    <div id="reads-plot" class="col-md-6"></div>
+    <div id="bases-plot" class="col-md-6"></div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <button id="download-tsv" class="btn btn-primary">Download TSV</button>
+      <button id="download-xlsx" class="btn btn-primary">Download XLSX</button>
+    </div>
+  </div>
   <div id="genome-table"></div>
 
   <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+  <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
   <script src="scripts/dashboard.js"></script>
 </body>
 </html>

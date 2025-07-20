@@ -12,22 +12,40 @@ fetch("sample_data.json")
       movableColumns: true,
       columns: [
         { title: "Sample ID", field: "sample_id", headerMenu: true },
-        { title: "Organism", field: "organism", headerMenu: true },
-        { title: "Technology", field: "tech", headerMenu: true },
-        { title: "Study", field: "study", headerMenu: true },
+        { title: "Organism", field: "scientific_name", headerMenu: true },
+        { title: "Technology", field: "instrument_platform", headerMenu: true },
+        { title: "Reads", field: "read_count", headerMenu: true },
+        { title: "Bases", field: "base_count", headerMenu: true },
+        { title: "Study", field: "study_accession", headerMenu: true },
         { title: "Source DB", field: "source", headerMenu: true }
       ],
       height: "600px"
     });
 
-    document.getElementById("organism-filter").addEventListener("input", e => {
-      table.setFilter("organism", "like", e.target.value);
-    });
+    const organismFilter = document.getElementById("organism-filter");
+    const techFilter = document.getElementById("tech-filter");
 
-    document.getElementById("tech-filter").addEventListener("change", e => {
-      const val = e.target.value;
-      table.setFilter("tech", val ? "=" : null, val);
-    });
+    function updateFilters() {
+      const filters = [];
+      const organismVal = organismFilter.value;
+      const techVal = techFilter.value;
+
+      if (organismVal) {
+        filters.push({ field: "scientific_name", type: "like", value: organismVal });
+      }
+
+      if (techVal) {
+        filters.push({ field: "instrument_platform", type: "=", value: techVal });
+      }
+
+      table.setFilter(filters);
+    }
+
+    organismFilter.addEventListener("input", updateFilters);
+    techFilter.addEventListener("change", updateFilters);
+
+    document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
+    document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
   });
 
 function summarize(data) {
@@ -35,8 +53,8 @@ function summarize(data) {
   const techCounts = { "OXFORD_NANOPORE": 0, "PACBIO_SMRT": 0 };
 
   data.forEach(item => {
-    organisms[item.organism] = (organisms[item.organism] || 0) + 1;
-    if (techCounts[item.tech] !== undefined) techCounts[item.tech]++;
+    organisms[item.scientific_name] = (organisms[item.scientific_name] || 0) + 1;
+    if (techCounts[item.instrument_platform] !== undefined) techCounts[item.instrument_platform]++;
   });
 
   const topOrganisms = Object.entries(organisms)
@@ -50,4 +68,32 @@ function summarize(data) {
     <p><strong>PacBio:</strong> ${techCounts["PACBIO_SMRT"]}</p>
     <p><strong>Top Organisms:</strong><br>${topOrganisms.map(([org, count]) => `${org} (${count})`).join('<br>')}</p>
   `;
+
+  createBoxPlot(data, "reads-plot", "read_count", "Number of Reads per Organism");
+  createBoxPlot(data, "bases-plot", "base_count", "Number of Bases per Organism");
+}
+
+function createBoxPlot(data, elementId, field, title) {
+  const plotData = [{
+    type: 'box',
+    x: data.map(d => d.scientific_name),
+    y: data.map(d => d[field]),
+    boxpoints: 'all',
+    jitter: 0.5,
+    pointpos: -1.8,
+    customdata: data.map(d => d.instrument_platform),
+    transforms: [{
+      type: 'groupby',
+      groups: data.map(d => d.instrument_platform),
+    }]
+  }];
+
+  const layout = {
+    title,
+    yaxis: {
+      title: field === 'read_count' ? 'Number of Reads' : 'Number of Bases'
+    }
+  };
+
+  Plotly.newPlot(elementId, plotData, layout);
 }
