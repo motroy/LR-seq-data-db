@@ -9,8 +9,7 @@ import os
 @pn.cache
 def get_data():
     # Construct the path to the data file relative to this script's location
-    script_dir = os.path.dirname(__file__)
-    data_path = os.path.join(script_dir, '..', 'public', 'dashboard_data.json')
+    data_path = os.path.join(os.getcwd(), 'public', 'dashboard_data.json')
     return pd.read_json(data_path)
 
 data = get_data()
