@@ -14,14 +14,14 @@ def get_data():
 
 data = get_data()
 
-search_term = pn.widgets.TextInput(name="Search by Organism", placeholder="Enter search term...")
+organism_filter = pn.widgets.MultiSelect(name="Search by Organism", options=sorted(data['scientific_name'].unique().tolist()))
 platform_filter = pn.widgets.Select(name="Filter by Platform", options=['All'] + sorted(data['instrument_platform'].unique().tolist()))
 
-@pn.depends(search_term.param.value, platform_filter.param.value)
-def filtered_data(search, platform):
+@pn.depends(organism_filter.param.value, platform_filter.param.value)
+def filtered_data(organisms, platform):
     df = data.copy()
-    if search:
-        df = df[df['scientific_name'].str.contains(search, case=False)]
+    if organisms:
+        df = df[df['scientific_name'].isin(organisms)]
     if platform and platform != 'All':
         df = df[df['instrument_platform'] == platform]
     return df
@@ -54,7 +54,7 @@ def get_data_charts(df):
 
 widgets = pn.Column(
     "### Filters",
-    search_term,
+    organism_filter,
     platform_filter
 )
 

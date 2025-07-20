@@ -6,8 +6,9 @@
   let data = [];
   let filteredData = [];
   let error = null;
-  let searchTerm = '';
+  let selectedOrganisms = [];
   let platformFilter = '';
+  let organismOptions = [];
 
   onMount(async () => {
     try {
@@ -16,6 +17,8 @@
         throw new Error('Failed to fetch data');
       }
       data = await response.json();
+      const organisms = [...new Set(data.map(d => d.scientific_name))];
+      organismOptions = organisms.sort();
       filteredData = data;
     } catch (e) {
       error = e.message;
@@ -25,9 +28,9 @@
   $: {
     if (data) {
       filteredData = data.filter(d => {
-        const searchTermMatch = d.scientific_name.toLowerCase().includes(searchTerm.toLowerCase());
+        const organismMatch = selectedOrganisms.length > 0 ? selectedOrganisms.includes(d.scientific_name) : true;
         const platformMatch = platformFilter ? d.instrument_platform === platformFilter : true;
-        return searchTermMatch && platformMatch;
+        return organismMatch && platformMatch;
       });
     }
   }
@@ -42,7 +45,11 @@
     <aside>
       <h3>Filters</h3>
       <label for="search">Search by Organism</label>
-      <input type="text" id="search" bind:value={searchTerm} />
+      <select id="search" bind:value={selectedOrganisms} multiple>
+        {#each organismOptions as organism}
+          <option value={organism}>{organism}</option>
+        {/each}
+      </select>
 
       <label for="platform">Filter by Platform</label>
       <select id="platform" bind:value={platformFilter}>
