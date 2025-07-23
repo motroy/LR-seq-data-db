@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const worker = new Worker('scripts/worker.js');
 
-  fetch('genome-dashboard/assets/data/chunks/files.json')
+  fetch('assets/data/chunks/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
       worker.postMessage({ chunkFiles });
