@@ -25,16 +25,20 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch('assets/data/chunks/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
-      chunkFiles.forEach(file => {
+      let allData = [];
+      const fetchPromises = chunkFiles.map(file =>
         fetch(`assets/data/chunks/${file}`)
           .then(res => res.json())
           .then(chunkData => {
             table.addData(chunkData);
-            const currentData = table.getData();
-            summarize(currentData);
-            createBoxPlot(currentData, "reads-plot", "read_count", "Number of Reads per Organism");
-            createBoxPlot(currentData, "bases-plot", "base_count", "Number of Bases per Organism");
-          });
+            allData = allData.concat(chunkData);
+          })
+      );
+
+      Promise.all(fetchPromises).then(() => {
+        summarize(allData);
+        createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+        createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
       });
     });
 
