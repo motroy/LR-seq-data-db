@@ -52,16 +52,19 @@ def fetch_ena(platform, size=500, tax_id="2"):
     return results
 
 def main():
-    nanopore_data = fetch_ena("OXFORD_NANOPORE", 100000)
-    pacbio_data = fetch_ena("PACBIO_SMRT", 100000)
+    nanopore_data = fetch_ena("OXFORD_NANOPORE", 1000)
+    pacbio_data = fetch_ena("PACBIO_SMRT", 1000)
 
     combined = nanopore_data + pacbio_data
     random.shuffle(combined)
 
-    with open("sample_data.json", "w", encoding="utf-8") as f:
-        json.dump(combined, f, indent=2)
+    chunk_size = 1000
+    for i in range(0, len(combined), chunk_size):
+        chunk = combined[i:i + chunk_size]
+        with open(f"assets/data/chunks/chunk_{i // chunk_size + 1}.json", "w", encoding="utf-8") as f:
+            json.dump(chunk, f, indent=2)
 
-    print(f"✅ Saved {len(combined)} samples to sample_data.json")
+    print(f"✅ Saved {len(combined)} samples to {len(range(0, len(combined), chunk_size))} chunks")
 
 if __name__ == "__main__":
     main()
