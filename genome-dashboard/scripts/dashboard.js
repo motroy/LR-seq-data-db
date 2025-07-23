@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingOverlay = document.getElementById("loading-overlay");
   const progressBar = document.getElementById("progress-bar");
 
-  const worker = new Worker('worker.js');
+  const worker = new Worker('scripts/worker.js');
 
-  fetch('../assets/data/chunks/files.json')
+  fetch('assets/data/chunks/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
       worker.postMessage({ chunkFiles });
