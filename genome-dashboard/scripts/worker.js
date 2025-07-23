@@ -10,7 +10,7 @@ self.onmessage = function(e) {
       return;
     }
 
-    fetch(`../genome-dashboard/assets/data/chunks/${chunkFiles[index]}`)
+    fetch(`assets/data/chunks/${chunkFiles[index]}`)
       .then(res => res.json())
       .then(chunkData => {
         allData = allData.concat(chunkData);
