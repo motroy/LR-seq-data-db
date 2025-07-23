@@ -61,7 +61,7 @@ def main():
     chunk_size = 1000
     for i in range(0, len(combined), chunk_size):
         chunk = combined[i:i + chunk_size]
-        with open(f"assets/data/chunks/chunk_{i // chunk_size + 1}.json", "w", encoding="utf-8") as f:
+        with open(f"genome-dashboard/assets/data/chunks/chunk_{i // chunk_size + 1}.json", "w", encoding="utf-8") as f:
             json.dump(chunk, f, indent=2)
 
     print(f"✅ Saved {len(combined)} samples to {len(range(0, len(combined), chunk_size))} chunks")
