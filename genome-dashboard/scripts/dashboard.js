@@ -1,63 +1,72 @@
-fetch('assets/data/chunks/files.json')
-  .then(response => response.json())
-  .then(chunkFiles => {
-    Promise.all(
-      chunkFiles.map(file =>
-        fetch(`assets/data/chunks/${file}`).then(res => res.json())
-      )
-    ).then(chunks => {
-      const data = chunks.flat();
-      summarize(data);
-
-      const table = new Tabulator("#genome-table", {
-        data,
-        layout: "fitColumns",
-        responsiveLayout: "hide",
-        pagination: "local",
-        paginationSize: 25,
-        movableColumns: true,
-        columns: [
-          { title: "Sample ID", field: "sample_id", headerMenu: true },
-          { title: "Organism", field: "scientific_name", headerMenu: true },
-          { title: "Technology", field: "instrument_platform", headerMenu: true },
-          { title: "Reads", field: "read_count", headerMenu: true },
-          { title: "Bases", field: "base_count", headerMenu: true },
-          { title: "Study", field: "study_accession", headerMenu: true },
-          { title: "Source DB", field: "source", headerMenu: true }
-        ],
-        height: "600px"
-      });
-
-      const organismFilter = document.getElementById("organism-filter");
-      const techFilter = document.getElementById("tech-filter");
-
-      function updateFilters() {
-        const filters = [];
-        const organismVal = organismFilter.value;
-        const techVal = techFilter.value;
-
-        if (organismVal) {
-          filters.push({ field: "scientific_name", type: "like", value: organismVal });
-        }
-
-        if (techVal) {
-          filters.push({ field: "instrument_platform", type: "=", value: techVal });
-        }
-
-        table.setFilter(filters);
-      }
-
-      organismFilter.addEventListener("input", updateFilters);
-      techFilter.addEventListener("change", updateFilters);
-
-      table.on("dataFiltered", function(filters, rows) {
-        summarize(rows.map(row => row.getData()));
-      });
-
-      document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
-      document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  const table = new Tabulator("#genome-table", {
+    data: [],
+    layout: "fitColumns",
+    responsiveLayout: "hide",
+    pagination: "local",
+    paginationSize: 25,
+    movableColumns: true,
+    columns: [
+      { title: "Sample ID", field: "sample_id", headerMenu: true },
+      { title: "Organism", field: "scientific_name", headerMenu: true },
+      { title: "Technology", field: "instrument_platform", headerMenu: true },
+      { title: "Reads", field: "read_count", headerMenu: true },
+      { title: "Bases", field: "base_count", headerMenu: true },
+      { title: "Study", field: "study_accession", headerMenu: true },
+      { title: "Source DB", field: "source", headerMenu: true }
+    ],
+    height: "600px"
   });
+
+  summarize([]);
+  createBoxPlot([], "reads-plot", "read_count", "Number of Reads per Organism");
+  createBoxPlot([], "bases-plot", "base_count", "Number of Bases per Organism");
+
+  fetch('assets/data/chunks/files.json')
+    .then(response => response.json())
+    .then(chunkFiles => {
+      chunkFiles.forEach(file => {
+        fetch(`assets/data/chunks/${file}`)
+          .then(res => res.json())
+          .then(chunkData => {
+            table.addData(chunkData);
+            const currentData = table.getData();
+            summarize(currentData);
+            createBoxPlot(currentData, "reads-plot", "read_count", "Number of Reads per Organism");
+            createBoxPlot(currentData, "bases-plot", "base_count", "Number of Bases per Organism");
+          });
+      });
+    });
+
+  const organismFilter = document.getElementById("organism-filter");
+  const techFilter = document.getElementById("tech-filter");
+
+  function updateFilters() {
+    const filters = [];
+    const organismVal = organismFilter.value;
+    const techVal = techFilter.value;
+
+    if (organismVal) {
+      filters.push({ field: "scientific_name", type: "like", value: organismVal });
+    }
+
+    if (techVal) {
+      filters.push({ field: "instrument_platform", type: "=", value: techVal });
+    }
+
+    table.setFilter(filters);
+  }
+
+  organismFilter.addEventListener("input", updateFilters);
+  techFilter.addEventListener("change", updateFilters);
+
+  table.on("dataFiltered", function(filters, rows) {
+    summarize(rows.map(row => row.getData()));
+  });
+
+  document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
+  document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
+});
 
 function summarize(data) {
   const organisms = {};
