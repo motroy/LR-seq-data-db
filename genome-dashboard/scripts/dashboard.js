@@ -1,60 +1,62 @@
-const chunkFiles = ["chunk_1.json", "chunk_2.json"];
+fetch('assets/data/chunks/files.json')
+  .then(response => response.json())
+  .then(chunkFiles => {
+    Promise.all(
+      chunkFiles.map(file =>
+        fetch(`assets/data/chunks/${file}`).then(res => res.json())
+      )
+    ).then(chunks => {
+      const data = chunks.flat();
+      summarize(data);
 
-Promise.all(
-  chunkFiles.map(file =>
-    fetch(`assets/data/chunks/${file}`).then(res => res.json())
-  )
-).then(chunks => {
-  const data = chunks.flat();
-  summarize(data);
+      const table = new Tabulator("#genome-table", {
+        data,
+        layout: "fitColumns",
+        responsiveLayout: "hide",
+        pagination: "local",
+        paginationSize: 25,
+        movableColumns: true,
+        columns: [
+          { title: "Sample ID", field: "sample_id", headerMenu: true },
+          { title: "Organism", field: "scientific_name", headerMenu: true },
+          { title: "Technology", field: "instrument_platform", headerMenu: true },
+          { title: "Reads", field: "read_count", headerMenu: true },
+          { title: "Bases", field: "base_count", headerMenu: true },
+          { title: "Study", field: "study_accession", headerMenu: true },
+          { title: "Source DB", field: "source", headerMenu: true }
+        ],
+        height: "600px"
+      });
 
-  const table = new Tabulator("#genome-table", {
-    data,
-      layout: "fitColumns",
-      responsiveLayout: "hide",
-      pagination: "local",
-      paginationSize: 25,
-      movableColumns: true,
-      columns: [
-        { title: "Sample ID", field: "sample_id", headerMenu: true },
-        { title: "Organism", field: "scientific_name", headerMenu: true },
-        { title: "Technology", field: "instrument_platform", headerMenu: true },
-        { title: "Reads", field: "read_count", headerMenu: true },
-        { title: "Bases", field: "base_count", headerMenu: true },
-        { title: "Study", field: "study_accession", headerMenu: true },
-        { title: "Source DB", field: "source", headerMenu: true }
-      ],
-      height: "600px"
-    });
+      const organismFilter = document.getElementById("organism-filter");
+      const techFilter = document.getElementById("tech-filter");
 
-    const organismFilter = document.getElementById("organism-filter");
-    const techFilter = document.getElementById("tech-filter");
+      function updateFilters() {
+        const filters = [];
+        const organismVal = organismFilter.value;
+        const techVal = techFilter.value;
 
-    function updateFilters() {
-      const filters = [];
-      const organismVal = organismFilter.value;
-      const techVal = techFilter.value;
+        if (organismVal) {
+          filters.push({ field: "scientific_name", type: "like", value: organismVal });
+        }
 
-      if (organismVal) {
-        filters.push({ field: "scientific_name", type: "like", value: organismVal });
+        if (techVal) {
+          filters.push({ field: "instrument_platform", type: "=", value: techVal });
+        }
+
+        table.setFilter(filters);
       }
 
-      if (techVal) {
-        filters.push({ field: "instrument_platform", type: "=", value: techVal });
-      }
+      organismFilter.addEventListener("input", updateFilters);
+      techFilter.addEventListener("change", updateFilters);
 
-      table.setFilter(filters);
-    }
+      table.on("dataFiltered", function(filters, rows) {
+        summarize(rows.map(row => row.getData()));
+      });
 
-    organismFilter.addEventListener("input", updateFilters);
-    techFilter.addEventListener("change", updateFilters);
-
-    table.on("dataFiltered", function(filters, rows) {
-      summarize(rows.map(row => row.getData()));
+      document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
+      document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
     });
-
-    document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
-    document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
   });
 
 function summarize(data) {
