@@ -1,4 +1,4 @@
-const chunkFiles = ["chunk_1.json"];
+const chunkFiles = ["chunk_1.json", "chunk_2.json"];
 
 Promise.all(
   chunkFiles.map(file =>

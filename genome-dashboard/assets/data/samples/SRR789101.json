@@ -1,0 +1,7 @@
+{
+  "sample_id": "SRR789101",
+  "organism": "Bacillus subtilis",
+  "tech": "PacBio",
+  "study": "SRP345678",
+  "source": "SRA"
+}
