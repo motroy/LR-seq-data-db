@@ -25,42 +25,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingOverlay = document.getElementById("loading-overlay");
   const progressBar = document.getElementById("progress-bar");
 
+  const worker = new Worker('scripts/worker.js');
+
   fetch('assets/data/chunks/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
-      let allData = [];
-      let loadedChunks = 0;
-      const totalChunks = chunkFiles.length;
-
-      function processChunks(index) {
-        if (index >= totalChunks) {
-          summarize(allData);
-          createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-          createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
-
-          document.getElementById("plots").classList.remove("hidden");
-          document.getElementById("genome-table").classList.remove("hidden");
-          loadingOverlay.style.display = "none";
-          return;
-        }
-
-        fetch(`assets/data/chunks/${chunkFiles[index]}`)
-          .then(res => res.json())
-          .then(chunkData => {
-            table.addData(chunkData);
-            allData = allData.concat(chunkData);
-            loadedChunks++;
-            const progress = Math.round((loadedChunks / totalChunks) * 100);
-            progressBar.style.width = `${progress}%`;
-            progressBar.innerText = `${progress}%`;
-            progressBar.setAttribute("aria-valuenow", progress);
-
-            setTimeout(() => processChunks(index + 1), 0);
-          });
-      }
-
-      processChunks(0);
+      worker.postMessage({ chunkFiles });
     });
+
+  let allData = [];
+  worker.onmessage = function(e) {
+    const { type, data } = e.data;
+
+    if (type === 'progress') {
+      const { progress, chunkData } = data;
+      table.addData(chunkData);
+      allData = allData.concat(chunkData);
+      progressBar.style.width = `${progress}%`;
+      progressBar.innerText = `${progress}%`;
+      progressBar.setAttribute("aria-valuenow", progress);
+    } else if (type === 'complete') {
+      summarize(allData);
+      createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+      createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+
+      document.getElementById("plots").classList.remove("hidden");
+      document.getElementById("genome-table").classList.remove("hidden");
+      loadingOverlay.style.display = "none";
+    }
+  };
 
   const organismFilter = document.getElementById("organism-filter");
   const techFilter = document.getElementById("tech-filter");
