@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
         summarize(allData);
         createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
         createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+
+        document.getElementById("plots").classList.remove("hidden");
+        document.getElementById("genome-table").classList.remove("hidden");
       });
     });
 
