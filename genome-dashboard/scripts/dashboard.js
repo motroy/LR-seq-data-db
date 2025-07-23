@@ -32,8 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
       let loadedChunks = 0;
       const totalChunks = chunkFiles.length;
 
-      const fetchPromises = chunkFiles.map(file =>
-        fetch(`assets/data/chunks/${file}`)
+      function processChunks(index) {
+        if (index >= totalChunks) {
+          summarize(allData);
+          createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+          createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+
+          document.getElementById("plots").classList.remove("hidden");
+          document.getElementById("genome-table").classList.remove("hidden");
+          loadingOverlay.style.display = "none";
+          return;
+        }
+
+        fetch(`assets/data/chunks/${chunkFiles[index]}`)
           .then(res => res.json())
           .then(chunkData => {
             table.addData(chunkData);
@@ -43,18 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
             progressBar.style.width = `${progress}%`;
             progressBar.innerText = `${progress}%`;
             progressBar.setAttribute("aria-valuenow", progress);
-          })
-      );
 
-      Promise.all(fetchPromises).then(() => {
-        summarize(allData);
-        createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-        createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+            setTimeout(() => processChunks(index + 1), 0);
+          });
+      }
 
-        document.getElementById("plots").classList.remove("hidden");
-        document.getElementById("genome-table").classList.remove("hidden");
-        loadingOverlay.style.display = "none";
-      });
+      processChunks(0);
     });
 
   const organismFilter = document.getElementById("organism-filter");
