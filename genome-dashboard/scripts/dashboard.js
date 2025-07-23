@@ -1,10 +1,15 @@
-fetch("sample_data.json")
-  .then(res => res.json())
-  .then(data => {
-    summarize(data);
+const chunkFiles = ["chunk_1.json"];
 
-    const table = new Tabulator("#genome-table", {
-      data,
+Promise.all(
+  chunkFiles.map(file =>
+    fetch(`assets/data/chunks/${file}`).then(res => res.json())
+  )
+).then(chunks => {
+  const data = chunks.flat();
+  summarize(data);
+
+  const table = new Tabulator("#genome-table", {
+    data,
       layout: "fitColumns",
       responsiveLayout: "hide",
       pagination: "local",
