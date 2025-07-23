@@ -22,16 +22,27 @@ document.addEventListener("DOMContentLoaded", () => {
   createBoxPlot([], "reads-plot", "read_count", "Number of Reads per Organism");
   createBoxPlot([], "bases-plot", "base_count", "Number of Bases per Organism");
 
+  const loadingOverlay = document.getElementById("loading-overlay");
+  const progressBar = document.getElementById("progress-bar");
+
   fetch('assets/data/chunks/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
       let allData = [];
+      let loadedChunks = 0;
+      const totalChunks = chunkFiles.length;
+
       const fetchPromises = chunkFiles.map(file =>
         fetch(`assets/data/chunks/${file}`)
           .then(res => res.json())
           .then(chunkData => {
             table.addData(chunkData);
             allData = allData.concat(chunkData);
+            loadedChunks++;
+            const progress = Math.round((loadedChunks / totalChunks) * 100);
+            progressBar.style.width = `${progress}%`;
+            progressBar.innerText = `${progress}%`;
+            progressBar.setAttribute("aria-valuenow", progress);
           })
       );
 
@@ -42,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById("plots").classList.remove("hidden");
         document.getElementById("genome-table").classList.remove("hidden");
+        loadingOverlay.style.display = "none";
       });
     });
 
