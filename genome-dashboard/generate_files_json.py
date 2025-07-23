@@ -1,7 +1,7 @@
 import os
 import json
 
-chunks_dir = "genome-dashboard/assets/data/chunks"
+chunks_dir = "genome-dashboard/assets"
 files_json_path = os.path.join(chunks_dir, "files.json")
 
 chunk_files = [f for f in os.listdir(chunks_dir) if f.endswith(".json") and f != "files.json"]
