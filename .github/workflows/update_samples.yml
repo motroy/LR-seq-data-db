@@ -21,6 +21,9 @@ jobs:
     - name: Install dependencies
       run: pip install requests
 
+    - name: Create data directories
+      run: mkdir -p genome-dashboard/assets/data/chunks
+
     - name: Run data extraction
       run: python genome-dashboard/extract_ena_genomes.py
 
