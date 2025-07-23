@@ -52,8 +52,8 @@ def fetch_ena(platform, size=500, tax_id="2"):
     return results
 
 def main():
-    nanopore_data = fetch_ena("OXFORD_NANOPORE", 1000)
-    pacbio_data = fetch_ena("PACBIO_SMRT", 1000)
+    nanopore_data = fetch_ena("OXFORD_NANOPORE", 1000000)
+    pacbio_data = fetch_ena("PACBIO_SMRT", 1000000)
 
     combined = nanopore_data + pacbio_data
     random.shuffle(combined)
