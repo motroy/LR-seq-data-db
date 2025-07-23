@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingOverlay = document.getElementById("loading-overlay");
   const progressBar = document.getElementById("progress-bar");
 
-  const worker = new Worker('genome-dashboard/scripts/worker.js');
+  const worker = new Worker('scripts/worker.js');
 
-  fetch('genome-dashboard/assets/data/chunks/files.json')
+  fetch('assets/data/chunks/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
       worker.postMessage({ chunkFiles });
