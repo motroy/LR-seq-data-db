@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const allData = await loadGzippedJSON('test_data.json.gz');
+    const allData = await loadGzippedJSON('data.json.gz');
 
     table.setData(allData);
     summarize(allData);

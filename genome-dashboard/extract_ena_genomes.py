@@ -2,6 +2,7 @@ import requests
 import json
 import random
 import time
+import gzip
 
 def fetch_ena(platform, size=500, tax_id="2"):
     print(f"🔍 Fetching {platform} samples from ENA...")
@@ -56,8 +57,10 @@ def main():
     pacbio_data = fetch_ena("PACBIO_SMRT", 1000000)
 
     combined = nanopore_data + pacbio_data
-    with open('genome-dashboard/data.json', 'w', encoding='utf-8') as f:
-        json.dump(combined, f, ensure_ascii=False, indent=4)
+    #with open('genome-dashboard/data.json', 'w', encoding='utf-8') as f:
+    #    json.dump(combined, f, ensure_ascii=False, indent=4)
+    with gzip.open('genome-dashboard/data.json.gz', 'w') as fout:
+        fout.write(json.dumps(combined).encode('utf-8'))
 
     print(f"✅ Saved {len(combined)} samples to genome-dashboard/data.json")
 
