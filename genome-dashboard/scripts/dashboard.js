@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { decompress } from 'https://cdn.skypack.dev/fflate';
+
+document.addEventListener("DOMContentLoaded", async () => {
   const table = new Tabulator("#genome-table", {
     data: [],
     layout: "fitColumns",
@@ -23,19 +25,30 @@ document.addEventListener("DOMContentLoaded", () => {
   createBoxPlot([], "bases-plot", "base_count", "Number of Bases per Organism");
 
   const loadingOverlay = document.getElementById("loading-overlay");
-  
-  fetch('data.json')
-    .then(response => response.json())
-    .then(allData => {
-      table.setData(allData);
-      summarize(allData);
-      createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-      createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
 
-      document.getElementById("plots").classList.remove("hidden");
-      document.getElementById("genome-table").classList.remove("hidden");
-      loadingOverlay.style.display = "none";
-    });
+  // Load and decompress gzip JSON
+  async function loadGzippedJSON(url) {
+    const response = await fetch(url);
+    const compressed = new Uint8Array(await response.arrayBuffer());
+    const decompressed = decompress(compressed);
+    const jsonString = new TextDecoder().decode(decompressed);
+    return JSON.parse(jsonString);
+  }
+
+  try {
+    const allData = await loadGzippedJSON('test_data.json.gz');
+
+    table.setData(allData);
+    summarize(allData);
+    createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+    createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+
+    document.getElementById("plots").classList.remove("hidden");
+    document.getElementById("genome-table").classList.remove("hidden");
+    loadingOverlay.style.display = "none";
+  } catch (err) {
+    console.error("Failed to load gzip JSON:", err);
+  }
 
   const organismFilter = document.getElementById("organism-filter");
   const techFilter = document.getElementById("tech-filter");
