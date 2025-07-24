@@ -1,5 +1,3 @@
-import { decompress } from 'https://cdn.skypack.dev/fflate';
-
 document.addEventListener("DOMContentLoaded", async () => {
   const table = new Tabulator("#genome-table", {
     data: [],
@@ -30,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function loadGzippedJSON(url) {
     const response = await fetch(url);
     const compressed = new Uint8Array(await response.arrayBuffer());
-    const decompressed = decompress(compressed);
+    const decompressed = fflate.decompressSync(compressed);
     const jsonString = new TextDecoder().decode(decompressed);
     return JSON.parse(jsonString);
   }
