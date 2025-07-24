@@ -28,37 +28,31 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch('assets/files.json')
     .then(response => response.json())
     .then(chunkFiles => {
+      const promises = chunkFiles.map(file => fetch(`assets/${file}`).then(res => res.json()));
       let allData = [];
       let loadedChunks = 0;
       const totalChunks = chunkFiles.length;
 
-      function processChunks(index) {
-        if (index >= totalChunks) {
-          summarize(allData);
-          createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-          createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+      promises.forEach(promise => {
+        promise.then(chunkData => {
+          table.addData(chunkData);
+          allData = allData.concat(chunkData);
+          loadedChunks++;
+          const progress = Math.round((loadedChunks / totalChunks) * 100);
+          progressBar.style.width = `${progress}%`;
+          progressBar.innerText = `${progress}%`;
+          progressBar.setAttribute("aria-valuenow", progress);
 
-          document.getElementById("plots").classList.remove("hidden");
-          document.getElementById("genome-table").classList.remove("hidden");
-          loadingOverlay.style.display = "none";
-          return;
-        }
-
-        fetch(`assets/${chunkFiles[index]}`)
-          .then(res => res.json())
-          .then(chunkData => {
-            table.addData(chunkData);
-            allData = allData.concat(chunkData);
-            loadedChunks++;
-            const progress = Math.round((loadedChunks / totalChunks) * 100);
-            progressBar.style.width = `${progress}%`;
-            progressBar.innerText = `${progress}%`;
-            progressBar.setAttribute("aria-valuenow", progress);
-            processChunks(index + 1);
-          });
-      }
-
-      processChunks(0);
+          if (loadedChunks === totalChunks) {
+            summarize(allData);
+            createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+            createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+            document.getElementById("plots").classList.remove("hidden");
+            document.getElementById("genome-table").classList.remove("hidden");
+            loadingOverlay.style.display = "none";
+          }
+        });
+      });
     });
 
   const organismFilter = document.getElementById("organism-filter");
