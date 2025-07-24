@@ -1,0 +1,182 @@
+[
+    {
+        "sample_id": "DRR165746",
+        "scientific_name": "Pseudomonas asiatica",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB7920",
+        "read_count": 63676,
+        "base_count": 430583282,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR332976",
+        "scientific_name": "Mycobacterium kiyosense",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB12154",
+        "read_count": 163347,
+        "base_count": 962879294,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR335980",
+        "scientific_name": "Klebsiella pneumoniae",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB12755",
+        "read_count": 80845,
+        "base_count": 565488457,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR398840",
+        "scientific_name": "Klebsiella pneumoniae",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB10032",
+        "read_count": 22345,
+        "base_count": 171608458,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR398847",
+        "scientific_name": "Klebsiella pneumoniae",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB10032",
+        "read_count": 25259,
+        "base_count": 168003048,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR398849",
+        "scientific_name": "Escherichia coli",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB10032",
+        "read_count": 132015,
+        "base_count": 121122478,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR398853",
+        "scientific_name": "Escherichia coli",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB10032",
+        "read_count": 37701,
+        "base_count": 236463953,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR398861",
+        "scientific_name": "Escherichia coli",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB10032",
+        "read_count": 83981,
+        "base_count": 156552280,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR398867",
+        "scientific_name": "Escherichia coli",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB10032",
+        "read_count": 98581,
+        "base_count": 622625997,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR457487",
+        "scientific_name": "Staphylococcus aureus",
+        "instrument_platform": "OXFORD_NANOPORE",
+        "study_accession": "PRJDB15501",
+        "read_count": 34536,
+        "base_count": 141379715,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR013335",
+        "scientific_name": "Helicobacter pylori F16",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB2329",
+        "read_count": 2,
+        "base_count": 5762,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR013337",
+        "scientific_name": "Helicobacter pylori F30",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB2329",
+        "read_count": 2,
+        "base_count": 7314,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR013339",
+        "scientific_name": "Helicobacter pylori F32",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB2329",
+        "read_count": 2,
+        "base_count": 5030,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR013342",
+        "scientific_name": "Helicobacter pylori P12",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB2329",
+        "read_count": 2,
+        "base_count": 12874,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR013344",
+        "scientific_name": "Helicobacter pylori P12",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB2329",
+        "read_count": 2,
+        "base_count": 2009,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR016447",
+        "scientific_name": "Bacillus subtilis subsp. natto BEST195",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB2126",
+        "read_count": 250441,
+        "base_count": 510026628,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR018508",
+        "scientific_name": "Caballeronia cordobensis",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB1660",
+        "read_count": 94258,
+        "base_count": 164656324,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR018509",
+        "scientific_name": "Caballeronia cordobensis",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB1660",
+        "read_count": 110545,
+        "base_count": 195072499,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR018511",
+        "scientific_name": "Caballeronia cordobensis",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB1660",
+        "read_count": 79867,
+        "base_count": 344616316,
+        "source": "ENA"
+    },
+    {
+        "sample_id": "DRR018512",
+        "scientific_name": "Caballeronia cordobensis",
+        "instrument_platform": "PACBIO_SMRT",
+        "study_accession": "PRJDB1660",
+        "read_count": 77268,
+        "base_count": 331558111,
+        "source": "ENA"
+    }
+]
