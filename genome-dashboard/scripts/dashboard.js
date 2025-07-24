@@ -23,36 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
   createBoxPlot([], "bases-plot", "base_count", "Number of Bases per Organism");
 
   const loadingOverlay = document.getElementById("loading-overlay");
-  const progressBar = document.getElementById("progress-bar");
-
-  fetch('assets/files.json')
+  
+  fetch('data.json')
     .then(response => response.json())
-    .then(chunkFiles => {
-      const promises = chunkFiles.map(file => fetch(`assets/${file}`).then(res => res.json()));
-      let allData = [];
-      let loadedChunks = 0;
-      const totalChunks = chunkFiles.length;
+    .then(allData => {
+      table.setData(allData);
+      summarize(allData);
+      createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+      createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
 
-      promises.forEach(promise => {
-        promise.then(chunkData => {
-          table.addData(chunkData);
-          allData = allData.concat(chunkData);
-          loadedChunks++;
-          const progress = Math.round((loadedChunks / totalChunks) * 100);
-          progressBar.style.width = `${progress}%`;
-          progressBar.innerText = `${progress}%`;
-          progressBar.setAttribute("aria-valuenow", progress);
-
-          if (loadedChunks === totalChunks) {
-            summarize(allData);
-            createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-            createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
-            document.getElementById("plots").classList.remove("hidden");
-            document.getElementById("genome-table").classList.remove("hidden");
-            loadingOverlay.style.display = "none";
-          }
-        });
-      });
+      document.getElementById("plots").classList.remove("hidden");
+      document.getElementById("genome-table").classList.remove("hidden");
+      loadingOverlay.style.display = "none";
     });
 
   const organismFilter = document.getElementById("organism-filter");

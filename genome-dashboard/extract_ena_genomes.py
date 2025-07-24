@@ -56,15 +56,10 @@ def main():
     pacbio_data = fetch_ena("PACBIO_SMRT", 1000000)
 
     combined = nanopore_data + pacbio_data
-    random.shuffle(combined)
+    with open('genome-dashboard/data.json', 'w', encoding='utf-8') as f:
+        json.dump(combined, f, ensure_ascii=False, indent=4)
 
-    chunk_size = 1000
-    for i in range(0, len(combined), chunk_size):
-        chunk = combined[i:i + chunk_size]
-        with open(f"genome-dashboard/assets/chunk_{i // chunk_size + 1}.json", "w", encoding="utf-8") as f:
-            json.dump(chunk, f, indent=2)
-
-    print(f"✅ Saved {len(combined)} samples to {len(range(0, len(combined), chunk_size))} chunks")
+    print(f"✅ Saved {len(combined)} samples to genome-dashboard/data.json")
 
 if __name__ == "__main__":
     main()
