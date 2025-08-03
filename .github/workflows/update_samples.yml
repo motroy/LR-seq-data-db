@@ -21,9 +21,12 @@ jobs:
     - name: Install dependencies
       run: pip install requests
 
-    - name: Run data extraction
+    - name: Run WGS data extraction
       run: python genome-dashboard/extract_ena_genomes.py
 
+    - name: Run MGx data extraction
+      run: python genome-dashboard/extract_ena_genomes.py --tax-id 408169 --output genome-dashboard/data_metagenome.json.gz
+      
     - name: Commit and push updated data
       run: |
         git config user.name "github-actions[bot]"
