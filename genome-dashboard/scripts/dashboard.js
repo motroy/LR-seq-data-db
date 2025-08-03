@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const dataType = urlParams.get('type') || 'wgs'; // Default to wgs
+
+  const dashboardTitle = document.getElementById("dashboard-title");
+  if (dataType === 'wgs') {
+    document.title = "WGS Dashboard";
+    dashboardTitle.textContent = 'WGS Dashboard';
+  } else if (dataType === 'mgx') {
+    document.title = "MGx Dashboard";
+    dashboardTitle.textContent = 'MGx Dashboard';
+  }
+
   const table = new Tabulator("#genome-table", {
     data: [],
     layout: "fitColumns",
@@ -21,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingOverlay = document.getElementById("loading-overlay");
   const organismFilter = document.getElementById("organism-filter");
   const techFilter = document.getElementById("tech-filter");
-  const dataSourceFilter = document.getElementById("data-source-filter");
 
   let allData = [];
 
@@ -69,9 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   organismFilter.addEventListener("input", updateFilters);
   techFilter.addEventListener("change", updateFilters);
-  dataSourceFilter.addEventListener("change", (event) => {
-    loadData(event.target.value);
-  });
 
   table.on("dataFiltered", function(filters, rows) {
     const filteredData = rows.map(row => row.getData());
@@ -80,7 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     createBoxPlot(filteredData, "bases-plot", "base_count", "Number of Bases per Organism");
   });
 
-  loadData(dataSourceFilter.value);
+  const initialSource = dataType === 'wgs' ? 'bacteria' : 'metagenome';
+  loadData(initialSource);
 
   document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
   document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
