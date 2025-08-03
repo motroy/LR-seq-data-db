@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   const table = new Tabulator("#genome-table", {
     data: [],
     layout: "fitColumns",
@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     height: "600px"
   });
 
-  summarize([]);
-  createBoxPlot([], "reads-plot", "read_count", "Number of Reads per Organism");
-  createBoxPlot([], "bases-plot", "base_count", "Number of Bases per Organism");
-
   const loadingOverlay = document.getElementById("loading-overlay");
+  const organismFilter = document.getElementById("organism-filter");
+  const techFilter = document.getElementById("tech-filter");
+  const dataSourceFilter = document.getElementById("data-source-filter");
 
-  // Load and decompress gzip JSON
+  let allData = [];
+
   async function loadGzippedJSON(url) {
     const response = await fetch(url);
     const compressed = new Uint8Array(await response.arrayBuffer());
@@ -33,23 +33,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     return JSON.parse(jsonString);
   }
 
-  try {
-    const allData = await loadGzippedJSON('data.json.gz');
-
-    table.setData(allData);
-    summarize(allData);
-    createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-    createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
-
-    document.getElementById("plots").classList.remove("hidden");
-    document.getElementById("genome-table").classList.remove("hidden");
-    loadingOverlay.style.display = "none";
-  } catch (err) {
-    console.error("Failed to load gzip JSON:", err);
+  async function loadData(source) {
+    loadingOverlay.style.display = "flex";
+    const url = source === 'bacteria' ? 'data_bacteria.json.gz' : 'data_metagenome.json.gz';
+    try {
+      allData = await loadGzippedJSON(url);
+      table.setData(allData);
+      summarize(allData);
+      createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
+      createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+      document.getElementById("plots").classList.remove("hidden");
+      document.getElementById("genome-table").classList.remove("hidden");
+    } catch (err) {
+      console.error("Failed to load gzip JSON:", err);
+    } finally {
+      loadingOverlay.style.display = "none";
+    }
   }
-
-  const organismFilter = document.getElementById("organism-filter");
-  const techFilter = document.getElementById("tech-filter");
 
   function updateFilters() {
     const filters = [];
@@ -69,10 +69,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   organismFilter.addEventListener("input", updateFilters);
   techFilter.addEventListener("change", updateFilters);
+  dataSourceFilter.addEventListener("change", (event) => {
+    loadData(event.target.value);
+  });
 
   table.on("dataFiltered", function(filters, rows) {
-    summarize(rows.map(row => row.getData()));
+    const filteredData = rows.map(row => row.getData());
+    summarize(filteredData);
+    createBoxPlot(filteredData, "reads-plot", "read_count", "Number of Reads per Organism");
+    createBoxPlot(filteredData, "bases-plot", "base_count", "Number of Bases per Organism");
   });
+
+  loadData(dataSourceFilter.value);
 
   document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
   document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
