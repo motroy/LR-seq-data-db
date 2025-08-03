@@ -3,9 +3,10 @@ import json
 import random
 import time
 import gzip
+import argparse
 
-def fetch_ena(platform, size=500, tax_id="2"):
-    print(f"🔍 Fetching {platform} samples from ENA...")
+def fetch_ena(platform, tax_id, size=500):
+    print(f"🔍 Fetching {platform} samples from ENA for tax ID {tax_id}...")
 
     ena_url = "https://www.ebi.ac.uk/ena/portal/api/search"
     query = f'instrument_platform="{platform}" AND tax_tree({tax_id})'
@@ -17,14 +18,6 @@ def fetch_ena(platform, size=500, tax_id="2"):
         "format": "json",
         "limit": size
     }
-    #url = "https://www.ebi.ac.uk/ena/portal/api/search"
-    #params = {
-    #    "result": "read_run",
-    #    "query": "tax_tree(2) AND (instrument_platform=\"ONT\" OR instrument_platform=\"PACBIO_SMRT\")",
-    #    "fields": "study_accession,sample_accession,run_accession,scientific_name,instrument_platform,read_count,base_count,first_public",
-    #    "format": "tsv",
-    #    "limit": 0  # Fetch all records
-    #}
 
     for attempt in range(3):
         try:
@@ -53,16 +46,19 @@ def fetch_ena(platform, size=500, tax_id="2"):
     return results
 
 def main():
-    nanopore_data = fetch_ena("OXFORD_NANOPORE", 1000000)
-    pacbio_data = fetch_ena("PACBIO_SMRT", 1000000)
+    parser = argparse.ArgumentParser(description="Fetch genome data from ENA.")
+    parser.add_argument("--tax-id", default="2", help="Taxonomy ID to fetch.")
+    parser.add_argument("--output", default="genome-dashboard/data.json.gz", help="Output file path.")
+    args = parser.parse_args()
+
+    nanopore_data = fetch_ena("OXFORD_NANOPORE", args.tax_id, 1000000)
+    pacbio_data = fetch_ena("PACBIO_SMRT", args.tax_id, 1000000)
 
     combined = nanopore_data + pacbio_data
-    #with open('genome-dashboard/data.json', 'w', encoding='utf-8') as f:
-    #    json.dump(combined, f, ensure_ascii=False, indent=4)
-    with gzip.open('genome-dashboard/data.json.gz', 'w') as fout:
+    with gzip.open(args.output, 'w') as fout:
         fout.write(json.dumps(combined).encode('utf-8'))
 
-    print(f"✅ Saved {len(combined)} samples to genome-dashboard/data.json")
+    print(f"✅ Saved {len(combined)} samples to {args.output}")
 
 if __name__ == "__main__":
     main()

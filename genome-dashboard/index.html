@@ -17,10 +17,16 @@
   <h1 class="mb-4">Oxford Nanopore & PacBio Genome Dataset</h1>
 
   <div class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <select id="data-source-filter" class="form-select">
+        <option value="bacteria">Bacteria (WGS)</option>
+        <option value="metagenome">Metagenome (MGx)</option>
+      </select>
+    </div>
+    <div class="col-md-4">
       <input id="organism-filter" class="form-control" placeholder="🔎 Filter by organism name..." />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <select id="tech-filter" class="form-select">
         <option value="">All Technologies</option>
         <option value="OXFORD_NANOPORE">Oxford Nanopore</option>
