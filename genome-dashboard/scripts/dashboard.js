@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingOverlay = document.getElementById("loading-overlay");
   const organismFilter = document.getElementById("organism-filter");
   const techFilter = document.getElementById("tech-filter");
+  const ampliconFilter = document.getElementById("amplicon-filter");
 
   let allData = [];
 
@@ -66,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filters = [];
     const organismVal = organismFilter.value;
     const techVal = techFilter.value;
+    const ampliconVal = ampliconFilter.value;
 
     if (organismVal) {
       filters.push({ field: "scientific_name", type: "like", value: organismVal });
@@ -75,11 +77,20 @@ document.addEventListener("DOMContentLoaded", () => {
       filters.push({ field: "instrument_platform", type: "=", value: techVal });
     }
 
+    if (ampliconVal) {
+      if (ampliconVal === 'AMPLICON') {
+        filters.push({ field: "library_strategy", type: "=", value: "AMPLICON" });
+      } else if (ampliconVal === 'NON_AMPLICON') {
+        filters.push({ field: "library_strategy", type: "!=", value: "AMPLICON" });
+      }
+    }
+
     table.setFilter(filters);
   }
 
   organismFilter.addEventListener("input", updateFilters);
   techFilter.addEventListener("change", updateFilters);
+  ampliconFilter.addEventListener("change", updateFilters);
 
   table.on("dataFiltered", function(filters, rows) {
     const filteredData = rows.map(row => row.getData());
@@ -98,10 +109,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function summarize(data) {
   const organisms = {};
   const techCounts = { "OXFORD_NANOPORE": 0, "PACBIO_SMRT": 0 };
+  let ampliconCount = 0;
+  let nonAmpliconCount = 0;
 
   data.forEach(item => {
     organisms[item.scientific_name] = (organisms[item.scientific_name] || 0) + 1;
     if (techCounts[item.instrument_platform] !== undefined) techCounts[item.instrument_platform]++;
+    if (item.library_strategy === 'AMPLICON') {
+      ampliconCount++;
+    } else {
+      nonAmpliconCount++;
+    }
   });
 
   const topOrganisms = Object.entries(organisms)
@@ -113,6 +131,8 @@ function summarize(data) {
     <p><strong>Total Samples:</strong> ${data.length}</p>
     <p><strong>Oxford Nanopore:</strong> ${techCounts["OXFORD_NANOPORE"]}</p>
     <p><strong>PacBio:</strong> ${techCounts["PACBIO_SMRT"]}</p>
+    <p><strong>Amplicon:</strong> ${ampliconCount}</p>
+    <p><strong>Non-Amplicon:</strong> ${nonAmpliconCount}</p>
     <p><strong>Top Organisms:</strong><br>${topOrganisms.map(([org, count]) => `${org} (${count})`).join('<br>')}</p>
   `;
 
