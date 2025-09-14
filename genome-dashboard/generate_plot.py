@@ -9,16 +9,28 @@ from datetime import datetime
 from collections import defaultdict
 
 def get_workflow_runs(repo, workflow_name, token):
-    """Gets the list of runs for a specific workflow."""
+    """Gets the list of all runs for a specific workflow, handling pagination."""
+    runs = []
     url = f"https://api.github.com/repos/{repo}/actions/workflows/{workflow_name}/runs"
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json"
     }
-    params = {"status": "success"}
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()["workflow_runs"]
+    params = {"status": "success", "per_page": 100}
+
+    while url:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        runs.extend(response.json()["workflow_runs"])
+
+        if 'next' in response.links:
+            url = response.links['next']['url']
+            # params should not be passed in subsequent calls as they are part of the 'next' URL
+            params = None
+        else:
+            url = None
+
+    return runs
 
 def download_log_archive(run_id, repo, token):
     """Downloads the log archive for a specific workflow run."""
@@ -41,8 +53,7 @@ def parse_sample_count_from_log(log_content, pattern):
 def generate_plot(csv_file, output_image):
     """Generates a line plot from the historical data."""
     if not os.path.exists(csv_file):
-        print(f"
-Warning: {csv_file} not found. Skipping plot generation.")
+        print(f"Warning: {csv_file} not found. Skipping plot generation.")
         return
 
     df = pd.read_csv(csv_file)
@@ -71,8 +82,7 @@ def main():
     output_image = "genome-dashboard/assets/sample_plot.png"
 
     if not repo or not token:
-        print("
- GITHUB_REPOSITORY and GITHUB_TOKEN environment variables are required.")
+        print("GITHUB_REPOSITORY and GITHUB_TOKEN environment variables are required.")
         print("📦 Generating plot from existing CSV for local testing if it exists.")
         generate_plot(csv_file, output_image)
         return
