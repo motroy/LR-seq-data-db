@@ -162,8 +162,19 @@ def main():
             # Combine old and new data
             df_combined = pd.concat([df_existing, df_new], ignore_index=True)
             df_combined['date'] = pd.to_datetime(df_combined['date'])
-            df_combined = df_combined.sort_values(by="date").reset_index(drop=True)
-            df_combined.to_csv(csv_file, index=False)
+
+            # Sort by run_id to ensure 'last' is well-defined
+            df_combined = df_combined.sort_values(by="run_id")
+
+            # Filter for runs with at least one non-zero count
+            mask = (df_combined['wgs_samples'] > 0) | (df_combined['mgx_samples'] > 0)
+            df_nonzero = df_combined[mask]
+
+            # From the non-zero runs, for each date, keep the last one
+            df_final = df_nonzero.drop_duplicates(subset='date', keep='last')
+
+            df_final = df_final.sort_values(by="date").reset_index(drop=True)
+            df_final.to_csv(csv_file, index=False)
             print(f"✅ {csv_file} updated.", flush=True)
         else:
             print("No new data to add to the CSV file.", flush=True)
