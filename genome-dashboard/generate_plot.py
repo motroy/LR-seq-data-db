@@ -144,7 +144,7 @@ def main():
                         count, line = parse_sample_count_from_log(log_content, mgx_count_pattern)
                         if line: new_data[run['id']]['mgx_samples'] = count
 
-            new_data[run['id']]['date'] = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").date()
+            new_data[run['id']]['date'] = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").strftime("%Y-%m-%d")
 
         if new_data:
             print(f"Adding {len(new_data)} new data points to {csv_file}.")
@@ -156,6 +156,7 @@ def main():
 
             # Combine old and new data
             df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+            df_combined['date'] = pd.to_datetime(df_combined['date'])
             df_combined = df_combined.sort_values(by="date").reset_index(drop=True)
             df_combined.to_csv(csv_file, index=False)
             print(f"✅ {csv_file} updated.")
