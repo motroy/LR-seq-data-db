@@ -12,7 +12,7 @@ def get_workflow_runs(repo, workflow_name, token, since_date=None):
     """Gets the list of all runs for a specific workflow since a given date, handling pagination."""
     runs = []
     url = f"https://api.github.com/repos/{repo}/actions/workflows/{workflow_name}/runs"
-    print(f"Fetching workflow runs from: {url}")
+    print(f"Fetching workflow runs from: {url}", flush=True)
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json"
@@ -55,24 +55,24 @@ def parse_sample_count_from_log(log_content, pattern):
 def generate_plot(csv_file, output_image):
     """Generates a line plot from the historical data."""
     if not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0:
-        print(f"Warning: {csv_file} is missing or empty. Creating a 'No data' plot.")
+        print(f"Warning: {csv_file} is missing or empty. Creating a 'No data' plot.", flush=True)
         plt.figure(figsize=(10, 6))
         plt.text(0.5, 0.5, "No data available", ha='center', va='center', fontsize=20)
         plt.xticks([])
         plt.yticks([])
         plt.savefig(output_image)
-        print(f"✅ 'No data' plot saved to {output_image}")
+        print(f"✅ 'No data' plot saved to {output_image}", flush=True)
         return
 
     df = pd.read_csv(csv_file)
     if df.empty:
-        print(f"Warning: {csv_file} is empty. Creating a 'No data' plot.")
+        print(f"Warning: {csv_file} is empty. Creating a 'No data' plot.", flush=True)
         plt.figure(figsize=(10, 6))
         plt.text(0.5, 0.5, "No data available", ha='center', va='center', fontsize=20)
         plt.xticks([])
         plt.yticks([])
         plt.savefig(output_image)
-        print(f"✅ 'No data' plot saved to {output_image}")
+        print(f"✅ 'No data' plot saved to {output_image}", flush=True)
         return
 
     df["date"] = pd.to_datetime(df["date"])
@@ -90,7 +90,7 @@ def generate_plot(csv_file, output_image):
     plt.tight_layout()
 
     plt.savefig(output_image)
-    print(f"✅ Plot saved to {output_image}")
+    print(f"✅ Plot saved to {output_image}", flush=True)
 
 def main():
     repo = os.environ.get("GITHUB_REPOSITORY")
@@ -114,9 +114,9 @@ def main():
             pass # df_existing remains empty
 
     if repo and token:
-        print("🔄 Fetching workflow runs...")
+        print("🔄 Fetching workflow runs...", flush=True)
         runs = get_workflow_runs(repo, workflow_name, token, since_date=latest_date)
-        print(f"Found {len(runs)} workflow runs since {latest_date or 'the beginning'}.")
+        print(f"Found {len(runs)} workflow runs since {latest_date or 'the beginning'}.", flush=True)
 
         new_data = defaultdict(lambda: {"wgs_samples": 0, "mgx_samples": 0})
 
@@ -126,28 +126,33 @@ def main():
         mgx_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data_metagenome.json.gz")
 
         runs_to_process = [run for run in runs if run['id'] not in processed_run_ids]
-        print(f"Found {len(runs_to_process)} new, unique runs to process.")
+        print(f"Found {len(runs_to_process)} new, unique runs to process.", flush=True)
 
         for run in runs_to_process:
-            print(f"📄 Processing run {run['id']} from {run['created_at']}")
+            print(f"📄 Processing run {run['id']} from {run['created_at']}", flush=True)
 
             log_archive = download_log_archive(run["id"], repo, token)
             with zipfile.ZipFile(io.BytesIO(log_archive)) as z:
+                print(f"  Log files in archive for run {run['id']}: {z.namelist()}", flush=True)
                 for filename in z.namelist():
                     log_content = z.read(filename).decode("utf-8", errors='ignore')
 
                     if wgs_log_pattern.match(filename):
                         count, line = parse_sample_count_from_log(log_content, wgs_count_pattern)
-                        if line: new_data[run['id']]['wgs_samples'] = count
+                        if line:
+                            print(f"  - Found: {line}", flush=True)
+                            new_data[run['id']]['wgs_samples'] = count
 
                     elif mgx_log_pattern.match(filename):
                         count, line = parse_sample_count_from_log(log_content, mgx_count_pattern)
-                        if line: new_data[run['id']]['mgx_samples'] = count
+                        if line:
+                            print(f"  - Found: {line}", flush=True)
+                            new_data[run['id']]['mgx_samples'] = count
 
             new_data[run['id']]['date'] = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").strftime("%Y-%m-%d")
 
         if new_data:
-            print(f"Adding {len(new_data)} new data points to {csv_file}.")
+            print(f"Adding {len(new_data)} new data points to {csv_file}.", flush=True)
             data_list = [
                 {"run_id": run_id, "date": data["date"], "wgs_samples": data["wgs_samples"], "mgx_samples": data["mgx_samples"]}
                 for run_id, data in new_data.items()
@@ -159,9 +164,9 @@ def main():
             df_combined['date'] = pd.to_datetime(df_combined['date'])
             df_combined = df_combined.sort_values(by="date").reset_index(drop=True)
             df_combined.to_csv(csv_file, index=False)
-            print(f"✅ {csv_file} updated.")
+            print(f"✅ {csv_file} updated.", flush=True)
         else:
-            print("No new data to add to the CSV file.")
+            print("No new data to add to the CSV file.", flush=True)
 
     # Always generate the plot from the CSV
     generate_plot(csv_file, output_image)
