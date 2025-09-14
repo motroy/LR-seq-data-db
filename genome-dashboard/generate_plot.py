@@ -85,6 +85,7 @@ def generate_plot(csv_file, output_image):
     plt.title("Number of Samples Over Time")
     plt.xlabel("Date")
     plt.ylabel("Number of Samples")
+    plt.xticks(rotation='vertical')
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
