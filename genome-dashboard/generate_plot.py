@@ -8,16 +8,18 @@ import re
 from datetime import datetime
 from collections import defaultdict
 
-def get_workflow_runs(repo, workflow_name, token):
-    """Gets the list of all runs for a specific workflow, handling pagination."""
+def get_workflow_runs(repo, workflow_name, token, since_date=None):
+    """Gets the list of all runs for a specific workflow since a given date, handling pagination."""
     runs = []
     url = f"https://api.github.com/repos/{repo}/actions/workflows/{workflow_name}/runs"
-    print(f"Fetching workflow runs from: {url}") # New logging
+    print(f"Fetching workflow runs from: {url}")
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json"
     }
     params = {"status": "success", "per_page": 100}
+    if since_date:
+        params["created"] = f">={since_date.strftime('%Y-%m-%d')}"
 
     while url:
         response = requests.get(url, headers=headers, params=params)
@@ -47,16 +49,32 @@ def parse_sample_count_from_log(log_content, pattern):
     """Parses the log content to find the sample count and the full line."""
     match = re.search(pattern, log_content)
     if match:
-        return int(match.group(1)), match.group(0) # return count and full line
+        return int(match.group(1)), match.group(0)
     return 0, None
 
 def generate_plot(csv_file, output_image):
     """Generates a line plot from the historical data."""
-    if not os.path.exists(csv_file):
-        print(f"Warning: {csv_file} not found. Skipping plot generation.")
+    if not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0:
+        print(f"Warning: {csv_file} is missing or empty. Creating a 'No data' plot.")
+        plt.figure(figsize=(10, 6))
+        plt.text(0.5, 0.5, "No data available", ha='center', va='center', fontsize=20)
+        plt.xticks([])
+        plt.yticks([])
+        plt.savefig(output_image)
+        print(f"✅ 'No data' plot saved to {output_image}")
         return
 
     df = pd.read_csv(csv_file)
+    if df.empty:
+        print(f"Warning: {csv_file} is empty. Creating a 'No data' plot.")
+        plt.figure(figsize=(10, 6))
+        plt.text(0.5, 0.5, "No data available", ha='center', va='center', fontsize=20)
+        plt.xticks([])
+        plt.yticks([])
+        plt.savefig(output_image)
+        print(f"✅ 'No data' plot saved to {output_image}")
+        return
+
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values(by="date")
 
@@ -81,68 +99,70 @@ def main():
     csv_file = "genome-dashboard/sample_counts.csv"
     output_image = "genome-dashboard/assets/sample_plot.png"
 
-    if not repo or not token:
-        print("GITHUB_REPOSITORY and GITHUB_TOKEN environment variables are required.")
-        print("📦 Generating plot from existing CSV for local testing if it exists.")
-        generate_plot(csv_file, output_image)
-        return
+    # Load existing data
+    processed_run_ids = set()
+    latest_date = None
+    df_existing = pd.DataFrame(columns=['run_id', 'date', 'wgs_samples', 'mgx_samples'])
+    if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0:
+        try:
+            df_existing = pd.read_csv(csv_file)
+            if 'run_id' in df_existing.columns:
+                processed_run_ids = set(df_existing['run_id'])
+            if 'date' in df_existing.columns and not df_existing['date'].empty:
+                latest_date = pd.to_datetime(df_existing['date']).max()
+        except pd.errors.EmptyDataError:
+            pass # df_existing remains empty
 
-    print("🔄 Fetching workflow runs...")
-    runs = get_workflow_runs(repo, workflow_name, token)
-    print(f"Found {len(runs)} successful workflow runs.") # New logging
+    if repo and token:
+        print("🔄 Fetching workflow runs...")
+        runs = get_workflow_runs(repo, workflow_name, token, since_date=latest_date)
+        print(f"Found {len(runs)} workflow runs since {latest_date or 'the beginning'}.")
 
-    historical_data = defaultdict(lambda: {"wgs_samples": 0, "mgx_samples": 0})
+        new_data = defaultdict(lambda: {"wgs_samples": 0, "mgx_samples": 0})
 
-    wgs_log_pattern = re.compile(r".*Run WGS data extraction\.txt$")
-    mgx_log_pattern = re.compile(r".*Run MGx data extraction\.txt$")
+        wgs_log_pattern = re.compile(r".*Run WGS data extraction\.txt$")
+        mgx_log_pattern = re.compile(r".*Run MGx data extraction\.txt$")
+        wgs_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data.json.gz")
+        mgx_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data_metagenome.json.gz")
 
-    wgs_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data.json.gz")
-    mgx_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data_metagenome.json.gz")
+        runs_to_process = [run for run in runs if run['id'] not in processed_run_ids]
+        print(f"Found {len(runs_to_process)} new, unique runs to process.")
 
-    for run in runs:
-        print(f"📄 Processing run {run['id']} from {run['created_at']}")
-        run_date = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").date()
+        for run in runs_to_process:
+            print(f"📄 Processing run {run['id']} from {run['created_at']}")
 
-        log_archive = download_log_archive(run["id"], repo, token)
+            log_archive = download_log_archive(run["id"], repo, token)
+            with zipfile.ZipFile(io.BytesIO(log_archive)) as z:
+                for filename in z.namelist():
+                    log_content = z.read(filename).decode("utf-8", errors='ignore')
 
-        with zipfile.ZipFile(io.BytesIO(log_archive)) as z:
-            print(f"  Log files in archive for run {run['id']}: {z.namelist()}") # New logging
-            for filename in z.namelist():
-                log_content = z.read(filename).decode("utf-8", errors='ignore')
+                    if wgs_log_pattern.match(filename):
+                        count, line = parse_sample_count_from_log(log_content, wgs_count_pattern)
+                        if line: new_data[run['id']]['wgs_samples'] = count
 
-                if wgs_log_pattern.match(filename):
-                    count, line = parse_sample_count_from_log(log_content, wgs_count_pattern)
-                    if line:
-                        print(f"  - Found: {line}")
-                        historical_data[run_date]["wgs_samples"] = count
+                    elif mgx_log_pattern.match(filename):
+                        count, line = parse_sample_count_from_log(log_content, mgx_count_pattern)
+                        if line: new_data[run['id']]['mgx_samples'] = count
 
-                elif mgx_log_pattern.match(filename):
-                    count, line = parse_sample_count_from_log(log_content, mgx_count_pattern)
-                    if line:
-                        print(f"  - Found: {line}")
-                        historical_data[run_date]["mgx_samples"] = count
+            new_data[run['id']]['date'] = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").date()
 
-    if not historical_data:
-        print("No successful workflow runs found to generate historical data.")
-        # Create a plot with "No data available"
-        plt.figure(figsize=(10, 6))
-        plt.text(0.5, 0.5, "No data available", ha='center', va='center', fontsize=20)
-        plt.xticks([])
-        plt.yticks([])
-        plt.savefig(output_image)
-        print(f"✅ 'No data' plot saved to {output_image}")
-        return
+        if new_data:
+            print(f"Adding {len(new_data)} new data points to {csv_file}.")
+            data_list = [
+                {"run_id": run_id, "date": data["date"], "wgs_samples": data["wgs_samples"], "mgx_samples": data["mgx_samples"]}
+                for run_id, data in new_data.items()
+            ]
+            df_new = pd.DataFrame(data_list)
 
-    data_list = [
-        {"date": date, "wgs_samples": data["wgs_samples"], "mgx_samples": data["mgx_samples"]}
-        for date, data in historical_data.items()
-    ]
+            # Combine old and new data
+            df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+            df_combined = df_combined.sort_values(by="date").reset_index(drop=True)
+            df_combined.to_csv(csv_file, index=False)
+            print(f"✅ {csv_file} updated.")
+        else:
+            print("No new data to add to the CSV file.")
 
-    df = pd.DataFrame(data_list)
-    df = df.sort_values(by="date")
-    df.to_csv(csv_file, index=False)
-    print(f"✅ Historical data saved to {csv_file}")
-
+    # Always generate the plot from the CSV
     generate_plot(csv_file, output_image)
 
 if __name__ == "__main__":
