@@ -19,18 +19,24 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: pip install requests
+      run: pip install requests pandas matplotlib
 
     - name: Run WGS data extraction
       run: python genome-dashboard/extract_ena_genomes.py
 
     - name: Run MGx data extraction
       run: python genome-dashboard/extract_ena_genomes.py --tax-id 408169 --output genome-dashboard/data_metagenome.json.gz
-      
+
+    - name: Generate plot
+      run: python genome-dashboard/generate_plot.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+
     - name: Commit and push updated data
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add -A
-        git commit -m "📦 Update ENA genome data"
+        git commit -m "📦 Update ENA genome data and plot"
         git push
