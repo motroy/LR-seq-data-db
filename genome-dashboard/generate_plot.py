@@ -12,6 +12,7 @@ def get_workflow_runs(repo, workflow_name, token):
     """Gets the list of all runs for a specific workflow, handling pagination."""
     runs = []
     url = f"https://api.github.com/repos/{repo}/actions/workflows/{workflow_name}/runs"
+    print(f"Fetching workflow runs from: {url}") # New logging
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json"
@@ -25,7 +26,6 @@ def get_workflow_runs(repo, workflow_name, token):
 
         if 'next' in response.links:
             url = response.links['next']['url']
-            # params should not be passed in subsequent calls as they are part of the 'next' URL
             params = None
         else:
             url = None
@@ -89,8 +89,8 @@ def main():
 
     print("🔄 Fetching workflow runs...")
     runs = get_workflow_runs(repo, workflow_name, token)
+    print(f"Found {len(runs)} successful workflow runs.") # New logging
 
-    # Using a defaultdict to store counts for each date
     historical_data = defaultdict(lambda: {"wgs_samples": 0, "mgx_samples": 0})
 
     wgs_log_pattern = re.compile(r".*Run WGS data extraction\.txt$")
@@ -106,6 +106,7 @@ def main():
         log_archive = download_log_archive(run["id"], repo, token)
 
         with zipfile.ZipFile(io.BytesIO(log_archive)) as z:
+            print(f"  Log files in archive for run {run['id']}: {z.namelist()}") # New logging
             for filename in z.namelist():
                 log_content = z.read(filename).decode("utf-8", errors='ignore')
 
@@ -123,21 +124,25 @@ def main():
 
     if not historical_data:
         print("No successful workflow runs found to generate historical data.")
+        # Create a plot with "No data available"
+        plt.figure(figsize=(10, 6))
+        plt.text(0.5, 0.5, "No data available", ha='center', va='center', fontsize=20)
+        plt.xticks([])
+        plt.yticks([])
+        plt.savefig(output_image)
+        print(f"✅ 'No data' plot saved to {output_image}")
         return
 
-    # Convert the defaultdict to a list of dictionaries
     data_list = [
         {"date": date, "wgs_samples": data["wgs_samples"], "mgx_samples": data["mgx_samples"]}
         for date, data in historical_data.items()
     ]
 
-    # Create a DataFrame and save to CSV
     df = pd.DataFrame(data_list)
     df = df.sort_values(by="date")
     df.to_csv(csv_file, index=False)
     print(f"✅ Historical data saved to {csv_file}")
 
-    # Generate and save the plot
     generate_plot(csv_file, output_image)
 
 if __name__ == "__main__":
