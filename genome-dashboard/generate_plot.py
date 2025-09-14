@@ -44,11 +44,11 @@ def download_log_archive(run_id, repo, token):
     return response.content
 
 def parse_sample_count_from_log(log_content, pattern):
-    """Parses the log content to find the sample count using a specific pattern."""
+    """Parses the log content to find the sample count and the full line."""
     match = re.search(pattern, log_content)
     if match:
-        return int(match.group(1))
-    return 0
+        return int(match.group(1)), match.group(0) # return count and full line
+    return 0, None
 
 def generate_plot(csv_file, output_image):
     """Generates a line plot from the historical data."""
@@ -110,13 +110,15 @@ def main():
                 log_content = z.read(filename).decode("utf-8", errors='ignore')
 
                 if wgs_log_pattern.match(filename):
-                    count = parse_sample_count_from_log(log_content, wgs_count_pattern)
-                    if count > 0:
+                    count, line = parse_sample_count_from_log(log_content, wgs_count_pattern)
+                    if line:
+                        print(f"  - Found: {line}")
                         historical_data[run_date]["wgs_samples"] = count
 
                 elif mgx_log_pattern.match(filename):
-                    count = parse_sample_count_from_log(log_content, mgx_count_pattern)
-                    if count > 0:
+                    count, line = parse_sample_count_from_log(log_content, mgx_count_pattern)
+                    if line:
+                        print(f"  - Found: {line}")
                         historical_data[run_date]["mgx_samples"] = count
 
     if not historical_data:
