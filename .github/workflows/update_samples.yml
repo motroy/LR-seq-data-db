@@ -22,7 +22,7 @@ jobs:
       run: pip install requests pandas matplotlib
 
     - name: Run WGS data extraction
-      run: python genome-dashboard/extract_ena_genomes.py
+      run: python genome-dashboard/extract_ena_genomes.py --output genome-dashboard/data_bacteria.json.gz
 
     - name: Run MGx data extraction
       run: python genome-dashboard/extract_ena_genomes.py --tax-id 408169 --output genome-dashboard/data_metagenome.json.gz

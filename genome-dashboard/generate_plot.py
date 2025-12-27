@@ -123,7 +123,7 @@ def main():
 
         wgs_log_pattern = re.compile(r".*Run WGS data extraction\.txt$")
         mgx_log_pattern = re.compile(r".*Run MGx data extraction\.txt$")
-        wgs_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data.json.gz")
+        wgs_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data_bacteria.json.gz")
         mgx_count_pattern = re.compile(r"✅ Saved (\d+) samples to genome-dashboard/data_metagenome.json.gz")
 
         runs_to_process = [run for run in runs if run['id'] not in processed_run_ids]
