@@ -31,36 +31,114 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const loadingOverlay = document.getElementById("loading-overlay");
+  const progressBar = document.getElementById("progress-bar");
+  const loadingStage = document.getElementById("loading-stage");
+  const loadingDetail = document.getElementById("loading-detail");
   const organismFilter = document.getElementById("organism-filter");
   const techFilter = document.getElementById("tech-filter");
   const ampliconFilter = document.getElementById("amplicon-filter");
 
   let allData = [];
 
+  function updateProgress(percent, stage, detail) {
+    const p = Math.round(percent);
+    progressBar.style.width = p + "%";
+    progressBar.textContent = p + "%";
+    progressBar.setAttribute("aria-valuenow", p);
+    if (stage) loadingStage.textContent = stage;
+    if (detail !== undefined) loadingDetail.textContent = detail;
+  }
+
+  // Allow the browser to repaint between heavy synchronous steps
+  function yieldToMain() {
+    return new Promise(resolve => setTimeout(resolve, 0));
+  }
+
   async function loadGzippedJSON(url) {
+    // Stage 1: Fetch with progress (0–50%)
+    updateProgress(0, "Downloading data...", "");
     const response = await fetch(url);
-    const compressed = new Uint8Array(await response.arrayBuffer());
+    const contentLength = response.headers.get("Content-Length");
+    const total = contentLength ? parseInt(contentLength, 10) : 0;
+
+    let compressed;
+    if (total && response.body) {
+      // Stream the response to track download progress
+      const reader = response.body.getReader();
+      const chunks = [];
+      let received = 0;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        received += value.length;
+        const pct = (received / total) * 50;
+        const mb = (received / (1024 * 1024)).toFixed(1);
+        const totalMb = (total / (1024 * 1024)).toFixed(1);
+        updateProgress(pct, "Downloading data...", `${mb} / ${totalMb} MB`);
+      }
+      const full = new Uint8Array(received);
+      let offset = 0;
+      for (const chunk of chunks) {
+        full.set(chunk, offset);
+        offset += chunk.length;
+      }
+      compressed = full;
+    } else {
+      // Fallback: no content-length or no readable stream
+      updateProgress(25, "Downloading data...", "");
+      compressed = new Uint8Array(await response.arrayBuffer());
+    }
+    updateProgress(50, "Downloading data...", "Complete");
+
+    // Stage 2: Decompress (50–70%)
+    await yieldToMain();
+    updateProgress(55, "Decompressing...", "");
     const decompressed = fflate.decompressSync(compressed);
+    updateProgress(70, "Decompressing...", "Complete");
+
+    // Stage 3: Parse JSON (70–85%)
+    await yieldToMain();
+    updateProgress(75, "Parsing data...", "");
     const jsonString = new TextDecoder().decode(decompressed);
-    return JSON.parse(jsonString);
+    updateProgress(80, "Parsing data...", "");
+    const data = JSON.parse(jsonString);
+    updateProgress(85, "Parsing data...", `${data.length.toLocaleString()} records loaded`);
+    return data;
   }
 
   async function loadData(source) {
     loadingOverlay.style.display = "flex";
+    updateProgress(0, "Loading data...", "");
     const url = source === 'bacteria' ? 'data_bacteria.json.gz' : 'data_metagenome.json.gz';
     try {
       allData = await loadGzippedJSON(url);
+
+      // Stage 4: Render table (85–92%)
+      await yieldToMain();
+      updateProgress(87, "Rendering table...", `${allData.length.toLocaleString()} rows`);
       table.setData(allData);
+      updateProgress(92, "Rendering table...", "Complete");
+
+      // Stage 5: Generate plots and stats (92–100%)
+      await yieldToMain();
+      updateProgress(94, "Generating plots...", "");
       summarize(allData);
+      updateProgress(97, "Generating plots...", "");
       createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
       createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
+      updateProgress(100, "Done!", "");
+
       document.getElementById("plots").classList.remove("hidden");
       document.getElementById("genome-table").classList.remove("hidden");
     } catch (err) {
       console.error("Failed to load gzip JSON:", err);
-    } finally {
-      loadingOverlay.style.display = "none";
+      updateProgress(0, "Error loading data", err.message || "Unknown error");
+      return;
     }
+    // Brief pause so the user sees 100% before hiding the overlay
+    await new Promise(resolve => setTimeout(resolve, 300));
+    loadingOverlay.style.display = "none";
   }
 
   function updateFilters() {
