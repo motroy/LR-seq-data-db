@@ -1,29 +1,185 @@
+/* ============================================================
+   LR-seq Data Dashboard — Modern Theme
+   ============================================================ */
+
+:root {
+  --color-bg:        #f4f5f7;
+  --color-surface:   #ffffff;
+  --color-border:    #e2e4e9;
+  --color-text:      #1a1d23;
+  --color-text-sec:  #5f6368;
+  --color-accent:    #3b5bdb;
+  --color-accent-hover: #2b4bc6;
+  --color-accent-light: #edf2ff;
+  --color-stat-1:    #3b5bdb;
+  --color-stat-2:    #0ca678;
+  --color-stat-3:    #e8590c;
+  --color-stat-4:    #ae3ec9;
+  --radius:          10px;
+  --radius-sm:       6px;
+  --shadow-sm:       0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md:       0 4px 12px rgba(0,0,0,0.08);
+  --font:            'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
-  background-color: #f9f9fc;
+  font-family: var(--font);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1 {
-  font-weight: bold;
+.hidden { display: none !important; }
+
+/* ============================================================
+   Landing page
+   ============================================================ */
+
+.landing-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
-#stats {
-  background-color: #fff3cd;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ffeeba;
+.landing-wrapper {
+  max-width: 780px;
+  width: 100%;
 }
 
-.hidden {
-  display: none;
+.landing-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
+
+.landing-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.landing-subtitle {
+  color: var(--color-text-sec);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.dashboard-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  color: var(--color-text);
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.dashboard-card h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.dashboard-card p {
+  font-size: 0.9rem;
+  color: var(--color-text-sec);
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  flex: 1;
+}
+
+.card-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.growth-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.growth-section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.growth-chart {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.landing-footer {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--color-text-sec);
+}
+
+.landing-footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Loading overlay
+   ============================================================ */
 
 #loading-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
+  inset: 0;
+  background: rgba(244, 245, 247, 0.95);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,26 +187,352 @@ h1 {
 }
 
 #loading-content {
-  width: 50%;
+  width: min(420px, 90%);
   text-align: center;
 }
 
+#loading-icon {
+  color: var(--color-accent);
+  margin-bottom: 1.25rem;
+  animation: spin 1.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 #loading-stage {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: #333;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.progress-track {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 4px;
+  font-size: 0;
+  transition: width 0.25s ease;
 }
 
 #loading-detail {
+  font-size: 0.82rem;
+  color: var(--color-text-sec);
+  margin-top: 0.75rem;
+  min-height: 1.2em;
+}
+
+/* ============================================================
+   Dashboard — top nav
+   ============================================================ */
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-back {
   font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.progress {
-  height: 1.5rem;
+.nav-back:hover {
+  text-decoration: underline;
 }
 
-.progress-bar {
-  transition: width 0.2s ease;
+.top-nav h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ============================================================
+   Dashboard — main layout
+   ============================================================ */
+
+.dashboard-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 3rem;
+}
+
+/* ============================================================
+   Filters
+   ============================================================ */
+
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 160px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-sec);
+  margin-bottom: 0.35rem;
+}
+
+.filter-input,
+.filter-select {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 0.88rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color 0.15s;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 91, 219, 0.12);
+}
+
+/* ============================================================
+   Stats metric cards
+   ============================================================ */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.15rem;
+  border-top: 3px solid var(--color-border);
+}
+
+.stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+
+.stat-card .stat-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-sec);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.stat-card.accent-1 { border-top-color: var(--color-stat-1); }
+.stat-card.accent-1 .stat-value { color: var(--color-stat-1); }
+
+.stat-card.accent-2 { border-top-color: var(--color-stat-2); }
+.stat-card.accent-2 .stat-value { color: var(--color-stat-2); }
+
+.stat-card.accent-3 { border-top-color: var(--color-stat-3); }
+.stat-card.accent-3 .stat-value { color: var(--color-stat-3); }
+
+.stat-card.accent-4 { border-top-color: var(--color-stat-4); }
+.stat-card.accent-4 .stat-value { color: var(--color-stat-4); }
+
+/* Top organisms card spans full row */
+.stat-card.top-organisms {
+  grid-column: 1 / -1;
+  border-top-color: var(--color-text);
+}
+
+.stat-card.top-organisms .stat-label {
+  margin-bottom: 0.5rem;
+}
+
+.top-organisms-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-organisms-list li {
+  font-size: 0.85rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+}
+
+.top-organisms-list .org-count {
+  font-weight: 600;
+  color: var(--color-text-sec);
+  margin-left: 0.25rem;
+}
+
+/* ============================================================
+   Plots
+   ============================================================ */
+
+.plots-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.plot-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .plots-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Table section
+   ============================================================ */
+
+.table-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-toolbar-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.export-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-export {
+  padding: 0.35rem 0.85rem;
+  font-family: var(--font);
   font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-export:hover {
+  background: #dbe4ff;
+  border-color: var(--color-accent);
+}
+
+/* ============================================================
+   Tabulator overrides — align with our theme on top of midnight
+   ============================================================ */
+
+.tabulator {
+  border: none !important;
+  font-family: var(--font) !important;
+  font-size: 0.85rem !important;
+  background: var(--color-surface) !important;
+}
+
+.tabulator .tabulator-header {
+  background: var(--color-bg) !important;
+  border-bottom: 2px solid var(--color-border) !important;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  background: transparent !important;
+  border-right: 1px solid var(--color-border) !important;
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
+  color: var(--color-text-sec) !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+}
+
+.tabulator .tabulator-tableholder .tabulator-table .tabulator-row {
+  background: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+.tabulator .tabulator-tableholder .tabulator-table .tabulator-row:hover {
+  background: var(--color-accent-light) !important;
+}
+
+.tabulator .tabulator-tableholder .tabulator-table .tabulator-row .tabulator-cell {
+  border-right: 1px solid var(--color-border) !important;
+}
+
+.tabulator .tabulator-footer {
+  background: var(--color-bg) !important;
+  border-top: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+.tabulator .tabulator-footer .tabulator-page {
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-surface) !important;
+}
+
+.tabulator .tabulator-footer .tabulator-page.active {
+  background: var(--color-accent) !important;
+  color: #fff !important;
+  border-color: var(--color-accent) !important;
 }
