@@ -54,8 +54,114 @@ document.addEventListener("DOMContentLoaded", () => {
     return new Promise(resolve => setTimeout(resolve, 0));
   }
 
-  async function loadGzippedJSON(url) {
-    // Stage 1: Fetch with progress (0–50%)
+  // Debounce helper — delays fn execution until pause in calls
+  function debounce(fn, ms) {
+    let timer;
+    return function(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), ms);
+    };
+  }
+
+  // ---- Web Worker for off-main-thread decompression + parsing ----
+  function createDataWorker() {
+    const workerCode = `
+      importScripts("https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.js");
+
+      self.onmessage = async function(e) {
+        const { url } = e.data;
+        try {
+          // Fetch with progress
+          const response = await fetch(url);
+          const contentLength = response.headers.get("Content-Length");
+          const total = contentLength ? parseInt(contentLength, 10) : 0;
+
+          let compressed;
+          if (total && response.body) {
+            const reader = response.body.getReader();
+            const chunks = [];
+            let received = 0;
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              chunks.push(value);
+              received += value.length;
+              self.postMessage({ type: "download-progress", received, total });
+            }
+            const full = new Uint8Array(received);
+            let offset = 0;
+            for (const chunk of chunks) {
+              full.set(chunk, offset);
+              offset += chunk.length;
+            }
+            compressed = full;
+          } else {
+            compressed = new Uint8Array(await response.arrayBuffer());
+          }
+
+          // Decompress
+          self.postMessage({ type: "stage", stage: "decompress" });
+          const decompressed = fflate.decompressSync(compressed);
+
+          // Parse
+          self.postMessage({ type: "stage", stage: "parse" });
+          const jsonString = new TextDecoder().decode(decompressed);
+          const data = JSON.parse(jsonString);
+
+          self.postMessage({ type: "done", data });
+        } catch (err) {
+          self.postMessage({ type: "error", message: err.message });
+        }
+      };
+    `;
+    const blob = new Blob([workerCode], { type: "application/javascript" });
+    return new Worker(URL.createObjectURL(blob));
+  }
+
+  function loadGzippedJSON(url) {
+    return new Promise((resolve, reject) => {
+      const worker = createDataWorker();
+      worker.onmessage = function(e) {
+        const msg = e.data;
+        switch (msg.type) {
+          case "download-progress": {
+            const pct = (msg.received / msg.total) * 50;
+            const mb = (msg.received / (1024 * 1024)).toFixed(1);
+            const totalMb = (msg.total / (1024 * 1024)).toFixed(1);
+            updateProgress(pct, "Downloading data...", `${mb} / ${totalMb} MB`);
+            break;
+          }
+          case "stage":
+            if (msg.stage === "decompress") {
+              updateProgress(55, "Decompressing...", "");
+            } else if (msg.stage === "parse") {
+              updateProgress(75, "Parsing data...", "");
+            }
+            break;
+          case "done":
+            updateProgress(85, "Parsing data...", `${msg.data.length.toLocaleString()} records loaded`);
+            worker.terminate();
+            resolve(msg.data);
+            break;
+          case "error":
+            worker.terminate();
+            reject(new Error(msg.message));
+            break;
+        }
+      };
+      worker.onerror = function(err) {
+        worker.terminate();
+        reject(err);
+      };
+      updateProgress(0, "Downloading data...", "");
+      // Resolve relative URL to absolute since Blob workers have a different base URL
+      const absoluteUrl = new URL(url, window.location.href).href;
+      worker.postMessage({ url: absoluteUrl });
+    });
+  }
+
+  // Fallback for environments where inline workers are blocked
+  async function loadGzippedJSONFallback(url) {
     updateProgress(0, "Downloading data...", "");
     const response = await fetch(url);
     const contentLength = response.headers.get("Content-Length");
@@ -63,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let compressed;
     if (total && response.body) {
-      // Stream the response to track download progress
       const reader = response.body.getReader();
       const chunks = [];
       let received = 0;
@@ -85,19 +190,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       compressed = full;
     } else {
-      // Fallback: no content-length or no readable stream
       updateProgress(25, "Downloading data...", "");
       compressed = new Uint8Array(await response.arrayBuffer());
     }
     updateProgress(50, "Downloading data...", "Complete");
 
-    // Stage 2: Decompress (50–70%)
     await yieldToMain();
     updateProgress(55, "Decompressing...", "");
     const decompressed = fflate.decompressSync(compressed);
     updateProgress(70, "Decompressing...", "Complete");
 
-    // Stage 3: Parse JSON (70–85%)
     await yieldToMain();
     updateProgress(75, "Parsing data...", "");
     const jsonString = new TextDecoder().decode(decompressed);
@@ -112,7 +214,12 @@ document.addEventListener("DOMContentLoaded", () => {
     updateProgress(0, "Loading data...", "");
     const url = source === 'bacteria' ? 'data_bacteria.json.gz' : 'data_metagenome.json.gz';
     try {
-      allData = await loadGzippedJSON(url);
+      try {
+        allData = await loadGzippedJSON(url);
+      } catch (workerErr) {
+        console.warn("Web Worker failed, using main-thread fallback:", workerErr);
+        allData = await loadGzippedJSONFallback(url);
+      }
 
       // Stage 4: Render table (85–92%)
       await yieldToMain();
@@ -124,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
       await yieldToMain();
       updateProgress(94, "Generating plots...", "");
       summarize(allData);
-      updateProgress(97, "Generating plots...", "");
       createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
       createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
       updateProgress(100, "Done!", "");
@@ -166,7 +272,8 @@ document.addEventListener("DOMContentLoaded", () => {
     table.setFilter(filters);
   }
 
-  organismFilter.addEventListener("input", updateFilters);
+  // Debounce organism input (300ms) to avoid thrashing on every keystroke
+  organismFilter.addEventListener("input", debounce(updateFilters, 300));
   techFilter.addEventListener("change", updateFilters);
   ampliconFilter.addEventListener("change", updateFilters);
 
@@ -213,25 +320,59 @@ function summarize(data) {
     <p><strong>Non-Amplicon:</strong> ${nonAmpliconCount}</p>
     <p><strong>Top Organisms:</strong><br>${topOrganisms.map(([org, count]) => `${org} (${count})`).join('<br>')}</p>
   `;
+}
 
-  createBoxPlot(data, "reads-plot", "read_count", "Number of Reads per Organism");
-  createBoxPlot(data, "bases-plot", "base_count", "Number of Bases per Organism");
+// Pre-aggregate box plot statistics to avoid passing 100K+ raw points to Plotly
+function computeBoxTraces(data, field) {
+  // Group values by organism + technology
+  const groups = {};
+  for (const d of data) {
+    const key = d.instrument_platform;
+    if (!groups[key]) groups[key] = {};
+    if (!groups[key][d.scientific_name]) groups[key][d.scientific_name] = [];
+    groups[key][d.scientific_name].push(d[field]);
+  }
+
+  const traces = [];
+  for (const [tech, organisms] of Object.entries(groups)) {
+    const x = [];
+    const q1 = [], median = [], q3 = [], lowerfence = [], upperfence = [];
+
+    for (const [orgName, values] of Object.entries(organisms)) {
+      values.sort((a, b) => a - b);
+      const n = values.length;
+      if (n === 0) continue;
+
+      const med = values[Math.floor(n / 2)];
+      const q1Val = values[Math.floor(n * 0.25)];
+      const q3Val = values[Math.floor(n * 0.75)];
+      const iqr = q3Val - q1Val;
+      const lf = q1Val - 1.5 * iqr;
+      const uf = q3Val + 1.5 * iqr;
+
+      x.push(orgName);
+      q1.push(q1Val);
+      median.push(med);
+      q3.push(q3Val);
+      lowerfence.push(Math.max(values[0], lf));
+      upperfence.push(Math.min(values[n - 1], uf));
+    }
+
+    traces.push({
+      type: 'box',
+      name: tech,
+      x,
+      q1, median, q3, lowerfence, upperfence,
+      boxpoints: 'outliers',
+      jitter: 0.3,
+      pointpos: -1.5,
+    });
+  }
+  return traces;
 }
 
 function createBoxPlot(data, elementId, field, title) {
-  const plotData = [{
-    type: 'box',
-    x: data.map(d => d.scientific_name),
-    y: data.map(d => d[field]),
-    boxpoints: 'all',
-    jitter: 0.5,
-    pointpos: -1.8,
-    customdata: data.map(d => d.instrument_platform),
-    transforms: [{
-      type: 'groupby',
-      groups: data.map(d => d.instrument_platform),
-    }]
-  }];
+  const traces = computeBoxTraces(data, field);
 
   const layout = {
     title,
@@ -240,5 +381,6 @@ function createBoxPlot(data, elementId, field, title) {
     }
   };
 
-  Plotly.newPlot(elementId, plotData, layout);
+  // Use Plotly.react for efficient updates when the plot already exists
+  Plotly.react(elementId, traces, layout);
 }
