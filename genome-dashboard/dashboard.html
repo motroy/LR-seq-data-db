@@ -4,54 +4,86 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Genome Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_midnight.min.css" rel="stylesheet">
   <link href="assets/styles.css" rel="stylesheet">
 </head>
-<body class="container mt-4">
+<body>
+  <!-- Loading overlay -->
   <div id="loading-overlay">
     <div id="loading-content">
-      <div id="loading-stage">Loading data...</div>
-      <div class="progress">
-        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      <div id="loading-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
       </div>
-      <div id="loading-detail" class="text-muted mt-2"></div>
-    </div>
-  </div>
-  <h1 id="dashboard-title" class="mb-4"></h1>
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <input id="organism-filter" class="form-control" placeholder="🔎 Filter by organism name..." />
-    </div>
-    <div class="col-md-4">
-      <select id="tech-filter" class="form-select">
-        <option value="">All Technologies</option>
-        <option value="OXFORD_NANOPORE">Oxford Nanopore</option>
-        <option value="PACBIO_SMRT">PacBio</option>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <select id="amplicon-filter" class="form-select">
-        <option value="">All</option>
-        <option value="AMPLICON">Amplicon</option>
-        <option value="NON_AMPLICON">Non-Amplicon</option>
-      </select>
+      <div id="loading-stage">Loading data...</div>
+      <div class="progress-track">
+        <div id="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      </div>
+      <div id="loading-detail"></div>
     </div>
   </div>
 
-  <div id="stats" class="mb-4"></div>
-  <div id="plots" class="row mb-4 hidden">
-    <div id="reads-plot" class="col-md-6"></div>
-    <div id="bases-plot" class="col-md-6"></div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-md-12">
-      <button id="download-tsv" class="btn btn-primary">Download TSV</button>
-      <button id="download-xlsx" class="btn btn-primary">Download XLSX</button>
-    </div>
-  </div>
-  <div id="genome-table" class="hidden"></div>
+  <!-- Top navigation bar -->
+  <nav class="top-nav">
+    <a href="index.html" class="nav-back">&larr; All Dashboards</a>
+    <h1 id="dashboard-title"></h1>
+  </nav>
+
+  <main class="dashboard-main">
+    <!-- Filters toolbar -->
+    <section class="filter-bar">
+      <div class="filter-group">
+        <label for="organism-filter">Organism</label>
+        <input id="organism-filter" class="filter-input" placeholder="Filter by organism name..." />
+      </div>
+      <div class="filter-group">
+        <label for="tech-filter">Technology</label>
+        <select id="tech-filter" class="filter-select">
+          <option value="">All Technologies</option>
+          <option value="OXFORD_NANOPORE">Oxford Nanopore</option>
+          <option value="PACBIO_SMRT">PacBio</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="amplicon-filter">Library</label>
+        <select id="amplicon-filter" class="filter-select">
+          <option value="">All</option>
+          <option value="AMPLICON">Amplicon</option>
+          <option value="NON_AMPLICON">Non-Amplicon</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Stats metric cards -->
+    <section id="stats" class="stats-grid"></section>
+
+    <!-- Plots -->
+    <section id="plots" class="plots-row hidden">
+      <div class="plot-card">
+        <div id="reads-plot"></div>
+      </div>
+      <div class="plot-card">
+        <div id="bases-plot"></div>
+      </div>
+    </section>
+
+    <!-- Table + exports -->
+    <section class="table-section">
+      <div class="table-toolbar">
+        <span class="table-toolbar-label">Sample Data</span>
+        <div class="export-buttons">
+          <button id="download-tsv" class="btn-export">Export TSV</button>
+          <button id="download-xlsx" class="btn-export">Export XLSX</button>
+        </div>
+      </div>
+      <div id="genome-table" class="hidden"></div>
+    </section>
+  </main>
 
   <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
   <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>

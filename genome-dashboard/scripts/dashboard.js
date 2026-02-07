@@ -311,14 +311,35 @@ function summarize(data) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
+  const topOrganismsPills = topOrganisms
+    .map(([org, count]) => `<li>${org}<span class="org-count">(${count.toLocaleString()})</span></li>`)
+    .join('');
+
   document.getElementById("stats").innerHTML = `
-    <h3>📈 Summary Stats</h3>
-    <p><strong>Total Samples:</strong> ${data.length}</p>
-    <p><strong>Oxford Nanopore:</strong> ${techCounts["OXFORD_NANOPORE"]}</p>
-    <p><strong>PacBio:</strong> ${techCounts["PACBIO_SMRT"]}</p>
-    <p><strong>Amplicon:</strong> ${ampliconCount}</p>
-    <p><strong>Non-Amplicon:</strong> ${nonAmpliconCount}</p>
-    <p><strong>Top Organisms:</strong><br>${topOrganisms.map(([org, count]) => `${org} (${count})`).join('<br>')}</p>
+    <div class="stat-card accent-1">
+      <div class="stat-value">${data.length.toLocaleString()}</div>
+      <div class="stat-label">Total Samples</div>
+    </div>
+    <div class="stat-card accent-2">
+      <div class="stat-value">${techCounts["OXFORD_NANOPORE"].toLocaleString()}</div>
+      <div class="stat-label">Oxford Nanopore</div>
+    </div>
+    <div class="stat-card accent-3">
+      <div class="stat-value">${techCounts["PACBIO_SMRT"].toLocaleString()}</div>
+      <div class="stat-label">PacBio</div>
+    </div>
+    <div class="stat-card accent-4">
+      <div class="stat-value">${ampliconCount.toLocaleString()}</div>
+      <div class="stat-label">Amplicon</div>
+    </div>
+    <div class="stat-card accent-2">
+      <div class="stat-value">${nonAmpliconCount.toLocaleString()}</div>
+      <div class="stat-label">Non-Amplicon</div>
+    </div>
+    <div class="stat-card top-organisms">
+      <div class="stat-label">Top Organisms</div>
+      <ul class="top-organisms-list">${topOrganismsPills}</ul>
+    </div>
   `;
 }
 
@@ -375,10 +396,16 @@ function createBoxPlot(data, elementId, field, title) {
   const traces = computeBoxTraces(data, field);
 
   const layout = {
-    title,
+    title: { text: title, font: { family: 'Inter, sans-serif', size: 14, color: '#1a1d23' } },
     yaxis: {
-      title: field === 'read_count' ? 'Number of Reads' : 'Number of Bases'
-    }
+      title: field === 'read_count' ? 'Number of Reads' : 'Number of Bases',
+      gridcolor: '#e2e4e9',
+    },
+    xaxis: { gridcolor: '#e2e4e9' },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter, sans-serif', size: 12, color: '#5f6368' },
+    margin: { t: 40, r: 16, b: 40, l: 60 },
   };
 
   // Use Plotly.react for efficient updates when the plot already exists
