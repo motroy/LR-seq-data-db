@@ -133,10 +133,23 @@ def main():
     parser = argparse.ArgumentParser(description="Find hybrid BioSamples in SRA studies.")
     parser.add_argument("--limit", type=int, help="Limit the number of studies to process (for testing).")
     parser.add_argument("--workers", type=int, default=4, help="Number of worker processes.")
+    parser.add_argument(
+        "--type",
+        choices=["wgs", "mgx"],
+        default="mgx",
+        help="Data type to process: 'wgs' (bacteria, data_bacteria.json.gz) or 'mgx' (metagenome, data_metagenome.json.gz). Default: mgx."
+    )
+    parser.add_argument("--output-dir", default=".", help="Directory to write output files. Default: current directory.")
     args = parser.parse_args()
 
-    input_file = "data_metagenome.json.gz"
-    output_file = "hybrid_biosamples.json"
+    import os
+    if args.type == "wgs":
+        input_file = os.path.join(args.output_dir, "data_bacteria.json.gz")
+        output_file = os.path.join(args.output_dir, "hybrid_wgs.json.gz")
+    else:
+        input_file = os.path.join(args.output_dir, "data_metagenome.json.gz")
+        output_file = os.path.join(args.output_dir, "hybrid_mgx.json.gz")
+
     batch_size = 50
 
     studies = load_studies(input_file)
@@ -170,8 +183,8 @@ def main():
                 # Incremental save every 5 batches
                 if (i + 1) % 5 == 0:
                      try:
-                        with open(output_file, 'w') as f:
-                            json.dump(all_hybrid_samples, f, indent=2)
+                        with gzip.open(output_file, 'wt', encoding='utf-8') as f:
+                            json.dump(all_hybrid_samples, f)
                         logger.info(f"Incremental save to {output_file}")
                      except Exception as e:
                         logger.error(f"Error saving incremental results: {e}")
@@ -188,8 +201,8 @@ def main():
 
     # Save results
     try:
-        with open(output_file, 'w') as f:
-            json.dump(all_hybrid_samples, f, indent=2)
+        with gzip.open(output_file, 'wt', encoding='utf-8') as f:
+            json.dump(all_hybrid_samples, f)
         logger.info(f"Results saved to {output_file}")
     except Exception as e:
         logger.error(f"Error saving results: {e}")

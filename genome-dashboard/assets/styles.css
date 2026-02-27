@@ -171,6 +171,120 @@ body {
   }
 }
 
+/* Hybrid cards row */
+.dashboard-cards-hybrid {
+  margin-top: 0;
+}
+
+.card-icon-hybrid {
+  background: #fff3e8;
+  color: #c05621;
+}
+
+.dashboard-card-hybrid {
+  border-color: #fbd38d;
+}
+
+.dashboard-card-hybrid:hover {
+  border-color: #c05621;
+}
+
+/* ============================================================
+   Hybrid dashboard — type tab switcher in nav
+   ============================================================ */
+
+.hybrid-type-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+.hybrid-tab {
+  padding: 0.3rem 0.85rem;
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text-sec);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.hybrid-tab.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.hybrid-tab:hover:not(.active) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   Hybrid info banner
+   ============================================================ */
+
+.hybrid-info-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-accent-light);
+  border: 1px solid #c5d3f7;
+  border-radius: var(--radius);
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin-bottom: 1.25rem;
+}
+
+.hybrid-info-banner svg {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   Hybrid empty state
+   ============================================================ */
+
+.hybrid-empty-state {
+  grid-column: 1 / -1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-sec);
+  font-size: 0.9rem;
+}
+
+.hybrid-empty-state code {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+  font-size: 0.85rem;
+}
+
+/* Selected-IDs download button — highlighted when rows are selected */
+.btn-export-selected:not([disabled]) {
+  background: #fff3e8;
+  color: #c05621;
+  border-color: #fbd38d;
+}
+
+.btn-export-selected:not([disabled]):hover {
+  background: #fbd38d;
+  border-color: #c05621;
+}
+
+.btn-export-selected[disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+
 /* ============================================================
    Loading overlay
    ============================================================ */
