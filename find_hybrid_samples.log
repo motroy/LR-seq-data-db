@@ -1,0 +1,28 @@
+2026-02-27 11:31:23,126 - INFO - Fetching long-read runs for tax_id=2...
+2026-02-27 11:31:34,062 - INFO -   OXFORD_NANOPORE: 75,783 runs fetched
+2026-02-27 11:31:42,012 - INFO -   PACBIO_SMRT: 37,572 runs fetched
+2026-02-27 11:31:42,076 - INFO - Long-read: 113,355 runs across 93,129 unique biosamples
+2026-02-27 11:31:42,076 - INFO - Fetching short-read runs for tax_id=2...
+2026-02-27 11:32:21,609 - INFO -   ILLUMINA: 1,000,000 runs fetched
+2026-02-27 11:32:24,724 - INFO -   ION_TORRENT: 16,864 runs fetched
+2026-02-27 11:32:26,345 - INFO -   BGISEQ: 9,435 runs fetched
+2026-02-27 11:32:30,266 - INFO -   LS454: 21,962 runs fetched
+2026-02-27 11:32:31,128 - INFO -   COMPLETE_GENOMICS: 1,234 runs fetched
+2026-02-27 11:32:32,277 - INFO - Short-read: 1,049,495 runs across 998,819 unique biosamples
+2026-02-27 11:32:32,377 - INFO - Hybrid biosamples (long ∩ short): 8,533
+2026-02-27 11:32:32,688 - INFO - Results saved to genome-dashboard/hybrid_wgs.json.gz
+2026-02-27 11:32:32,688 - INFO - Done in 69.6s — 8,533 hybrid biosamples written.
+2026-02-27 11:32:33,039 - INFO - Fetching long-read runs for tax_id=408169...
+2026-02-27 11:32:38,404 - INFO -   OXFORD_NANOPORE: 93,465 runs fetched
+2026-02-27 11:32:45,777 - INFO -   PACBIO_SMRT: 107,748 runs fetched
+2026-02-27 11:32:45,912 - INFO - Long-read: 201,213 runs across 175,560 unique biosamples
+2026-02-27 11:32:45,912 - INFO - Fetching short-read runs for tax_id=408169...
+2026-02-27 11:33:19,216 - INFO -   ILLUMINA: 1,000,000 runs fetched
+2026-02-27 11:33:31,443 - INFO -   ION_TORRENT: 197,015 runs fetched
+2026-02-27 11:33:33,591 - INFO -   BGISEQ: 32,386 runs fetched
+2026-02-27 11:33:59,760 - INFO -   LS454: 305,216 runs fetched
+2026-02-27 11:34:00,521 - INFO -   COMPLETE_GENOMICS: 625 runs fetched
+2026-02-27 11:34:02,143 - INFO - Short-read: 1,535,242 runs across 1,282,653 unique biosamples
+2026-02-27 11:34:02,301 - INFO - Hybrid biosamples (long ∩ short): 1,480
+2026-02-27 11:34:02,359 - INFO - Results saved to genome-dashboard/hybrid_mgx.json.gz
+2026-02-27 11:34:02,359 - INFO - Done in 89.3s — 1,480 hybrid biosamples written.
