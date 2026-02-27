@@ -28,10 +28,10 @@ jobs:
       run: python genome-dashboard/extract_ena_genomes.py --tax-id 408169 --output genome-dashboard/data_metagenome.json.gz
 
     - name: Find hybrid WGS biosamples
-      run: python genome-dashboard/scripts/find_hybrid_samples.py --type wgs --output-dir genome-dashboard
+      run: python genome-dashboard/scripts/find_hybrid_samples.py --type wgs --output-dir genome-dashboard --long-reads-file genome-dashboard/data_bacteria.json.gz
 
     - name: Find hybrid MGx biosamples
-      run: python genome-dashboard/scripts/find_hybrid_samples.py --type mgx --output-dir genome-dashboard
+      run: python genome-dashboard/scripts/find_hybrid_samples.py --type mgx --output-dir genome-dashboard --long-reads-file genome-dashboard/data_metagenome.json.gz
 
     - name: Generate plot
       run: python genome-dashboard/generate_plot.py
