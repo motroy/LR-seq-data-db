@@ -78,8 +78,35 @@ def build_run_info(run: dict) -> dict:
     return {
         "run_accession": run.get("accession", ""),
         "instrument_model": run.get("instrument_model", ""),
+        "instrument_platform": run.get("instrument_platform", ""),
         "study_accession": run.get("study_accession", ""),
     }
+
+
+def load_local_long_reads(filepath: str) -> list:
+    """
+    Load long-read run data from a local .json.gz file produced by extract_ena_genomes.py.
+    Returns a list of run dicts compatible with index_by_sample().
+    """
+    logger.info(f"Loading long-read data from local file: {filepath}")
+    with gzip.open(filepath, "rt", encoding="utf-8") as f:
+        records = json.load(f)
+    runs = []
+    skipped = 0
+    for r in records:
+        sa = (r.get("sample_accession") or "").strip()
+        if not sa or sa.upper() in ("", "N/A", "NONE"):
+            skipped += 1
+            continue
+        runs.append({
+            "accession": r.get("sample_id", ""),
+            "sample_accession": sa,
+            "instrument_platform": r.get("instrument_platform", ""),
+            "instrument_model": r.get("instrument_model", ""),
+            "study_accession": r.get("study_accession", ""),
+        })
+    logger.info(f"  Loaded {len(runs):,} long-read runs ({skipped:,} skipped — no biosample ID)")
+    return runs
 
 
 def main():
@@ -97,6 +124,13 @@ def main():
         default=".",
         help="Directory for the output .json.gz file. Default: current directory.",
     )
+    parser.add_argument(
+        "--long-reads-file",
+        default=None,
+        help="Path to a local .json.gz file (from extract_ena_genomes.py) to use as the "
+             "long-read dataset instead of querying the ENA API. Must contain "
+             "'sample_accession' and 'instrument_model' fields.",
+    )
     args = parser.parse_args()
 
     tax_id = "2" if args.type == "wgs" else "408169"
@@ -105,12 +139,15 @@ def main():
     start = time.time()
 
     # ------------------------------------------------------------------ #
-    # 1. Fetch all long-read runs from ENA                                 #
+    # 1. Get all long-read runs (local file or ENA API)                    #
     # ------------------------------------------------------------------ #
-    logger.info(f"Fetching long-read runs for tax_id={tax_id}...")
-    long_runs: list = []
-    for platform in LONG_READ_PLATFORMS:
-        long_runs.extend(fetch_ena_platform(platform, tax_id))
+    if args.long_reads_file:
+        long_runs = load_local_long_reads(args.long_reads_file)
+    else:
+        logger.info(f"Fetching long-read runs for tax_id={tax_id}...")
+        long_runs = []
+        for platform in LONG_READ_PLATFORMS:
+            long_runs.extend(fetch_ena_platform(platform, tax_id))
 
     long_by_sample = index_by_sample(long_runs)
     logger.info(f"Long-read: {len(long_runs):,} runs across {len(long_by_sample):,} unique biosamples")

@@ -230,15 +230,37 @@ document.addEventListener("DOMContentLoaded", () => {
     return data;
   }
 
+  // ---- Technology keyword map for filter matching ----
+  // Maps filter option values to lists of keywords to match against instrument model/platform strings.
+  const TECH_KEYWORDS = {
+    'nanopore':   ['nanopore', 'minion', 'gridion', 'promethion', 'mk1c', 'p2 solo'],
+    'pacbio':     ['pacbio', 'sequel', 'revio', 'onso'],
+    'illumina':   ['illumina', 'hiseq', 'miseq', 'novaseq', 'nextseq', 'miniseq', 'iseq'],
+    'bgi':        ['bgiseq', 'dnbseq', 'mgi'],
+    'ion torrent': ['ion torrent', 'pgm', 'proton', 'chef'],
+  };
+
+  function matchesTechFilter(instrumentStr, platformStr, filterVal) {
+    if (!filterVal) return true;
+    const key = filterVal.toLowerCase();
+    const combined = ((instrumentStr || '') + ' ' + (platformStr || '')).toLowerCase();
+    const keywords = TECH_KEYWORDS[key] || [key];
+    return keywords.some(k => combined.includes(k));
+  }
+
   // ---- Flatten raw hybrid record for table display ----
   function flattenRecord(record) {
     const longInstruments = [...new Set((record.long_reads || []).map(r => r.instrument_model).filter(Boolean))].join(', ');
     const shortInstruments = [...new Set((record.short_reads || []).map(r => r.instrument_model).filter(Boolean))].join(', ');
+    const longPlatforms = [...new Set((record.long_reads || []).map(r => r.instrument_platform).filter(Boolean))].join(', ');
+    const shortPlatforms = [...new Set((record.short_reads || []).map(r => r.instrument_platform).filter(Boolean))].join(', ');
     const studyAccessions = [...new Set(record.study_accession || [])].join(', ');
     return {
       biosample: record.biosample || '',
       long_instruments: longInstruments,
       short_instruments: shortInstruments,
+      long_platforms: longPlatforms,
+      short_platforms: shortPlatforms,
       long_run_count: (record.long_reads || []).length,
       short_run_count: (record.short_reads || []).length,
       study_accessions: studyAccessions,
@@ -307,10 +329,10 @@ document.addEventListener("DOMContentLoaded", () => {
       filtered = filtered.filter(d => d.biosample.toLowerCase().includes(biosampleVal));
     }
     if (longVal) {
-      filtered = filtered.filter(d => d.long_instruments.toLowerCase().includes(longVal.toLowerCase()));
+      filtered = filtered.filter(d => matchesTechFilter(d.long_instruments, d.long_platforms, longVal));
     }
     if (shortVal) {
-      filtered = filtered.filter(d => d.short_instruments.toLowerCase().includes(shortVal.toLowerCase()));
+      filtered = filtered.filter(d => matchesTechFilter(d.short_instruments, d.short_platforms, shortVal));
     }
 
     table.setData(filtered);
