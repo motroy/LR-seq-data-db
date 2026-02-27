@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
-Script to identify BioSamples with both Long Reads and Short Reads data
-from a list of studies provided in a JSON file.
-Uses multiprocessing to speed up metadata fetching.
+Find BioSamples with both long-read and short-read data using the ENA Portal API.
+
+Instead of querying SRA study-by-study (slow), this script issues a small number
+of bulk ENA API requests — one per instrument platform — and does the intersection
+in memory.  For ~12 k studies the old pysradb approach took hours; this takes
+a few minutes.
 """
 
 import gzip
@@ -10,12 +13,10 @@ import json
 import logging
 import time
 import argparse
-import pandas as pd
-from typing import List, Dict, Any
-from multiprocessing import Pool, cpu_count
-from pysradb.sraweb import SRAweb
+import os
+import requests
+from collections import defaultdict
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -26,186 +27,140 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def load_studies(filepath: str) -> List[str]:
-    """Load unique study accessions from the gzipped JSON file."""
-    logger.info(f"Loading studies from {filepath}...")
-    try:
-        with gzip.open(filepath, 'rt', encoding='utf-8') as f:
-            data = json.load(f)
+ENA_API_URL = "https://www.ebi.ac.uk/ena/portal/api/search"
 
-        studies = set()
-        for entry in data:
-            if 'study_accession' in entry:
-                studies.add(entry['study_accession'])
+LONG_READ_PLATFORMS = ["OXFORD_NANOPORE", "PACBIO_SMRT"]
 
-        logger.info(f"Found {len(studies)} unique studies.")
-        return list(studies)
-    except Exception as e:
-        logger.error(f"Error loading studies: {e}")
-        return []
+# All ENA short-read platform codes
+SHORT_READ_PLATFORMS = ["ILLUMINA", "ION_TORRENT", "BGISEQ", "LS454", "COMPLETE_GENOMICS"]
 
-def classify_platform(instrument_model: str) -> str:
-    """Classify instrument model into 'LONG', 'SHORT', or 'OTHER'."""
-    if not isinstance(instrument_model, str):
-        return 'OTHER'
+FETCH_FIELDS = "accession,sample_accession,instrument_platform,instrument_model,study_accession,library_strategy"
 
-    model = instrument_model.upper()
 
-    # Long Reads
-    if any(x in model for x in ['NANOPORE', 'MINION', 'GRIDION', 'PROMETHION', 'PACBIO', 'SEQUEL']):
-        return 'LONG'
-
-    # Short Reads
-    if any(x in model for x in ['ILLUMINA', 'HISEQ', 'MISEQ', 'NEXTSEQ', 'NOVASEQ', 'ION TORRENT', 'BGISEQ', 'DNBSEQ', 'SOLID', '454', 'AB 5500', 'HELIOS']):
-        return 'SHORT'
-
-    return 'OTHER'
-
-def process_batch_worker(studies: List[str]) -> List[Dict]:
-    """Worker function to process a batch of studies."""
-    # Create a new SRAweb instance for each worker
-    db = SRAweb()
-    hybrid_samples = []
-
-    # Retry logic
-    max_retries = 3
-    for attempt in range(max_retries):
+def fetch_ena_platform(platform: str, tax_id: str, retries: int = 3) -> list:
+    """
+    Fetch all runs for a single ENA instrument_platform + taxonomy in one request.
+    Returns a list of dicts with the requested fields.
+    """
+    params = {
+        "result": "read_run",
+        "query": f'instrument_platform="{platform}" AND tax_tree({tax_id})',
+        "fields": FETCH_FIELDS,
+        "format": "json",
+        "limit": 1_000_000,
+    }
+    for attempt in range(retries):
         try:
-            # Fetch metadata for all studies in the batch
-            df = db.sra_metadata(studies, detailed=True)
-            break # Success
-        except Exception as e:
-            if attempt < max_retries - 1:
-                sleep_time = 2 * (attempt + 1)
-                time.sleep(sleep_time)
-            else:
-                logger.error(f"Failed to process batch {studies[:3]}... after {max_retries} attempts: {e}")
-                return []
+            resp = requests.get(ENA_API_URL, params=params, timeout=120)
+            resp.raise_for_status()
+            data = resp.json()
+            logger.info(f"  {platform}: {len(data):,} runs fetched")
+            return data
+        except Exception as exc:
+            wait = 5 * (attempt + 1)
+            logger.warning(f"  {platform} attempt {attempt + 1} failed: {exc}. Retrying in {wait}s...")
+            time.sleep(wait)
+    logger.error(f"  {platform}: all {retries} attempts failed — skipping.")
+    return []
 
-    try:
-        if df is None or df.empty:
-            return []
 
-        # Ensure required columns exist
-        required_cols = ['sample_accession', 'run_accession', 'instrument_model', 'study_accession']
-        for col in required_cols:
-            if col not in df.columns:
-                if col == 'instrument_model' and 'instrument' in df.columns:
-                    df['instrument_model'] = df['instrument']
-                else:
-                    return []
+def index_by_sample(runs: list) -> dict:
+    """Return {sample_accession: [run_dict, ...]} for non-empty sample accessions."""
+    by_sample = defaultdict(list)
+    for run in runs:
+        sa = (run.get("sample_accession") or "").strip()
+        if sa and sa.upper() not in ("", "N/A", "NONE"):
+            by_sample[sa].append(run)
+    return by_sample
 
-        # Group by sample_accession
-        for sample_acc, group in df.groupby('sample_accession'):
-            if pd.isna(sample_acc) or sample_acc == 'N/A':
-                continue
 
-            long_reads = []
-            short_reads = []
+def build_run_info(run: dict) -> dict:
+    return {
+        "run_accession": run.get("accession", ""),
+        "instrument_model": run.get("instrument_model", ""),
+        "study_accession": run.get("study_accession", ""),
+    }
 
-            for _, row in group.iterrows():
-                platform = classify_platform(row['instrument_model'])
-                run_info = {
-                    'run_accession': row['run_accession'],
-                    'instrument_model': row['instrument_model'],
-                    'study_accession': row['study_accession']
-                }
-
-                if platform == 'LONG':
-                    long_reads.append(run_info)
-                elif platform == 'SHORT':
-                    short_reads.append(run_info)
-
-            if long_reads and short_reads:
-                hybrid_samples.append({
-                    'biosample': sample_acc,
-                    'short_reads': short_reads,
-                    'long_reads': long_reads,
-                    'study_accession': list(set(r['study_accession'] for r in long_reads + short_reads))
-                })
-
-    except Exception as e:
-        logger.error(f"Error processing batch {studies[:3]}...: {e}")
-
-    return hybrid_samples
 
 def main():
-    parser = argparse.ArgumentParser(description="Find hybrid BioSamples in SRA studies.")
-    parser.add_argument("--limit", type=int, help="Limit the number of studies to process (for testing).")
-    parser.add_argument("--workers", type=int, default=4, help="Number of worker processes.")
+    parser = argparse.ArgumentParser(
+        description="Find hybrid BioSamples (both long- and short-read) via ENA Portal API."
+    )
     parser.add_argument(
         "--type",
         choices=["wgs", "mgx"],
         default="mgx",
-        help="Data type to process: 'wgs' (bacteria, data_bacteria.json.gz) or 'mgx' (metagenome, data_metagenome.json.gz). Default: mgx."
+        help="'wgs' → bacteria (tax 2), 'mgx' → metagenomes (tax 408169). Default: mgx.",
     )
-    parser.add_argument("--output-dir", default=".", help="Directory to write output files. Default: current directory.")
+    parser.add_argument(
+        "--output-dir",
+        default=".",
+        help="Directory for the output .json.gz file. Default: current directory.",
+    )
     args = parser.parse_args()
 
-    import os
-    if args.type == "wgs":
-        input_file = os.path.join(args.output_dir, "data_bacteria.json.gz")
-        output_file = os.path.join(args.output_dir, "hybrid_wgs.json.gz")
-    else:
-        input_file = os.path.join(args.output_dir, "data_metagenome.json.gz")
-        output_file = os.path.join(args.output_dir, "hybrid_mgx.json.gz")
+    tax_id = "2" if args.type == "wgs" else "408169"
+    output_file = os.path.join(args.output_dir, f"hybrid_{args.type}.json.gz")
 
-    batch_size = 50
+    start = time.time()
 
-    studies = load_studies(input_file)
-    if not studies:
-        logger.error("No studies found. Exiting.")
+    # ------------------------------------------------------------------ #
+    # 1. Fetch all long-read runs from ENA                                 #
+    # ------------------------------------------------------------------ #
+    logger.info(f"Fetching long-read runs for tax_id={tax_id}...")
+    long_runs: list = []
+    for platform in LONG_READ_PLATFORMS:
+        long_runs.extend(fetch_ena_platform(platform, tax_id))
+
+    long_by_sample = index_by_sample(long_runs)
+    logger.info(f"Long-read: {len(long_runs):,} runs across {len(long_by_sample):,} unique biosamples")
+
+    if not long_by_sample:
+        logger.error("No long-read data retrieved — aborting.")
         return
 
-    if args.limit:
-        logger.info(f"Limiting to first {args.limit} studies.")
-        studies = studies[:args.limit]
+    # ------------------------------------------------------------------ #
+    # 2. Fetch all short-read runs from ENA                                #
+    # ------------------------------------------------------------------ #
+    logger.info(f"Fetching short-read runs for tax_id={tax_id}...")
+    short_runs: list = []
+    for platform in SHORT_READ_PLATFORMS:
+        short_runs.extend(fetch_ena_platform(platform, tax_id))
 
-    all_hybrid_samples = []
+    short_by_sample = index_by_sample(short_runs)
+    logger.info(f"Short-read: {len(short_runs):,} runs across {len(short_by_sample):,} unique biosamples")
 
-    # Prepare batches
-    batches = [studies[i:i + batch_size] for i in range(0, len(studies), batch_size)]
-    total_batches = len(batches)
+    # ------------------------------------------------------------------ #
+    # 3. Intersect by sample_accession                                     #
+    # ------------------------------------------------------------------ #
+    hybrid_samples = sorted(set(long_by_sample) & set(short_by_sample))
+    logger.info(f"Hybrid biosamples (long ∩ short): {len(hybrid_samples):,}")
 
-    logger.info(f"Processing {len(studies)} studies in {total_batches} batches using {args.workers} workers...")
+    results = []
+    for sample in hybrid_samples:
+        lr = long_by_sample[sample]
+        sr = short_by_sample[sample]
+        study_accs = list({r.get("study_accession", "") for r in lr + sr} - {""})
+        results.append({
+            "biosample": sample,
+            "long_reads": [build_run_info(r) for r in lr],
+            "short_reads": [build_run_info(r) for r in sr],
+            "study_accession": study_accs,
+        })
 
-    start_time = time.time()
-
+    # ------------------------------------------------------------------ #
+    # 4. Save                                                              #
+    # ------------------------------------------------------------------ #
     try:
-        with Pool(processes=args.workers) as pool:
-            for i, result in enumerate(pool.imap_unordered(process_batch_worker, batches)):
-                if result:
-                    all_hybrid_samples.extend(result)
-
-                # Log progress every batch
-                logger.info(f"Processed {i + 1}/{total_batches} batches. Found {len(all_hybrid_samples)} hybrid samples so far.")
-
-                # Incremental save every 5 batches
-                if (i + 1) % 5 == 0:
-                     try:
-                        with gzip.open(output_file, 'wt', encoding='utf-8') as f:
-                            json.dump(all_hybrid_samples, f)
-                        logger.info(f"Incremental save to {output_file}")
-                     except Exception as e:
-                        logger.error(f"Error saving incremental results: {e}")
-
-    except KeyboardInterrupt:
-        logger.warning("Interrupted by user. Saving partial results...")
-    except Exception as e:
-        logger.error(f"An error occurred: {e}")
-
-    end_time = time.time()
-    duration = end_time - start_time
-    logger.info(f"Processing complete in {duration:.2f} seconds.")
-    logger.info(f"Total hybrid samples found: {len(all_hybrid_samples)}")
-
-    # Save results
-    try:
-        with gzip.open(output_file, 'wt', encoding='utf-8') as f:
-            json.dump(all_hybrid_samples, f)
+        with gzip.open(output_file, "wt", encoding="utf-8") as f:
+            json.dump(results, f)
         logger.info(f"Results saved to {output_file}")
-    except Exception as e:
-        logger.error(f"Error saving results: {e}")
+    except Exception as exc:
+        logger.error(f"Error saving results: {exc}")
+
+    elapsed = time.time() - start
+    logger.info(f"Done in {elapsed:.1f}s — {len(results):,} hybrid biosamples written.")
+
 
 if __name__ == "__main__":
     main()
