@@ -10,7 +10,7 @@ def fetch_ena(platform, tax_id, size=500):
 
     ena_url = "https://www.ebi.ac.uk/ena/portal/api/search"
     query = f'instrument_platform="{platform}" AND tax_tree({tax_id})'
-    fields = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,read_count,base_count,library_strategy"
+    fields = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,pubmed_id,read_count,base_count,library_strategy"
     params = {
         "result": "read_run",
         "query": query,
@@ -41,6 +41,7 @@ def fetch_ena(platform, tax_id, size=500):
             "instrument_platform": item.get("instrument_platform", platform),
             "instrument_model": item.get("instrument_model", ""),
             "study_accession": item.get("study_accession", "NA"),
+            "pubmed_id": item.get("pubmed_id", ""),
             "read_count": int(item.get("read_count", 0)),
             "base_count": int(item.get("base_count", 0)),
             "library_strategy": item.get("library_strategy", "Unknown"),
