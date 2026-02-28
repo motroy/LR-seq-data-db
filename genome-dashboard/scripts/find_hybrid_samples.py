@@ -34,7 +34,7 @@ LONG_READ_PLATFORMS = ["OXFORD_NANOPORE", "PACBIO_SMRT"]
 # All ENA short-read platform codes
 SHORT_READ_PLATFORMS = ["ILLUMINA", "ION_TORRENT", "BGISEQ", "LS454", "COMPLETE_GENOMICS"]
 
-FETCH_FIELDS = "accession,sample_accession,instrument_platform,instrument_model,study_accession,library_strategy"
+FETCH_FIELDS = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,library_strategy"
 
 
 def fetch_ena_platform(platform: str, tax_id: str, retries: int = 3) -> list:
@@ -101,6 +101,7 @@ def load_local_long_reads(filepath: str) -> list:
         runs.append({
             "accession": r.get("sample_id", ""),
             "sample_accession": sa,
+            "scientific_name": r.get("scientific_name", ""),
             "instrument_platform": r.get("instrument_platform", ""),
             "instrument_model": r.get("instrument_model", ""),
             "study_accession": r.get("study_accession", ""),
@@ -178,8 +179,10 @@ def main():
         lr = long_by_sample[sample]
         sr = short_by_sample[sample]
         study_accs = list({r.get("study_accession", "") for r in lr + sr} - {""})
+        scientific_name = next((r.get("scientific_name", "") for r in lr if r.get("scientific_name")), "")
         results.append({
             "biosample": sample,
+            "scientific_name": scientific_name,
             "long_reads": [build_run_info(r) for r in lr],
             "short_reads": [build_run_info(r) for r in sr],
             "study_accession": study_accs,
