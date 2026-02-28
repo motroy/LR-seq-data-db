@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingStage = document.getElementById("loading-stage");
   const loadingDetail = document.getElementById("loading-detail");
   const biosampleFilter = document.getElementById("biosample-filter");
+  const organismFilter = document.getElementById("organism-filter");
   const longTechFilter = document.getElementById("long-tech-filter");
   const shortTechFilter = document.getElementById("short-tech-filter");
   const downloadSelectedBtn = document.getElementById("download-selected-txt");
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.history.replaceState({}, '', url);
       // Reset filters
       biosampleFilter.value = '';
+      organismFilter.value = '';
       longTechFilter.value = '';
       shortTechFilter.value = '';
       loadData(activeType);
@@ -62,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return `<a href="https://www.ncbi.nlm.nih.gov/biosample/${val}" target="_blank" rel="noopener" style="color:var(--color-accent)">${val}</a>`;
         }
       },
+      { title: "Organism", field: "scientific_name", headerMenu: true, formatter: "plaintext" },
       { title: "Long-Read Instruments", field: "long_instruments", headerMenu: true },
       { title: "Short-Read Instruments", field: "short_instruments", headerMenu: true },
       { title: "Long-Read Runs", field: "long_run_count", headerMenu: true, hozAlign: "right", width: 130 },
@@ -257,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const studyAccessions = [...new Set(record.study_accession || [])].join(', ');
     return {
       biosample: record.biosample || '',
+      scientific_name: record.scientific_name || '',
       long_instruments: longInstruments,
       short_instruments: shortInstruments,
       long_platforms: longPlatforms,
@@ -320,6 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---- Filtering ----
   function updateFilters() {
     const biosampleVal = biosampleFilter.value.trim().toLowerCase();
+    const organismVal = organismFilter.value.trim().toLowerCase();
     const longVal = longTechFilter.value;
     const shortVal = shortTechFilter.value;
 
@@ -327,6 +332,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (biosampleVal) {
       filtered = filtered.filter(d => d.biosample.toLowerCase().includes(biosampleVal));
+    }
+    if (organismVal) {
+      filtered = filtered.filter(d => d.scientific_name.toLowerCase().includes(organismVal));
     }
     if (longVal) {
       filtered = filtered.filter(d => matchesTechFilter(d.long_instruments, d.long_platforms, longVal));
@@ -341,6 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   biosampleFilter.addEventListener("input", debounce(updateFilters, 300));
+  organismFilter.addEventListener("input", debounce(updateFilters, 300));
   longTechFilter.addEventListener("change", updateFilters);
   shortTechFilter.addEventListener("change", updateFilters);
 
