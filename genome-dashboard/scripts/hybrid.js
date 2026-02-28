@@ -81,6 +81,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return `<a href="https://www.ncbi.nlm.nih.gov/sra/?term=${t}" target="_blank" rel="noopener" style="color:var(--color-accent)">${t}</a>`;
           }).join(', ');
         }
+      },
+      {
+        title: "PubMed IDs",
+        field: "pubmed_ids",
+        headerMenu: true,
+        formatter: function(cell) {
+          const val = cell.getValue() || '';
+          return val.split(',').map(s => {
+            const id = s.trim();
+            if (!id) return '';
+            return `<a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank" rel="noopener" style="color:var(--color-accent)">${id}</a>`;
+          }).join(', ');
+        }
       }
     ],
     height: "600px"
@@ -258,9 +271,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const longPlatforms = [...new Set((record.long_reads || []).map(r => r.instrument_platform).filter(Boolean))].join(', ');
     const shortPlatforms = [...new Set((record.short_reads || []).map(r => r.instrument_platform).filter(Boolean))].join(', ');
     const studyAccessions = [...new Set(record.study_accession || [])].join(', ');
+    const pubmedIds = (record.pubmed_ids || []).join(', ');
     return {
       biosample: record.biosample || '',
       scientific_name: record.scientific_name || '',
+      pubmed_ids: pubmedIds,
       long_instruments: longInstruments,
       short_instruments: shortInstruments,
       long_platforms: longPlatforms,

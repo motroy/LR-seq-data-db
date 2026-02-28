@@ -34,7 +34,7 @@ LONG_READ_PLATFORMS = ["OXFORD_NANOPORE", "PACBIO_SMRT"]
 # All ENA short-read platform codes
 SHORT_READ_PLATFORMS = ["ILLUMINA", "ION_TORRENT", "BGISEQ", "LS454", "COMPLETE_GENOMICS"]
 
-FETCH_FIELDS = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,library_strategy"
+FETCH_FIELDS = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,pubmed_id,library_strategy"
 
 
 def fetch_ena_platform(platform: str, tax_id: str, retries: int = 3) -> list:
@@ -83,6 +83,17 @@ def build_run_info(run: dict) -> dict:
     }
 
 
+def collect_pubmed_ids(runs: list) -> list:
+    """Return a sorted list of unique non-empty PubMed IDs from a list of run dicts."""
+    ids = set()
+    for r in runs:
+        raw = (r.get("pubmed_id") or "").strip()
+        for pid in raw.replace(",", " ").split():
+            if pid:
+                ids.add(pid)
+    return sorted(ids)
+
+
 def load_local_long_reads(filepath: str) -> list:
     """
     Load long-read run data from a local .json.gz file produced by extract_ena_genomes.py.
@@ -105,6 +116,7 @@ def load_local_long_reads(filepath: str) -> list:
             "instrument_platform": r.get("instrument_platform", ""),
             "instrument_model": r.get("instrument_model", ""),
             "study_accession": r.get("study_accession", ""),
+            "pubmed_id": r.get("pubmed_id", ""),
         })
     logger.info(f"  Loaded {len(runs):,} long-read runs ({skipped:,} skipped — no biosample ID)")
     return runs
@@ -183,6 +195,7 @@ def main():
         results.append({
             "biosample": sample,
             "scientific_name": scientific_name,
+            "pubmed_ids": collect_pubmed_ids(lr + sr),
             "long_reads": [build_run_info(r) for r in lr],
             "short_reads": [build_run_info(r) for r in sr],
             "study_accession": study_accs,
