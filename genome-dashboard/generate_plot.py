@@ -40,7 +40,7 @@ def load_json_gz(path):
 
 
 def generate_plot(csv_file, output_image):
-    """Generates a line plot from the historical data, including hybrid sample counts."""
+    """Generates a line plot from the historical data with dual y-axes for hybrid visibility."""
     if not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0:
         print(f"Warning: {csv_file} is missing or empty. Creating a 'No data' plot.", flush=True)
         plt.figure(figsize=(10, 6))
@@ -65,29 +65,50 @@ def generate_plot(csv_file, output_image):
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values(by="date")
 
-    plt.figure(figsize=(10, 6))
-    plt.plot(df["date"], df["wgs_samples"], marker='o', linestyle='-',
-             color=COLOR_WGS, label="WGS Samples")
-    plt.plot(df["date"], df["mgx_samples"], marker='o', linestyle='-',
-             color=COLOR_MGX, label="MGx Samples")
+    has_hybrid = ("hybrid_wgs" in df.columns or "hybrid_mgx" in df.columns)
+    # Check if any hybrid values are non-zero
+    has_hybrid_data = has_hybrid and (
+        (df.get("hybrid_wgs", pd.Series([0])).max() > 0) or
+        (df.get("hybrid_mgx", pd.Series([0])).max() > 0)
+    )
 
-    # Plot hybrid sample lines (dotted, same colors) if columns exist
-    if "hybrid_wgs" in df.columns:
-        plt.plot(df["date"], df["hybrid_wgs"], marker='s', linestyle=':',
-                 color=COLOR_WGS, label="Hybrid WGS", alpha=0.8)
-    if "hybrid_mgx" in df.columns:
-        plt.plot(df["date"], df["hybrid_mgx"], marker='s', linestyle=':',
-                 color=COLOR_MGX, label="Hybrid MGx", alpha=0.8)
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+
+    # Primary y-axis: WGS and MGx
+    l1, = ax1.plot(df["date"], df["wgs_samples"], marker='o', linestyle='-',
+                   color=COLOR_WGS, label="WGS Samples", linewidth=2)
+    l2, = ax1.plot(df["date"], df["mgx_samples"], marker='o', linestyle='-',
+                   color=COLOR_MGX, label="MGx Samples", linewidth=2)
+    ax1.set_xlabel("Date")
+    ax1.set_ylabel("Number of Samples (WGS / MGx)", color='black')
+    ax1.tick_params(axis='x', rotation=90)
+    ax1.grid(True, alpha=0.3)
+
+    lines = [l1, l2]
+
+    # Secondary y-axis: Hybrid counts (much smaller scale)
+    if has_hybrid_data:
+        ax2 = ax1.twinx()
+        if "hybrid_wgs" in df.columns:
+            l3, = ax2.plot(df["date"], df["hybrid_wgs"], marker='s', linestyle=':',
+                           color=COLOR_WGS, label="Hybrid WGS", alpha=0.85,
+                           linewidth=2, markersize=7)
+            lines.append(l3)
+        if "hybrid_mgx" in df.columns:
+            l4, = ax2.plot(df["date"], df["hybrid_mgx"], marker='s', linestyle=':',
+                           color=COLOR_MGX, label="Hybrid MGx", alpha=0.85,
+                           linewidth=2, markersize=7)
+            lines.append(l4)
+        ax2.set_ylabel("Number of Hybrid Samples", color='gray')
+        ax2.tick_params(axis='y', labelcolor='gray')
 
     plt.title("Number of Samples Over Time")
-    plt.xlabel("Date")
-    plt.ylabel("Number of Samples")
-    plt.xticks(rotation='vertical')
-    plt.grid(True)
-    plt.legend()
-    plt.tight_layout()
+    labels = [l.get_label() for l in lines]
+    ax1.legend(lines, labels, loc='upper left')
+    fig.tight_layout()
 
     plt.savefig(output_image, dpi=150)
+    plt.close()
     print(f"✅ Plot saved to {output_image}", flush=True)
 
 
@@ -107,112 +128,71 @@ def generate_organism_bubble_plot(wgs_file, mgx_file, output_image):
     top_wgs = wgs_counts.most_common(10)
     top_mgx = mgx_counts.most_common(10)
 
-    # Collect all unique organisms across both top lists
-    all_organisms = []
-    seen = set()
-    for org, _ in top_wgs:
-        if org not in seen:
-            all_organisms.append(org)
-            seen.add(org)
-    for org, _ in top_mgx:
-        if org not in seen:
-            all_organisms.append(org)
-            seen.add(org)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
 
-    # Build data for both categories per organism
-    wgs_vals = [wgs_counts.get(org, 0) for org in all_organisms]
-    mgx_vals = [mgx_counts.get(org, 0) for org in all_organisms]
+    # Shared bubble sizing: use sqrt scaling for better visual proportionality
+    global_max = max(
+        top_wgs[0][1] if top_wgs else 1,
+        top_mgx[0][1] if top_mgx else 1
+    )
+    max_bubble = 1500  # max bubble area in points^2
 
-    # Determine which top list each organism belongs to
-    wgs_top_set = {org for org, _ in top_wgs}
-    mgx_top_set = {org for org, _ in top_mgx}
+    def bubble_size(count):
+        return max((count / global_max) * max_bubble, 40)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 8))
-
-    # --- WGS panel (top 10 WGS organisms) ---
+    # --- WGS panel ---
     wgs_orgs = [org for org, _ in top_wgs]
     wgs_top_counts = [cnt for _, cnt in top_wgs]
-    # Also show their MGx counts for context
-    wgs_mgx_counts = [mgx_counts.get(org, 0) for org in wgs_orgs]
-
     y_pos = list(range(len(wgs_orgs)))
 
-    # Scale bubble sizes
-    max_count = max(max(wgs_top_counts), max(wgs_mgx_counts)) if wgs_mgx_counts else max(wgs_top_counts)
-    scale = 800 / max_count if max_count > 0 else 1
-
     ax1.scatter(
-        [1] * len(wgs_orgs), y_pos,
-        s=[c * scale for c in wgs_top_counts],
-        color=COLOR_WGS, alpha=0.7, edgecolors='white', linewidth=0.5,
-        label="WGS"
+        [0.5] * len(wgs_orgs), y_pos,
+        s=[bubble_size(c) for c in wgs_top_counts],
+        color=COLOR_WGS, alpha=0.75, edgecolors='white', linewidth=1.5,
+        zorder=3
     )
-    ax1.scatter(
-        [2] * len(wgs_orgs), y_pos,
-        s=[c * scale for c in wgs_mgx_counts],
-        color=COLOR_MGX, alpha=0.7, edgecolors='white', linewidth=0.5,
-        label="MGx"
-    )
-
-    # Add count labels
-    for i, (wc, mc) in enumerate(zip(wgs_top_counts, wgs_mgx_counts)):
-        ax1.annotate(f"{wc:,}", (1, i), textcoords="offset points",
-                     xytext=(0, -5), ha='center', fontsize=7, color='black')
-        if mc > 0:
-            ax1.annotate(f"{mc:,}", (2, i), textcoords="offset points",
-                         xytext=(0, -5), ha='center', fontsize=7, color='black')
+    for i, cnt in enumerate(wgs_top_counts):
+        ax1.annotate(f"{cnt:,}", (0.5, i), ha='center', va='center',
+                     fontsize=8, fontweight='bold', color='white', zorder=4)
 
     ax1.set_yticks(y_pos)
-    ax1.set_yticklabels(wgs_orgs, fontsize=9)
-    ax1.set_xticks([1, 2])
-    ax1.set_xticklabels(["WGS", "MGx"])
-    ax1.set_xlim(0.3, 2.7)
+    ax1.set_yticklabels(wgs_orgs, fontsize=10, style='italic')
+    ax1.set_xticks([])
+    ax1.set_xlim(-0.3, 1.3)
     ax1.invert_yaxis()
-    ax1.set_title("Top 10 WGS Organisms", fontsize=12, fontweight='bold')
-    ax1.legend(loc='lower right', fontsize=8)
-    ax1.grid(axis='x', alpha=0.3)
+    ax1.set_title("Top 10 WGS Organisms", fontsize=13, fontweight='bold', color=COLOR_WGS)
+    ax1.spines['top'].set_visible(False)
+    ax1.spines['right'].set_visible(False)
+    ax1.spines['bottom'].set_visible(False)
+    ax1.grid(axis='y', alpha=0.2, linestyle='--')
 
-    # --- MGx panel (top 10 MGx organisms) ---
+    # --- MGx panel ---
     mgx_orgs = [org for org, _ in top_mgx]
     mgx_top_counts = [cnt for _, cnt in top_mgx]
-    mgx_wgs_counts = [wgs_counts.get(org, 0) for org in mgx_orgs]
-
     y_pos2 = list(range(len(mgx_orgs)))
 
-    max_count2 = max(max(mgx_top_counts), max(mgx_wgs_counts)) if mgx_wgs_counts else max(mgx_top_counts)
-    scale2 = 800 / max_count2 if max_count2 > 0 else 1
-
     ax2.scatter(
-        [1] * len(mgx_orgs), y_pos2,
-        s=[c * scale2 for c in mgx_wgs_counts],
-        color=COLOR_WGS, alpha=0.7, edgecolors='white', linewidth=0.5,
-        label="WGS"
+        [0.5] * len(mgx_orgs), y_pos2,
+        s=[bubble_size(c) for c in mgx_top_counts],
+        color=COLOR_MGX, alpha=0.75, edgecolors='white', linewidth=1.5,
+        zorder=3
     )
-    ax2.scatter(
-        [2] * len(mgx_orgs), y_pos2,
-        s=[c * scale2 for c in mgx_top_counts],
-        color=COLOR_MGX, alpha=0.7, edgecolors='white', linewidth=0.5,
-        label="MGx"
-    )
-
-    for i, (wc, mc) in enumerate(zip(mgx_wgs_counts, mgx_top_counts)):
-        if wc > 0:
-            ax2.annotate(f"{wc:,}", (1, i), textcoords="offset points",
-                         xytext=(0, -5), ha='center', fontsize=7, color='black')
-        ax2.annotate(f"{mc:,}", (2, i), textcoords="offset points",
-                     xytext=(0, -5), ha='center', fontsize=7, color='black')
+    for i, cnt in enumerate(mgx_top_counts):
+        ax2.annotate(f"{cnt:,}", (0.5, i), ha='center', va='center',
+                     fontsize=8, fontweight='bold', color='white', zorder=4)
 
     ax2.set_yticks(y_pos2)
-    ax2.set_yticklabels(mgx_orgs, fontsize=9)
-    ax2.set_xticks([1, 2])
-    ax2.set_xticklabels(["WGS", "MGx"])
-    ax2.set_xlim(0.3, 2.7)
+    ax2.set_yticklabels(mgx_orgs, fontsize=10, style='italic')
+    ax2.set_xticks([])
+    ax2.set_xlim(-0.3, 1.3)
     ax2.invert_yaxis()
-    ax2.set_title("Top 10 MGx Organisms", fontsize=12, fontweight='bold')
-    ax2.legend(loc='lower right', fontsize=8)
-    ax2.grid(axis='x', alpha=0.3)
+    ax2.set_title("Top 10 MGx Organisms", fontsize=13, fontweight='bold', color=COLOR_MGX)
+    ax2.spines['top'].set_visible(False)
+    ax2.spines['right'].set_visible(False)
+    ax2.spines['bottom'].set_visible(False)
+    ax2.grid(axis='y', alpha=0.2, linestyle='--')
 
-    fig.suptitle("Top Organisms by Sample Count", fontsize=14, fontweight='bold', y=0.98)
+    fig.suptitle("Top Organisms by Sample Count", fontsize=15, fontweight='bold', y=0.98)
     plt.tight_layout()
     plt.savefig(output_image, dpi=150, bbox_inches='tight')
     plt.close()
