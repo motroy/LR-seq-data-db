@@ -1,6 +1,7 @@
 import os
 import json
 import gzip
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
@@ -112,8 +113,109 @@ def generate_plot(csv_file, output_image):
     print(f"✅ Plot saved to {output_image}", flush=True)
 
 
+class BubbleChart:
+    """Packed bubble chart using collision-based packing.
+
+    Based on matplotlib gallery example:
+    https://matplotlib.org/stable/gallery/misc/packed_bubbles.html
+    """
+
+    def __init__(self, area, bubble_spacing=0):
+        area = np.asarray(area, dtype=float)
+        r = np.sqrt(area / np.pi)
+
+        self.bubble_spacing = bubble_spacing
+        self.bubbles = np.ones((len(area), 4))
+        self.bubbles[:, 2] = r
+        self.bubbles[:, 3] = area
+        self.maxstep = 2 * self.bubbles[:, 2].max() + self.bubble_spacing
+        self.step_dist = self.maxstep / 2
+
+        length = np.ceil(np.sqrt(len(self.bubbles)))
+        grid = np.arange(length) * self.maxstep
+        gx, gy = np.meshgrid(grid, grid)
+        self.bubbles[:, 0] = gx.flatten()[:len(self.bubbles)]
+        self.bubbles[:, 1] = gy.flatten()[:len(self.bubbles)]
+
+        self.com = self.center_of_mass()
+
+    def center_of_mass(self):
+        return np.average(self.bubbles[:, :2], axis=0, weights=self.bubbles[:, 3])
+
+    def center_distance(self, bubble, bubbles):
+        return np.hypot(bubble[0] - bubbles[:, 0], bubble[1] - bubbles[:, 1])
+
+    def outline_distance(self, bubble, bubbles):
+        center_distance = self.center_distance(bubble, bubbles)
+        return center_distance - bubble[2] - bubbles[:, 2] - self.bubble_spacing
+
+    def check_collisions(self, bubble, bubbles):
+        distance = self.outline_distance(bubble, bubbles)
+        return len(distance[distance < 0])
+
+    def collides_with(self, bubble, bubbles):
+        distance = self.outline_distance(bubble, bubbles)
+        return np.argmin(distance, keepdims=True)
+
+    def collapse(self, n_iterations=50):
+        for _i in range(n_iterations):
+            moves = 0
+            for i in range(len(self.bubbles)):
+                rest_bub = np.delete(self.bubbles, i, 0)
+                dir_vec = self.com - self.bubbles[i, :2]
+                dir_vec = dir_vec / np.sqrt(dir_vec.dot(dir_vec))
+                new_point = self.bubbles[i, :2] + dir_vec * self.step_dist
+                new_bubble = np.append(new_point, self.bubbles[i, 2:4])
+
+                if not self.check_collisions(new_bubble, rest_bub):
+                    self.bubbles[i, :] = new_bubble
+                    self.com = self.center_of_mass()
+                    moves += 1
+                else:
+                    for colliding in self.collides_with(new_bubble, rest_bub):
+                        dir_vec = rest_bub[colliding, :2] - self.bubbles[i, :2]
+                        dir_vec = dir_vec / np.sqrt(dir_vec.dot(dir_vec))
+                        orth = np.array([dir_vec[1], -dir_vec[0]])
+                        new_point1 = self.bubbles[i, :2] + orth * self.step_dist
+                        new_point2 = self.bubbles[i, :2] - orth * self.step_dist
+                        dist1 = self.center_distance(self.com, np.array([new_point1]))
+                        dist2 = self.center_distance(self.com, np.array([new_point2]))
+                        new_point = new_point1 if dist1 < dist2 else new_point2
+                        new_bubble = np.append(new_point, self.bubbles[i, 2:4])
+                        if not self.check_collisions(new_bubble, rest_bub):
+                            self.bubbles[i, :] = new_bubble
+                            self.com = self.center_of_mass()
+
+            if moves / len(self.bubbles) < 0.1:
+                self.step_dist = self.step_dist / 2
+
+    def plot(self, ax, labels, colors):
+        for i in range(len(self.bubbles)):
+            circ = plt.Circle(
+                self.bubbles[i, :2], self.bubbles[i, 2],
+                facecolor=colors[i], alpha=0.8, edgecolor='white', linewidth=1.5)
+            ax.add_patch(circ)
+            # Multi-line label: organism name + count
+            r = self.bubbles[i, 2]
+            fontsize = max(6, min(10, r * 0.55))
+            ax.text(*self.bubbles[i, :2], labels[i],
+                    horizontalalignment='center', verticalalignment='center',
+                    fontsize=fontsize, fontweight='bold', color='white',
+                    wrap=True)
+
+
+def _format_bubble_label(name, count):
+    """Format organism name and count for bubble label, wrapping long names."""
+    # Shorten very long names
+    if len(name) > 20:
+        parts = name.split()
+        if len(parts) >= 2:
+            name = parts[0][:1] + '. ' + ' '.join(parts[1:])
+    return f"{name}\n{count:,}"
+
+
 def generate_organism_bubble_plot(wgs_file, mgx_file, output_image):
-    """Generates a bubble plot showing top 10 organisms in WGS and top 10 in MGx data."""
+    """Generates a packed bubble chart showing top 10 organisms in WGS and MGx data."""
     wgs_data = load_json_gz(wgs_file)
     mgx_data = load_json_gz(mgx_file)
 
@@ -128,71 +230,42 @@ def generate_organism_bubble_plot(wgs_file, mgx_file, output_image):
     top_wgs = wgs_counts.most_common(10)
     top_mgx = mgx_counts.most_common(10)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 9),
+                                    subplot_kw=dict(aspect="equal"))
 
-    # Shared bubble sizing: use sqrt scaling for better visual proportionality
-    global_max = max(
-        top_wgs[0][1] if top_wgs else 1,
-        top_mgx[0][1] if top_mgx else 1
-    )
-    max_bubble = 1500  # max bubble area in points^2
+    # --- WGS packed bubbles ---
+    if top_wgs:
+        wgs_areas = [cnt for _, cnt in top_wgs]
+        wgs_labels = [_format_bubble_label(org, cnt) for org, cnt in top_wgs]
+        wgs_colors = [COLOR_WGS] * len(top_wgs)
 
-    def bubble_size(count):
-        return max((count / global_max) * max_bubble, 40)
+        bc_wgs = BubbleChart(area=wgs_areas, bubble_spacing=0.1)
+        bc_wgs.collapse()
+        bc_wgs.plot(ax1, wgs_labels, wgs_colors)
+        ax1.axis("off")
+        ax1.relim()
+        ax1.autoscale_view()
 
-    # --- WGS panel ---
-    wgs_orgs = [org for org, _ in top_wgs]
-    wgs_top_counts = [cnt for _, cnt in top_wgs]
-    y_pos = list(range(len(wgs_orgs)))
+    ax1.set_title("Top 10 WGS Organisms", fontsize=14, fontweight='bold',
+                  color=COLOR_WGS, pad=15)
 
-    ax1.scatter(
-        [0.5] * len(wgs_orgs), y_pos,
-        s=[bubble_size(c) for c in wgs_top_counts],
-        color=COLOR_WGS, alpha=0.75, edgecolors='white', linewidth=1.5,
-        zorder=3
-    )
-    for i, cnt in enumerate(wgs_top_counts):
-        ax1.annotate(f"{cnt:,}", (0.5, i), ha='center', va='center',
-                     fontsize=8, fontweight='bold', color='white', zorder=4)
+    # --- MGx packed bubbles ---
+    if top_mgx:
+        mgx_areas = [cnt for _, cnt in top_mgx]
+        mgx_labels = [_format_bubble_label(org, cnt) for org, cnt in top_mgx]
+        mgx_colors = [COLOR_MGX] * len(top_mgx)
 
-    ax1.set_yticks(y_pos)
-    ax1.set_yticklabels(wgs_orgs, fontsize=10, style='italic')
-    ax1.set_xticks([])
-    ax1.set_xlim(-0.3, 1.3)
-    ax1.invert_yaxis()
-    ax1.set_title("Top 10 WGS Organisms", fontsize=13, fontweight='bold', color=COLOR_WGS)
-    ax1.spines['top'].set_visible(False)
-    ax1.spines['right'].set_visible(False)
-    ax1.spines['bottom'].set_visible(False)
-    ax1.grid(axis='y', alpha=0.2, linestyle='--')
+        bc_mgx = BubbleChart(area=mgx_areas, bubble_spacing=0.1)
+        bc_mgx.collapse()
+        bc_mgx.plot(ax2, mgx_labels, mgx_colors)
+        ax2.axis("off")
+        ax2.relim()
+        ax2.autoscale_view()
 
-    # --- MGx panel ---
-    mgx_orgs = [org for org, _ in top_mgx]
-    mgx_top_counts = [cnt for _, cnt in top_mgx]
-    y_pos2 = list(range(len(mgx_orgs)))
+    ax2.set_title("Top 10 MGx Organisms", fontsize=14, fontweight='bold',
+                  color=COLOR_MGX, pad=15)
 
-    ax2.scatter(
-        [0.5] * len(mgx_orgs), y_pos2,
-        s=[bubble_size(c) for c in mgx_top_counts],
-        color=COLOR_MGX, alpha=0.75, edgecolors='white', linewidth=1.5,
-        zorder=3
-    )
-    for i, cnt in enumerate(mgx_top_counts):
-        ax2.annotate(f"{cnt:,}", (0.5, i), ha='center', va='center',
-                     fontsize=8, fontweight='bold', color='white', zorder=4)
-
-    ax2.set_yticks(y_pos2)
-    ax2.set_yticklabels(mgx_orgs, fontsize=10, style='italic')
-    ax2.set_xticks([])
-    ax2.set_xlim(-0.3, 1.3)
-    ax2.invert_yaxis()
-    ax2.set_title("Top 10 MGx Organisms", fontsize=13, fontweight='bold', color=COLOR_MGX)
-    ax2.spines['top'].set_visible(False)
-    ax2.spines['right'].set_visible(False)
-    ax2.spines['bottom'].set_visible(False)
-    ax2.grid(axis='y', alpha=0.2, linestyle='--')
-
-    fig.suptitle("Top Organisms by Sample Count", fontsize=15, fontweight='bold', y=0.98)
+    fig.suptitle("Top Organisms by Sample Count", fontsize=16, fontweight='bold', y=0.97)
     plt.tight_layout()
     plt.savefig(output_image, dpi=150, bbox_inches='tight')
     plt.close()
