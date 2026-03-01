@@ -9,7 +9,7 @@ PAGE_SIZE = 10000
 def fetch_ena(platform, tax_id):
     print(f"🔍 Fetching {platform} samples from ENA for tax ID {tax_id}...")
 
-    ena_url = "https://www.ebi.ac.uk/ena/portal/api/search"
+    ena_url = "                                           "
     query = f'instrument_platform="{platform}" AND tax_tree({tax_id})'
     fields = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,pubmed_id,read_count,base_count,library_strategy"
 
@@ -29,7 +29,7 @@ def fetch_ena(platform, tax_id):
         data = None
         for attempt in range(3):
             try:
-                response = requests.post(ena_url, data=params, timeout=60)
+                response = requests.get(ena_url, params=params, timeout=60)
                 response.raise_for_status()
                 data = response.json()
                 break
