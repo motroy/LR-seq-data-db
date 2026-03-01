@@ -60,3 +60,11 @@
 2026-03-01 01:54:28,822 - INFO -   Loaded 0 long-read runs (0 skipped — no biosample ID)
 2026-03-01 01:54:28,822 - INFO - Long-read: 0 runs across 0 unique biosamples
 2026-03-01 01:54:28,823 - ERROR - No long-read data retrieved — aborting.
+2026-03-01 10:17:14,316 - INFO - Loading long-read data from local file: genome-dashboard/data_bacteria.json.gz
+2026-03-01 10:17:14,317 - INFO -   Loaded 0 long-read runs (0 skipped — no biosample ID)
+2026-03-01 10:17:14,317 - INFO - Long-read: 0 runs across 0 unique biosamples
+2026-03-01 10:17:14,317 - ERROR - No long-read data retrieved — aborting.
+2026-03-01 10:17:14,454 - INFO - Loading long-read data from local file: genome-dashboard/data_metagenome.json.gz
+2026-03-01 10:17:14,454 - INFO -   Loaded 0 long-read runs (0 skipped — no biosample ID)
+2026-03-01 10:17:14,454 - INFO - Long-read: 0 runs across 0 unique biosamples
+2026-03-01 10:17:14,454 - ERROR - No long-read data retrieved — aborting.
