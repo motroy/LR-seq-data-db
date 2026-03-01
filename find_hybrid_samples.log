@@ -52,3 +52,11 @@
 2026-02-27 12:52:23,365 - INFO - Hybrid biosamples (long ∩ short): 1,420
 2026-02-27 12:52:23,428 - INFO - Results saved to genome-dashboard/hybrid_mgx.json.gz
 2026-02-27 12:52:23,428 - INFO - Done in 93.0s — 1,420 hybrid biosamples written.
+2026-03-01 01:54:28,704 - INFO - Loading long-read data from local file: genome-dashboard/data_bacteria.json.gz
+2026-03-01 01:54:28,704 - INFO -   Loaded 0 long-read runs (0 skipped — no biosample ID)
+2026-03-01 01:54:28,704 - INFO - Long-read: 0 runs across 0 unique biosamples
+2026-03-01 01:54:28,704 - ERROR - No long-read data retrieved — aborting.
+2026-03-01 01:54:28,822 - INFO - Loading long-read data from local file: genome-dashboard/data_metagenome.json.gz
+2026-03-01 01:54:28,822 - INFO -   Loaded 0 long-read runs (0 skipped — no biosample ID)
+2026-03-01 01:54:28,822 - INFO - Long-read: 0 runs across 0 unique biosamples
+2026-03-01 01:54:28,823 - ERROR - No long-read data retrieved — aborting.
