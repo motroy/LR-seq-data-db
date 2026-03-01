@@ -1,43 +1,42 @@
 import requests
 import json
-import random
 import time
 import gzip
 import argparse
 
 PAGE_SIZE = 10000
 
-def fetch_page(platform, tax_id, offset, size):
+def fetch_ena(platform, tax_id):
+    print(f"🔍 Fetching {platform} samples from ENA for tax ID {tax_id}...")
+
     ena_url = "https://www.ebi.ac.uk/ena/portal/api/search"
     query = f'instrument_platform="{platform}" AND tax_tree({tax_id})'
     fields = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,pubmed_id,read_count,base_count,library_strategy"
-    params = {
-        "result": "read_run",
-        "query": query,
-        "fields": fields,
-        "format": "json",
-        "limit": size,
-        "offset": offset,
-    }
-
-    for attempt in range(3):
-        try:
-            response = requests.get(ena_url, params=params, timeout=60)
-            response.raise_for_status()
-            return response.json()
-        except requests.exceptions.RequestException as err:
-            print(f"⚠️ Attempt {attempt+1} failed: {err}")
-            time.sleep(5)
-    return None
-
-def fetch_ena(platform, tax_id):
-    print(f"🔍 Fetching {platform} samples from ENA for tax ID {tax_id}...")
 
     results = []
     offset = 0
 
     while True:
-        data = fetch_page(platform, tax_id, offset, PAGE_SIZE)
+        params = {
+            "result": "read_run",
+            "query": query,
+            "fields": fields,
+            "format": "json",
+            "limit": PAGE_SIZE,
+            "offset": offset,
+        }
+
+        data = None
+        for attempt in range(3):
+            try:
+                response = requests.post(ena_url, data=params, timeout=60)
+                response.raise_for_status()
+                data = response.json()
+                break
+            except requests.exceptions.RequestException as err:
+                print(f"⚠️ Attempt {attempt+1} failed: {err}")
+                time.sleep(5)
+
         if data is None:
             print(f"❌ Failed to retrieve data for {platform}")
             return []
