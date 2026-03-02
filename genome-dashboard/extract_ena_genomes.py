@@ -29,7 +29,7 @@ def fetch_ena(platform, tax_id):
         data = None
         for attempt in range(3):
             try:
-                response = requests.post(ena_url, data=params, timeout=60)
+                response = requests.get(ena_url, params=params, timeout=60)
                 response.raise_for_status()
                 data = response.json()
                 break
