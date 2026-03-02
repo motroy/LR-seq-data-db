@@ -34,7 +34,7 @@ LONG_READ_PLATFORMS = ["OXFORD_NANOPORE", "PACBIO_SMRT"]
 # All ENA short-read platform codes
 SHORT_READ_PLATFORMS = ["ILLUMINA", "ION_TORRENT", "BGISEQ", "LS454", "COMPLETE_GENOMICS"]
 
-FETCH_FIELDS = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,pubmed_id,library_strategy"
+FETCH_FIELDS = "accession,sample_accession,scientific_name,instrument_platform,instrument_model,study_accession,library_strategy"
 
 
 def fetch_ena_platform(platform: str, tax_id: str, retries: int = 3) -> list:
@@ -47,7 +47,7 @@ def fetch_ena_platform(platform: str, tax_id: str, retries: int = 3) -> list:
         "query": f'instrument_platform="{platform}" AND tax_tree({tax_id})',
         "fields": FETCH_FIELDS,
         "format": "json",
-        "limit": 1_000_000,
+        "limit": 0,
     }
     for attempt in range(retries):
         try:
