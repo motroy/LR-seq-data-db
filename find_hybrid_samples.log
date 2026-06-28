@@ -444,3 +444,29 @@
 2026-06-21 03:44:35,853 - INFO - Hybrid biosamples (long ∩ short): 9,699
 2026-06-21 03:44:36,375 - INFO - Results saved to genome-dashboard/hybrid_mgx.json.gz
 2026-06-21 03:44:36,376 - INFO - Done in 332.5s — 9,699 hybrid biosamples written.
+2026-06-28 02:57:19,317 - INFO - Loading long-read data from local file: genome-dashboard/data_bacteria.json.gz
+2026-06-28 02:57:19,707 - INFO -   Loaded 119,021 long-read runs (0 skipped — no biosample ID)
+2026-06-28 02:57:19,791 - INFO - Long-read: 119,021 runs across 97,825 unique biosamples
+2026-06-28 02:57:19,791 - INFO - Fetching short-read runs for tax_id=2...
+2026-06-28 02:59:10,020 - INFO -   ILLUMINA: 3,858,833 runs fetched
+2026-06-28 02:59:12,836 - INFO -   ION_TORRENT: 16,925 runs fetched
+2026-06-28 02:59:14,984 - INFO -   BGISEQ: 9,698 runs fetched
+2026-06-28 02:59:17,782 - INFO -   LS454: 21,962 runs fetched
+2026-06-28 02:59:19,176 - INFO -   COMPLETE_GENOMICS: 1,238 runs fetched
+2026-06-28 02:59:24,340 - INFO - Short-read: 3,908,656 runs across 3,701,448 unique biosamples
+2026-06-28 02:59:24,756 - INFO - Hybrid biosamples (long ∩ short): 39,653
+2026-06-28 02:59:26,662 - INFO - Results saved to genome-dashboard/hybrid_wgs.json.gz
+2026-06-28 02:59:26,662 - INFO - Done in 127.3s — 39,653 hybrid biosamples written.
+2026-06-28 02:59:27,669 - INFO - Loading long-read data from local file: genome-dashboard/data_metagenome.json.gz
+2026-06-28 02:59:28,414 - INFO -   Loaded 226,844 long-read runs (0 skipped — no biosample ID)
+2026-06-28 02:59:28,638 - INFO - Long-read: 226,844 runs across 197,855 unique biosamples
+2026-06-28 02:59:28,639 - INFO - Fetching short-read runs for tax_id=408169...
+2026-06-28 03:04:36,261 - INFO -   ILLUMINA: 8,885,307 runs fetched
+2026-06-28 03:04:49,477 - INFO -   ION_TORRENT: 202,526 runs fetched
+2026-06-28 03:04:52,601 - INFO -   BGISEQ: 36,158 runs fetched
+2026-06-28 03:05:01,545 - INFO -   LS454: 305,477 runs fetched
+2026-06-28 03:05:02,635 - INFO -   COMPLETE_GENOMICS: 634 runs fetched
+2026-06-28 03:05:15,085 - INFO - Short-read: 9,430,102 runs across 8,133,183 unique biosamples
+2026-06-28 03:05:16,003 - INFO - Hybrid biosamples (long ∩ short): 10,119
+2026-06-28 03:05:16,532 - INFO - Results saved to genome-dashboard/hybrid_mgx.json.gz
+2026-06-28 03:05:16,532 - INFO - Done in 348.9s — 10,119 hybrid biosamples written.
