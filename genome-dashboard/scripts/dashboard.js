@@ -24,6 +24,9 @@ const DATASETS = {
 };
 
 const TOP_N_ORGANISMS_PLOT = 20;
+const TOP_N_ORGANISMS_PLOT_MOBILE = 10;
+const isNarrow = () => window.matchMedia("(max-width: 640px)").matches;
+const topN = () => (isNarrow() ? TOP_N_ORGANISMS_PLOT_MOBILE : TOP_N_ORGANISMS_PLOT);
 
 const params = new URLSearchParams(window.location.search);
 let activeType = params.get("type") === "mgx" ? "mgx" : "wgs";
@@ -64,7 +67,8 @@ const techFormatter = (cell) => {
 const table = new Tabulator("#genome-table", {
   data: [],
   layout: "fitColumns",
-  responsiveLayout: "hide",
+  responsiveLayout: "collapse",
+  responsiveLayoutCollapseStartOpen: false,
   height: "640px",
   pagination: true,
   paginationSize: 25,
@@ -74,14 +78,15 @@ const table = new Tabulator("#genome-table", {
   placeholder: "No samples match the current filters",
   columnDefaults: { headerMenu: columnVisibilityMenu, tooltip: true, resizable: "header" },
   columns: [
-    { title: "Run", field: "sample_id", formatter: (c) => enaLink(c.getValue()), width: 130, minWidth: 110 },
-    { title: "Organism", field: "scientific_name", formatter: (c) => `<em>${escapeHtml(c.getValue())}</em>`, minWidth: 180 },
-    { title: "Technology", field: "instrument_platform", formatter: techFormatter, width: 120, hozAlign: "center" },
-    { title: "Instrument", field: "instrument_model", minWidth: 130 },
-    { title: "Library", field: "library_strategy", width: 120 },
-    { title: "Reads", field: "read_count", formatter: numberFormatter, sorter: "number", hozAlign: "right", width: 120, cssClass: "num" },
-    { title: "Bases", field: "base_count", formatter: numberFormatter, sorter: "number", hozAlign: "right", width: 150, cssClass: "num" },
-    { title: "Study", field: "study_accession", formatter: (c) => enaLink(c.getValue()), width: 130 },
+    // `responsive` sets hide priority on narrow screens: 0 = never hidden, higher = hidden first.
+    { title: "Run", field: "sample_id", formatter: (c) => enaLink(c.getValue()), width: 130, minWidth: 110, responsive: 0 },
+    { title: "Organism", field: "scientific_name", formatter: (c) => `<em>${escapeHtml(c.getValue())}</em>`, minWidth: 150, responsive: 0 },
+    { title: "Technology", field: "instrument_platform", formatter: techFormatter, width: 120, hozAlign: "center", responsive: 1 },
+    { title: "Instrument", field: "instrument_model", minWidth: 130, responsive: 4 },
+    { title: "Library", field: "library_strategy", width: 120, responsive: 5 },
+    { title: "Reads", field: "read_count", formatter: numberFormatter, sorter: "number", hozAlign: "right", width: 120, cssClass: "num", responsive: 2 },
+    { title: "Bases", field: "base_count", formatter: numberFormatter, sorter: "number", hozAlign: "right", width: 150, cssClass: "num", responsive: 3 },
+    { title: "Study", field: "study_accession", formatter: (c) => enaLink(c.getValue()), width: 130, responsive: 6 },
     { title: "Sample", field: "sample_accession", formatter: (c) => enaLink(c.getValue()), width: 140, visible: false },
     { title: "Source", field: "source", width: 90, visible: false },
   ],
@@ -195,7 +200,7 @@ function computeBoxTraces(data, field, t) {
   // Restrict to the most frequent organisms so the chart stays readable.
   const counts = new Map();
   for (const d of data) counts.set(d.scientific_name, (counts.get(d.scientific_name) || 0) + 1);
-  const topOrgs = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP_N_ORGANISMS_PLOT).map(([o]) => o);
+  const topOrgs = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, topN()).map(([o]) => o);
   const topSet = new Set(topOrgs);
 
   const groups = { OXFORD_NANOPORE: new Map(), PACBIO_SMRT: new Map() };
@@ -245,29 +250,31 @@ function computeBoxTraces(data, field, t) {
 
 function renderBoxPlot(data, elementId, field, title, yLabel) {
   const t = tokens();
+  const narrow = isNarrow();
   const traces = computeBoxTraces(data, field, t);
   const base = plotlyBase(t);
   const layout = {
     ...base,
-    title: { text: title, x: 0.02, xanchor: "left", font: { family: t.font, size: 14, color: t.text } },
+    title: { text: title, x: 0.02, xanchor: "left", font: { family: t.font, size: narrow ? 13 : 14, color: t.text } },
     boxmode: "group",
-    xaxis: { ...base.xaxis, tickangle: -40, tickfont: { size: 10, color: t.text2 }, automargin: true },
+    xaxis: { ...base.xaxis, tickangle: narrow ? -60 : -40, tickfont: { size: narrow ? 9 : 10, color: t.text2 }, automargin: true },
     yaxis: { ...base.yaxis, type: "log", title: { text: yLabel, font: { color: t.text3 } }, tickformat: "~s" },
-    legend: { orientation: "h", x: 1, xanchor: "right", y: 1.14, font: { color: t.text2 } },
-    margin: { t: 56, r: 12, b: 110, l: 60 },
-    height: 420,
+    legend: { orientation: "h", x: 1, xanchor: "right", y: narrow ? 1.2 : 1.14, font: { color: t.text2, size: narrow ? 11 : 12 } },
+    margin: narrow ? { t: 64, r: 8, b: 90, l: 48 } : { t: 56, r: 12, b: 110, l: 60 },
+    height: narrow ? 380 : 420,
   };
   if (!traces.length) {
     layout.annotations = [{ text: "No data for the current filters", showarrow: false, font: { color: t.text3, size: 13 } }];
   }
-  Plotly.react(elementId, traces, layout, PLOTLY_CONFIG);
+  // The modebar overlaps the title on phones; touch users rarely need it.
+  Plotly.react(elementId, traces, layout, { ...PLOTLY_CONFIG, displayModeBar: !narrow });
 }
 
 function renderPlots(data) {
   // Plotly falls back to a fixed 700px width if it measures a hidden container, so wait until visible.
   if (!window.Plotly || els.plots.classList.contains("hidden")) return;
-  renderBoxPlot(data, "reads-plot", "read_count", `Reads per run · top ${TOP_N_ORGANISMS_PLOT} organisms`, "Reads (log scale)");
-  renderBoxPlot(data, "bases-plot", "base_count", `Bases per run · top ${TOP_N_ORGANISMS_PLOT} organisms`, "Bases (log scale)");
+  renderBoxPlot(data, "reads-plot", "read_count", `Reads per run · top ${topN()} organisms`, "Reads (log scale)");
+  renderBoxPlot(data, "bases-plot", "base_count", `Bases per run · top ${topN()} organisms`, "Bases (log scale)");
 }
 
 onThemeChange(() => { if (allData.length) renderPlots(filteredData); });

@@ -91,6 +91,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: var(--font);
   font-size: 15px;
   line-height: 1.5;
@@ -111,6 +112,8 @@ button { font-family: inherit; }
   box-shadow: var(--ring);
   border-radius: var(--radius-sm);
 }
+
+@supports not (overflow: clip) { body { overflow-x: hidden; } }
 
 .hidden { display: none !important; }
 
@@ -244,8 +247,15 @@ button { font-family: inherit; }
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 @media (max-width: 640px) {
+  .site-header__inner { padding: 0 0.85rem; gap: 0.5rem; }
   .brand__text { display: none; }
-  .site-nav a { padding: 0.4rem 0.55rem; font-size: 0.82rem; }
+  .site-nav { margin-left: 0; }
+  .site-nav a { padding: 0.35rem 0.5rem; font-size: 0.82rem; }
+  .site-header__actions { gap: 0.3rem; }
+  .icon-btn { width: 34px; height: 34px; }
+}
+@media (max-width: 440px) {
+  .site-header__actions a.icon-btn { display: none; }
 }
 
 /* ------------------------------------------------------------
@@ -299,7 +309,7 @@ button { font-family: inherit; }
 .hero::before {
   content: "";
   position: absolute;
-  inset: -60px -20% 0;
+  inset: -60px 0 0;
   z-index: -1;
   background:
     radial-gradient(600px 260px at 30% 0%, color-mix(in srgb, var(--wgs) 16%, transparent), transparent 70%),
@@ -324,6 +334,16 @@ button { font-family: inherit; }
   margin: 0 auto;
   color: var(--text-2);
   font-size: 1.05rem;
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 2rem 0 1.25rem; }
+  .hero p { font-size: 0.98rem; }
+  .page { padding: 1rem 0.9rem 3rem; }
+  .section__title { font-size: 1.05rem; }
+  .panel__head { padding: 0.8rem 0.9rem; }
+  .panel__body { padding: 0.5rem 0.5rem 0.75rem; }
+  .chart { min-height: 300px; }
 }
 
 .badge-row {
@@ -597,6 +617,18 @@ a.tile:hover { text-decoration: none; border-color: var(--tile-color, var(--acce
   letter-spacing: -0.02em;
 }
 .page-head p { margin: 0.15rem 0 0; color: var(--text-3); font-size: 0.88rem; }
+
+@media (max-width: 640px) {
+  .page-head h1 { font-size: 1.25rem; }
+  .toolbar { padding: 0.85rem 0.9rem; gap: 0.7rem 0.8rem; }
+  .toolbar__actions { justify-content: space-between; }
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+  .stat-card { padding: 0.8rem 0.85rem; }
+  .stat-card .stat-value { font-size: 1.25rem; }
+  .plot-card { padding: 0.25rem 0 0; }
+  .table-toolbar { padding: 0.6rem 0.75rem; }
+  .btn { padding: 0.4rem 0.7rem; }
+}
 
 .segmented {
   display: inline-flex;
@@ -1048,7 +1080,28 @@ a.tile:hover { text-decoration: none; border-color: var(--tile-color, var(--acce
   color: var(--text-2) !important;
   padding: 0.35rem 0.6rem !important;
 }
-.tabulator .tabulator-footer .tabulator-footer-contents { padding: 0 !important; }
+.tabulator .tabulator-footer .tabulator-footer-contents {
+  padding: 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.35rem 0.75rem !important;
+}
+.tabulator .tabulator-footer .tabulator-paginator {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 0.2rem !important;
+  text-align: right !important;
+}
+@media (max-width: 640px) {
+  .tabulator .tabulator-footer .tabulator-paginator > label { display: none !important; }
+  .tabulator .tabulator-footer .tabulator-page[data-page="first"],
+  .tabulator .tabulator-footer .tabulator-page[data-page="last"] { display: none !important; }
+  .tabulator .tabulator-footer .tabulator-page-counter { width: 100%; font-size: 0.76rem; }
+}
 .tabulator .tabulator-footer .tabulator-page-counter { color: var(--text-3) !important; font-size: 0.8rem; }
 .tabulator .tabulator-footer .tabulator-paginator { color: var(--text-2) !important; font-family: var(--font) !important; }
 .tabulator .tabulator-footer .tabulator-paginator label { color: var(--text-3) !important; font-size: 0.8rem; }
@@ -1088,6 +1141,34 @@ a.tile:hover { text-decoration: none; border-color: var(--tile-color, var(--acce
 }
 .tabulator-row .tabulator-cell .pill--ont { background: color-mix(in srgb, var(--c2) 14%, transparent); border-color: color-mix(in srgb, var(--c2) 35%, transparent); color: var(--c2); }
 .tabulator-row .tabulator-cell .pill--pb  { background: color-mix(in srgb, var(--c3) 14%, transparent); border-color: color-mix(in srgb, var(--c3) 35%, transparent); color: var(--c3); }
+
+/* Responsive collapse: the toggle column and the per-row expansion panel */
+.tabulator-row .tabulator-responsive-collapse-toggle {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 5px !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+}
+.tabulator-row .tabulator-responsive-collapse-toggle svg { stroke: var(--accent) !important; }
+.tabulator-row .tabulator-responsive-collapse {
+  padding: 0.35rem 0.75rem 0.6rem !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: none !important;
+  background: var(--surface-2) !important;
+}
+.tabulator-row .tabulator-responsive-collapse table { font-size: 0.82rem !important; color: var(--text) !important; }
+.tabulator-row .tabulator-responsive-collapse table tr td { padding: 0.2rem 0.6rem 0.2rem 0 !important; vertical-align: top; }
+.tabulator-row .tabulator-responsive-collapse table tr td:first-of-type {
+  color: var(--text-3) !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-top: 0.32rem !important;
+}
 
 .tabulator-menu {
   background: var(--surface) !important;
