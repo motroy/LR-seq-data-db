@@ -56,7 +56,8 @@ const linkList = (value, urlFor) => (value || "")
 const table = new Tabulator("#hybrid-table", {
   data: [],
   layout: "fitColumns",
-  responsiveLayout: "hide",
+  responsiveLayout: "collapse",
+  responsiveLayoutCollapseStartOpen: false,
   height: "640px",
   pagination: true,
   paginationSize: 25,
@@ -70,20 +71,20 @@ const table = new Tabulator("#hybrid-table", {
   columns: [
     {
       formatter: "rowSelection", titleFormatter: "rowSelection",
-      hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 44, resizable: false, headerMenu: false,
+      hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 40, resizable: false, headerMenu: false, responsive: 0,
       cellClick: (e, cell) => cell.getRow().toggleSelect(),
     },
     {
-      title: "BioSample", field: "biosample", width: 150,
+      title: "BioSample", field: "biosample", width: 140, responsive: 0,
       formatter: (c) => `<a href="https://www.ncbi.nlm.nih.gov/biosample/${encodeURIComponent(c.getValue())}" target="_blank" rel="noopener">${escapeHtml(c.getValue())}</a>`,
     },
-    { title: "Organism", field: "scientific_name", minWidth: 200, formatter: (c) => `<em>${escapeHtml(c.getValue())}</em>` },
-    { title: "Long-read instruments", field: "long_instruments", minWidth: 160 },
-    { title: "Short-read instruments", field: "short_instruments", minWidth: 160 },
-    { title: "LR runs", field: "long_run_count", sorter: "number", hozAlign: "right", width: 100, cssClass: "num" },
-    { title: "SR runs", field: "short_run_count", sorter: "number", hozAlign: "right", width: 100, cssClass: "num" },
-    { title: "Studies", field: "study_accessions", minWidth: 140, formatter: (c) => linkList(c.getValue(), (id) => `https://www.ncbi.nlm.nih.gov/sra/?term=${encodeURIComponent(id)}`) },
-    { title: "PubMed", field: "pubmed_ids", width: 130, formatter: (c) => linkList(c.getValue(), (id) => `https://pubmed.ncbi.nlm.nih.gov/${encodeURIComponent(id)}/`) },
+    { title: "Organism", field: "scientific_name", minWidth: 140, responsive: 0, formatter: (c) => `<em>${escapeHtml(c.getValue())}</em>` },
+    { title: "Long-read instruments", field: "long_instruments", minWidth: 160, responsive: 1 },
+    { title: "Short-read instruments", field: "short_instruments", minWidth: 160, responsive: 2 },
+    { title: "LR runs", field: "long_run_count", sorter: "number", hozAlign: "right", width: 100, cssClass: "num", responsive: 3 },
+    { title: "SR runs", field: "short_run_count", sorter: "number", hozAlign: "right", width: 100, cssClass: "num", responsive: 4 },
+    { title: "Studies", field: "study_accessions", minWidth: 140, responsive: 5, formatter: (c) => linkList(c.getValue(), (id) => `https://www.ncbi.nlm.nih.gov/sra/?term=${encodeURIComponent(id)}`) },
+    { title: "PubMed", field: "pubmed_ids", width: 130, responsive: 6, formatter: (c) => linkList(c.getValue(), (id) => `https://pubmed.ncbi.nlm.nih.gov/${encodeURIComponent(id)}/`) },
   ],
 });
 
