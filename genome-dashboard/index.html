@@ -1,65 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Long-Read Sequencing Data Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/styles.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Long-Read Sequencing Data · ENA bacterial genomes &amp; metagenomes</title>
+  <meta name="description" content="Explore long-read (Oxford Nanopore and PacBio) bacterial whole-genome and metagenome sequencing records from the European Nucleotide Archive, plus biosamples with hybrid short- and long-read data. Updated weekly." />
+  <meta name="theme-color" content="#3b5bdb" />
+  <meta property="og:title" content="Long-Read Sequencing Data Dashboard" />
+  <meta property="og:description" content="Weekly-updated dashboards of Oxford Nanopore and PacBio bacterial WGS and metagenome samples from ENA, including hybrid short+long read biosamples." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("lrseq-theme");
+        if (t !== "light" && t !== "dark") t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="assets/styles.css" rel="stylesheet" />
 </head>
-<body class="landing-body">
-  <div class="landing-wrapper">
-    <header class="landing-header">
-      <h1>Long-Read Sequencing Data</h1>
-      <p class="landing-subtitle">Explore bacterial genome and metagenome sequencing records from the European Nucleotide Archive</p>
-    </header>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="dashboard-cards">
-      <a href="dashboard.html?type=wgs" class="dashboard-card">
-        <div class="card-icon">WGS</div>
-        <h2>Whole Genome Sequencing</h2>
-        <p>Browse bacterial whole-genome sequencing samples from Oxford Nanopore and PacBio platforms.</p>
-        <span class="card-action">Open Dashboard &rarr;</span>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 7h10M8 12h12M4 17h7M15 17h5"/></svg>
+        </span>
+        <span class="brand__text">LR-seq Data<span class="brand__sub">Long reads from ENA</span></span>
       </a>
-      <a href="dashboard.html?type=mgx" class="dashboard-card">
-        <div class="card-icon">MGx</div>
-        <h2>Metagenomics</h2>
-        <p>Explore metagenomic sequencing samples across long-read sequencing technologies.</p>
-        <span class="card-action">Open Dashboard &rarr;</span>
-      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" data-nav="home" aria-current="page">Overview</a>
+        <a href="dashboard.html?type=wgs" data-nav="wgs">WGS</a>
+        <a href="dashboard.html?type=mgx" data-nav="mgx">MGx</a>
+        <a href="hybrid.html?type=wgs" data-nav="hybrid">Hybrid</a>
+      </nav>
+      <div class="site-header__actions">
+        <a class="icon-btn" href="https://github.com/motroy/LR-seq-data-db" target="_blank" rel="noopener" aria-label="Source code on GitHub" title="Source on GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <div class="dashboard-cards dashboard-cards-hybrid">
-      <a href="hybrid.html?type=wgs" class="dashboard-card dashboard-card-hybrid">
-        <div class="card-icon card-icon-hybrid">HYB</div>
-        <h2>Hybrid WGS</h2>
-        <p>Biosamples with <strong>both short and long reads</strong> for whole-genome sequencing — ideal for hybrid assembly workflows.</p>
-        <span class="card-action">Open Dashboard &rarr;</span>
-      </a>
-      <a href="hybrid.html?type=mgx" class="dashboard-card dashboard-card-hybrid">
-        <div class="card-icon card-icon-hybrid">HYB</div>
-        <h2>Hybrid MGx</h2>
-        <p>Metagenomic biosamples with <strong>both short and long reads</strong> — enabling richer community-level analyses.</p>
-        <span class="card-action">Open Dashboard &rarr;</span>
-      </a>
-    </div>
+  <main id="main" class="page">
 
-    <section class="growth-section">
-      <h2>Sample Growth Over Time</h2>
-      <img src="assets/sample_plot.png" class="growth-chart" alt="Sample growth over time">
+    <section class="hero">
+      <span class="eyebrow">European Nucleotide Archive · long-read sequencing</span>
+      <h1>Bacterial genomes &amp; metagenomes,<br /><span class="grad">sequenced with long reads</span></h1>
+      <p>A weekly-refreshed catalogue of Oxford Nanopore and PacBio sequencing runs for bacterial whole-genome and metagenomic samples, with biosamples that also have matching short-read data for hybrid assembly.</p>
+      <div class="badge-row">
+        <span class="badge"><span class="dot" aria-hidden="true"></span>Updated <span data-updated>…</span></span>
+        <span class="badge">Refreshed weekly by GitHub Actions</span>
+        <span class="badge">Export TSV / XLSX</span>
+      </div>
     </section>
 
-    <section class="growth-section">
-      <h2>Top Organisms by Sample Count</h2>
-      <img src="assets/organism_bubble_plot.png" class="growth-chart" alt="Top organisms in WGS and MGx data">
+    <section class="stat-strip" aria-label="Latest sample counts">
+      <a class="tile tile--wgs" href="dashboard.html?type=wgs">
+        <div class="tile__label">WGS samples</div>
+        <div class="tile__value" data-stat="wgs_samples"><span class="skeleton"></span></div>
+        <div class="tile__delta" data-delta="wgs_samples"></div>
+      </a>
+      <a class="tile tile--mgx" href="dashboard.html?type=mgx">
+        <div class="tile__label">Metagenome samples</div>
+        <div class="tile__value" data-stat="mgx_samples"><span class="skeleton"></span></div>
+        <div class="tile__delta" data-delta="mgx_samples"></div>
+      </a>
+      <a class="tile tile--hyb" href="hybrid.html?type=wgs">
+        <div class="tile__label">Hybrid WGS biosamples</div>
+        <div class="tile__value" data-stat="hybrid_wgs"><span class="skeleton"></span></div>
+        <div class="tile__delta" data-delta="hybrid_wgs"></div>
+      </a>
+      <a class="tile tile--hyb2" href="hybrid.html?type=mgx">
+        <div class="tile__label">Hybrid MGx biosamples</div>
+        <div class="tile__value" data-stat="hybrid_mgx"><span class="skeleton"></span></div>
+        <div class="tile__delta" data-delta="hybrid_mgx"></div>
+      </a>
     </section>
 
-    <footer class="landing-footer">
-      <p>Data sourced from the <a href="https://www.ebi.ac.uk/ena/browser/home" target="_blank" rel="noopener">European Nucleotide Archive</a>. Updated weekly.</p>
-    </footer>
-  </div>
+    <section class="section" aria-labelledby="dashboards-title">
+      <div class="section__head">
+        <div>
+          <h2 class="section__title" id="dashboards-title">Dashboards</h2>
+          <p class="section__desc">Filter, sort and export sample-level metadata. Each dashboard loads its full dataset in the browser.</p>
+        </div>
+      </div>
+      <div class="card-grid">
+        <a href="dashboard.html?type=wgs" class="dash-card dash-card--wgs">
+          <div class="dash-card__top">
+            <div class="dash-card__icon" aria-hidden="true">WGS</div>
+            <div><h2>Whole Genome Sequencing</h2><span class="dash-card__kicker">Bacteria · long reads</span></div>
+          </div>
+          <p>Browse bacterial whole-genome sequencing runs from Oxford Nanopore and PacBio platforms, with per-organism read and base distributions.</p>
+          <div class="dash-card__foot"><span>Open dashboard →</span><span class="dash-card__count" data-count="wgs_samples"></span></div>
+        </a>
+        <a href="dashboard.html?type=mgx" class="dash-card dash-card--mgx">
+          <div class="dash-card__top">
+            <div class="dash-card__icon" aria-hidden="true">MGx</div>
+            <div><h2>Metagenomics</h2><span class="dash-card__kicker">Metagenomes · long reads</span></div>
+          </div>
+          <p>Explore metagenomic sequencing runs across long-read technologies, including amplicon and non-amplicon libraries.</p>
+          <div class="dash-card__foot"><span>Open dashboard →</span><span class="dash-card__count" data-count="mgx_samples"></span></div>
+        </a>
+        <a href="hybrid.html?type=wgs" class="dash-card dash-card--hyb">
+          <div class="dash-card__top">
+            <div class="dash-card__icon" aria-hidden="true">HYB</div>
+            <div><h2>Hybrid WGS</h2><span class="dash-card__kicker">Short + long reads · same biosample</span></div>
+          </div>
+          <p>Biosamples with <strong>both</strong> short-read and long-read whole-genome data in SRA, ideal for hybrid assembly workflows.</p>
+          <div class="dash-card__foot"><span>Open dashboard →</span><span class="dash-card__count" data-count="hybrid_wgs"></span></div>
+        </a>
+        <a href="hybrid.html?type=mgx" class="dash-card dash-card--hyb2">
+          <div class="dash-card__top">
+            <div class="dash-card__icon" aria-hidden="true">HYB</div>
+            <div><h2>Hybrid MGx</h2><span class="dash-card__kicker">Short + long reads · metagenomes</span></div>
+          </div>
+          <p>Metagenomic biosamples with <strong>both</strong> short-read and long-read data, enabling richer community-level analyses.</p>
+          <div class="dash-card__foot"><span>Open dashboard →</span><span class="dash-card__count" data-count="hybrid_mgx"></span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="growth-title">
+      <div class="panel">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="growth-title">Sample growth over time</h2>
+            <p class="section__desc">Counts recorded at each weekly data refresh.</p>
+          </div>
+          <div class="segmented" role="group" aria-label="Chart series">
+            <button type="button" data-series="samples" aria-pressed="true">Long-read samples</button>
+            <button type="button" data-series="hybrid" aria-pressed="false">Hybrid biosamples</button>
+          </div>
+        </div>
+        <div class="panel__body">
+          <div id="growth-chart" class="chart" role="img" aria-label="Line chart of sample counts over time"></div>
+          <noscript><div class="chart-fallback"><img src="assets/sample_plot.png" alt="Sample growth over time" /></div></noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="organisms-title">
+      <div class="panel">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title" id="organisms-title">Top organisms by sample count</h2>
+            <p class="section__desc">Bubble area is proportional to the number of samples, for WGS and MGx separately.</p>
+          </div>
+        </div>
+        <div class="panel__body">
+          <figure class="figure">
+            <img src="assets/organism_bubble_plot.png" alt="Packed bubble chart of the most frequently sequenced organisms in the WGS and MGx datasets" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="about-title">
+      <div class="section__head">
+        <h2 class="section__title" id="about-title">About the data</h2>
+      </div>
+      <div class="prose-grid">
+        <div class="prose-card">
+          <h3>Source</h3>
+          <p>Run-level metadata is retrieved from the <a href="https://www.ebi.ac.uk/ena/browser/home" target="_blank" rel="noopener">ENA Portal API</a> for bacterial (<code>tax 2</code>) and metagenomic (<code>tax 408169</code>) samples sequenced on <code>OXFORD_NANOPORE</code> or <code>PACBIO_SMRT</code> platforms.</p>
+        </div>
+        <div class="prose-card">
+          <h3>Hybrid detection</h3>
+          <p>For every long-read biosample, SRA is queried for additional runs on short-read platforms (Illumina, BGI/DNBSEQ, Ion Torrent). Biosamples with both are listed in the Hybrid dashboards, with linked studies and PubMed IDs.</p>
+        </div>
+        <div class="prose-card">
+          <h3>Refresh cadence</h3>
+          <p>A GitHub Actions workflow re-runs the extraction every Sunday, records the new totals in <code>sample_counts.csv</code>, regenerates the figures and redeploys this site.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>Data from the <a href="https://www.ebi.ac.uk/ena/browser/home" target="_blank" rel="noopener">European Nucleotide Archive</a> and <a href="https://www.ncbi.nlm.nih.gov/sra" target="_blank" rel="noopener">NCBI SRA</a>. Last refresh: <span data-updated>…</span>.</span>
+      <span><a href="https://github.com/motroy/LR-seq-data-db" target="_blank" rel="noopener">Source on GitHub</a> · MIT License</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3.1.0/plotly.min.js" defer></script>
+  <script type="module" src="scripts/landing.js"></script>
 </body>
 </html>

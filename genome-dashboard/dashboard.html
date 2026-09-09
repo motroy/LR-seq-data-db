@@ -1,94 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Genome Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_midnight.min.css" rel="stylesheet">
-  <link href="assets/styles.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Long-read samples · LR-seq Data</title>
+  <meta name="description" content="Filter, chart and export Oxford Nanopore and PacBio bacterial whole-genome and metagenome sequencing runs from the European Nucleotide Archive." />
+  <meta name="theme-color" content="#3b5bdb" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("lrseq-theme");
+        if (t !== "light" && t !== "dark") t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { document.documentElement.setAttribute("data-theme", "light"); }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet" />
+  <link href="assets/styles.css" rel="stylesheet" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <!-- Loading overlay -->
-  <div id="loading-overlay">
+  <div id="loading-overlay" role="status" aria-live="polite">
     <div id="loading-content">
-      <div id="loading-icon">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-        </svg>
+      <div id="loading-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
       </div>
-      <div id="loading-stage">Loading data...</div>
-      <div class="progress-track">
-        <div id="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      <div id="loading-stage">Loading data…</div>
+      <div class="progress-track" aria-hidden="true">
+        <div id="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
       <div id="loading-detail"></div>
+      <div id="loading-actions">
+        <button id="loading-retry" type="button" class="btn btn--primary">Try again</button>
+        <a href="index.html" class="btn btn--ghost">Back to overview</a>
+      </div>
     </div>
   </div>
 
-  <!-- Top navigation bar -->
-  <nav class="top-nav">
-    <a href="index.html" class="nav-back">&larr; All Dashboards</a>
-    <h1 id="dashboard-title"></h1>
-  </nav>
-
-  <main class="dashboard-main">
-    <!-- Filters toolbar -->
-    <section class="filter-bar">
-      <div class="filter-group">
-        <label for="organism-filter">Organism</label>
-        <input id="organism-filter" class="filter-input" placeholder="Filter by organism name..." />
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 7h10M8 12h12M4 17h7M15 17h5"/></svg>
+        </span>
+        <span class="brand__text">LR-seq Data<span class="brand__sub">Long reads from ENA</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" data-nav="home">Overview</a>
+        <a href="dashboard.html?type=wgs" data-nav="wgs">WGS</a>
+        <a href="dashboard.html?type=mgx" data-nav="mgx">MGx</a>
+        <a href="hybrid.html?type=wgs" data-nav="hybrid">Hybrid</a>
+      </nav>
+      <div class="site-header__actions">
+        <a class="icon-btn" href="https://github.com/motroy/LR-seq-data-db" target="_blank" rel="noopener" aria-label="Source code on GitHub" title="Source on GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+        </a>
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
       </div>
-      <div class="filter-group">
+    </div>
+  </header>
+
+  <main id="main" class="page">
+
+    <div class="page-head">
+      <div>
+        <h1 id="dashboard-title">Long-read samples</h1>
+        <p id="dashboard-desc">Run-level metadata from ENA. Data refreshed <span data-updated>weekly</span>.</p>
+      </div>
+      <div class="segmented" id="type-tabs" role="group" aria-label="Dataset">
+        <button type="button" data-type="wgs" aria-pressed="true">WGS</button>
+        <button type="button" data-type="mgx" aria-pressed="false">MGx</button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <section class="toolbar" aria-label="Filters">
+      <div class="field">
+        <label for="organism-filter">Organism</label>
+        <div class="field__control">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="organism-filter" class="input" type="search" placeholder="e.g. Escherichia coli" autocomplete="off" />
+        </div>
+      </div>
+      <div class="field">
         <label for="tech-filter">Technology</label>
-        <select id="tech-filter" class="filter-select">
-          <option value="">All Technologies</option>
+        <select id="tech-filter" class="select">
+          <option value="">All technologies</option>
           <option value="OXFORD_NANOPORE">Oxford Nanopore</option>
           <option value="PACBIO_SMRT">PacBio</option>
         </select>
       </div>
-      <div class="filter-group">
+      <div class="field">
         <label for="amplicon-filter">Library</label>
-        <select id="amplicon-filter" class="filter-select">
-          <option value="">All</option>
+        <select id="amplicon-filter" class="select">
+          <option value="">All libraries</option>
           <option value="AMPLICON">Amplicon</option>
-          <option value="NON_AMPLICON">Non-Amplicon</option>
+          <option value="NON_AMPLICON">Non-amplicon</option>
         </select>
       </div>
+      <div class="toolbar__actions">
+        <span class="result-count" id="result-count" aria-live="polite"></span>
+        <button id="reset-filters" type="button" class="btn btn--ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          Reset
+        </button>
+      </div>
     </section>
 
-    <!-- Stats metric cards -->
-    <section id="stats" class="stats-grid"></section>
+    <!-- Stats -->
+    <section id="stats" class="stats-grid" aria-label="Summary statistics" aria-live="polite"></section>
 
     <!-- Plots -->
-    <section id="plots" class="plots-row hidden">
-      <div class="plot-card">
-        <div id="reads-plot"></div>
-      </div>
-      <div class="plot-card">
-        <div id="bases-plot"></div>
-      </div>
+    <section id="plots" class="plots-row hidden" aria-label="Charts">
+      <div class="plot-card"><div id="reads-plot" class="chart"></div></div>
+      <div class="plot-card"><div id="bases-plot" class="chart"></div></div>
     </section>
 
-    <!-- Table + exports -->
-    <section class="table-section">
+    <!-- Table -->
+    <section class="table-section" aria-label="Sample table">
       <div class="table-toolbar">
-        <span class="table-toolbar-label">Sample Data</span>
+        <span class="table-toolbar-label">Samples<small id="table-count"></small></span>
         <div class="export-buttons">
-          <button id="download-tsv" class="btn-export">Export TSV</button>
-          <button id="download-xlsx" class="btn-export">Export XLSX</button>
+          <button id="download-tsv" type="button" class="btn btn--soft">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            TSV
+          </button>
+          <button id="download-xlsx" type="button" class="btn btn--soft">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+            XLSX
+          </button>
         </div>
       </div>
-      <div id="genome-table" class="hidden"></div>
+      <div id="genome-table"></div>
     </section>
+
   </main>
 
-  <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-  <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
-  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.js"></script>
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>Data from the <a href="https://www.ebi.ac.uk/ena/browser/home" target="_blank" rel="noopener">European Nucleotide Archive</a>. Exports respect the active filters.</span>
+      <span><a href="https://github.com/motroy/LR-seq-data-db" target="_blank" rel="noopener">Source on GitHub</a> · MIT License</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3.1.0/plotly.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
   <script type="module" src="scripts/dashboard.js"></script>
 </body>
 </html>

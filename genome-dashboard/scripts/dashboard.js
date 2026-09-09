@@ -1,413 +1,359 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const dataType = urlParams.get('type') || 'wgs'; // Default to wgs
+import {
+  initTheme, onThemeChange, setActiveNav, tokens, plotlyBase, PLOTLY_CONFIG,
+  createLoader, loadGzippedJSON, debounce, fmtInt, escapeHtml,
+  columnVisibilityMenu, whenTableBuilt, downloadTSV, fetchLatestCounts, renderUpdated, yieldToMain,
+} from "./common.js";
 
-  const dashboardTitle = document.getElementById("dashboard-title");
-  if (dataType === 'wgs') {
-    document.title = "WGS Dashboard";
-    dashboardTitle.textContent = 'WGS Dashboard';
-  } else if (dataType === 'mgx') {
-    document.title = "MGx Dashboard";
-    dashboardTitle.textContent = 'MGx Dashboard';
-  }
+initTheme();
 
-  const table = new Tabulator("#genome-table", {
-    data: [],
-    layout: "fitColumns",
-    responsiveLayout: "hide",
-    pagination: "local",
-    paginationSize: 25,
-    movableColumns: true,
-    columns: [
-      { title: "Sample ID", field: "sample_id", headerMenu: true },
-      { title: "Organism", field: "scientific_name", headerMenu: true },
-      { title: "Technology", field: "instrument_platform", headerMenu: true },
-      { title: "Reads", field: "read_count", headerMenu: true },
-      { title: "Bases", field: "base_count", headerMenu: true },
-      { title: "Study", field: "study_accession", headerMenu: true },
-      { title: "Source DB", field: "source", headerMenu: true }
-    ],
-    height: "600px"
-  });
+const DATASETS = {
+  wgs: {
+    label: "WGS",
+    title: "Whole-genome sequencing samples",
+    desc: "Bacterial whole-genome sequencing runs on Oxford Nanopore and PacBio platforms.",
+    file: "data_bacteria.json.gz",
+    exportName: "lr_wgs_samples",
+  },
+  mgx: {
+    label: "MGx",
+    title: "Metagenome sequencing samples",
+    desc: "Metagenomic sequencing runs on Oxford Nanopore and PacBio platforms.",
+    file: "data_metagenome.json.gz",
+    exportName: "lr_mgx_samples",
+  },
+};
 
-  const loadingOverlay = document.getElementById("loading-overlay");
-  const progressBar = document.getElementById("progress-bar");
-  const loadingStage = document.getElementById("loading-stage");
-  const loadingDetail = document.getElementById("loading-detail");
-  const organismFilter = document.getElementById("organism-filter");
-  const techFilter = document.getElementById("tech-filter");
-  const ampliconFilter = document.getElementById("amplicon-filter");
+const TOP_N_ORGANISMS_PLOT = 20;
 
-  let allData = [];
+const params = new URLSearchParams(window.location.search);
+let activeType = params.get("type") === "mgx" ? "mgx" : "wgs";
 
-  function updateProgress(percent, stage, detail) {
-    const p = Math.round(percent);
-    progressBar.style.width = p + "%";
-    progressBar.textContent = p + "%";
-    progressBar.setAttribute("aria-valuenow", p);
-    if (stage) loadingStage.textContent = stage;
-    if (detail !== undefined) loadingDetail.textContent = detail;
-  }
+const loader = createLoader();
+const els = {
+  title: document.getElementById("dashboard-title"),
+  desc: document.getElementById("dashboard-desc"),
+  organism: document.getElementById("organism-filter"),
+  tech: document.getElementById("tech-filter"),
+  amplicon: document.getElementById("amplicon-filter"),
+  reset: document.getElementById("reset-filters"),
+  count: document.getElementById("result-count"),
+  tableCount: document.getElementById("table-count"),
+  stats: document.getElementById("stats"),
+  plots: document.getElementById("plots"),
+  tabs: document.querySelectorAll("#type-tabs [data-type]"),
+};
 
-  // Allow the browser to repaint between heavy synchronous steps
-  function yieldToMain() {
-    return new Promise(resolve => setTimeout(resolve, 0));
-  }
+let allData = [];
+let filteredData = [];
 
-  // Debounce helper — delays fn execution until pause in calls
-  function debounce(fn, ms) {
-    let timer;
-    return function(...args) {
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(this, args), ms);
-    };
-  }
+/* ------------------------------------------------------------
+   Table
+   ------------------------------------------------------------ */
 
-  // ---- Web Worker for off-main-thread decompression + parsing ----
-  function createDataWorker() {
-    const workerCode = `
-      importScripts("https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.js");
+const enaLink = (id) => `<a href="https://www.ebi.ac.uk/ena/browser/view/${encodeURIComponent(id)}" target="_blank" rel="noopener">${escapeHtml(id)}</a>`;
 
-      self.onmessage = async function(e) {
-        const { url } = e.data;
-        try {
-          // Fetch with progress
-          const response = await fetch(url);
-          const contentLength = response.headers.get("Content-Length");
-          const total = contentLength ? parseInt(contentLength, 10) : 0;
+const numberFormatter = (cell) => fmtInt(cell.getValue());
 
-          let compressed;
-          if (total && response.body) {
-            const reader = response.body.getReader();
-            const chunks = [];
-            let received = 0;
-            while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-              chunks.push(value);
-              received += value.length;
-              self.postMessage({ type: "download-progress", received, total });
-            }
-            const full = new Uint8Array(received);
-            let offset = 0;
-            for (const chunk of chunks) {
-              full.set(chunk, offset);
-              offset += chunk.length;
-            }
-            compressed = full;
-          } else {
-            compressed = new Uint8Array(await response.arrayBuffer());
-          }
+const techFormatter = (cell) => {
+  const v = cell.getValue() || "";
+  if (v === "OXFORD_NANOPORE") return '<span class="pill pill--ont">Nanopore</span>';
+  if (v === "PACBIO_SMRT") return '<span class="pill pill--pb">PacBio</span>';
+  return `<span class="pill">${escapeHtml(v)}</span>`;
+};
 
-          // Decompress
-          self.postMessage({ type: "stage", stage: "decompress" });
-          const decompressed = fflate.decompressSync(compressed);
-
-          // Parse
-          self.postMessage({ type: "stage", stage: "parse" });
-          const jsonString = new TextDecoder().decode(decompressed);
-          const data = JSON.parse(jsonString);
-
-          self.postMessage({ type: "done", data });
-        } catch (err) {
-          self.postMessage({ type: "error", message: err.message });
-        }
-      };
-    `;
-    const blob = new Blob([workerCode], { type: "application/javascript" });
-    return new Worker(URL.createObjectURL(blob));
-  }
-
-  function loadGzippedJSON(url) {
-    return new Promise((resolve, reject) => {
-      const worker = createDataWorker();
-      worker.onmessage = function(e) {
-        const msg = e.data;
-        switch (msg.type) {
-          case "download-progress": {
-            const pct = (msg.received / msg.total) * 50;
-            const mb = (msg.received / (1024 * 1024)).toFixed(1);
-            const totalMb = (msg.total / (1024 * 1024)).toFixed(1);
-            updateProgress(pct, "Downloading data...", `${mb} / ${totalMb} MB`);
-            break;
-          }
-          case "stage":
-            if (msg.stage === "decompress") {
-              updateProgress(55, "Decompressing...", "");
-            } else if (msg.stage === "parse") {
-              updateProgress(75, "Parsing data...", "");
-            }
-            break;
-          case "done":
-            updateProgress(85, "Parsing data...", `${msg.data.length.toLocaleString()} records loaded`);
-            worker.terminate();
-            resolve(msg.data);
-            break;
-          case "error":
-            worker.terminate();
-            reject(new Error(msg.message));
-            break;
-        }
-      };
-      worker.onerror = function(err) {
-        worker.terminate();
-        reject(err);
-      };
-      updateProgress(0, "Downloading data...", "");
-      // Resolve relative URL to absolute since Blob workers have a different base URL
-      const absoluteUrl = new URL(url, window.location.href).href;
-      worker.postMessage({ url: absoluteUrl });
-    });
-  }
-
-  // Fallback for environments where inline workers are blocked
-  async function loadGzippedJSONFallback(url) {
-    updateProgress(0, "Downloading data...", "");
-    const response = await fetch(url);
-    const contentLength = response.headers.get("Content-Length");
-    const total = contentLength ? parseInt(contentLength, 10) : 0;
-
-    let compressed;
-    if (total && response.body) {
-      const reader = response.body.getReader();
-      const chunks = [];
-      let received = 0;
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-        received += value.length;
-        const pct = (received / total) * 50;
-        const mb = (received / (1024 * 1024)).toFixed(1);
-        const totalMb = (total / (1024 * 1024)).toFixed(1);
-        updateProgress(pct, "Downloading data...", `${mb} / ${totalMb} MB`);
-      }
-      const full = new Uint8Array(received);
-      let offset = 0;
-      for (const chunk of chunks) {
-        full.set(chunk, offset);
-        offset += chunk.length;
-      }
-      compressed = full;
-    } else {
-      updateProgress(25, "Downloading data...", "");
-      compressed = new Uint8Array(await response.arrayBuffer());
-    }
-    updateProgress(50, "Downloading data...", "Complete");
-
-    await yieldToMain();
-    updateProgress(55, "Decompressing...", "");
-    const decompressed = fflate.decompressSync(compressed);
-    updateProgress(70, "Decompressing...", "Complete");
-
-    await yieldToMain();
-    updateProgress(75, "Parsing data...", "");
-    const jsonString = new TextDecoder().decode(decompressed);
-    updateProgress(80, "Parsing data...", "");
-    const data = JSON.parse(jsonString);
-    updateProgress(85, "Parsing data...", `${data.length.toLocaleString()} records loaded`);
-    return data;
-  }
-
-  async function loadData(source) {
-    loadingOverlay.style.display = "flex";
-    updateProgress(0, "Loading data...", "");
-    const url = source === 'bacteria' ? 'data_bacteria.json.gz' : 'data_metagenome.json.gz';
-    try {
-      try {
-        allData = await loadGzippedJSON(url);
-      } catch (workerErr) {
-        console.warn("Web Worker failed, using main-thread fallback:", workerErr);
-        allData = await loadGzippedJSONFallback(url);
-      }
-
-      // Stage 4: Render table (85–92%)
-      await yieldToMain();
-      updateProgress(87, "Rendering table...", `${allData.length.toLocaleString()} rows`);
-      table.setData(allData);
-      updateProgress(92, "Rendering table...", "Complete");
-
-      // Stage 5: Generate plots and stats (92–100%)
-      await yieldToMain();
-      updateProgress(94, "Generating plots...", "");
-      summarize(allData);
-      createBoxPlot(allData, "reads-plot", "read_count", "Number of Reads per Organism");
-      createBoxPlot(allData, "bases-plot", "base_count", "Number of Bases per Organism");
-      updateProgress(100, "Done!", "");
-
-      document.getElementById("plots").classList.remove("hidden");
-      document.getElementById("genome-table").classList.remove("hidden");
-    } catch (err) {
-      console.error("Failed to load gzip JSON:", err);
-      updateProgress(0, "Error loading data", err.message || "Unknown error");
-      return;
-    }
-    // Brief pause so the user sees 100% before hiding the overlay
-    await new Promise(resolve => setTimeout(resolve, 300));
-    loadingOverlay.style.display = "none";
-  }
-
-  function updateFilters() {
-    const filters = [];
-    const organismVal = organismFilter.value;
-    const techVal = techFilter.value;
-    const ampliconVal = ampliconFilter.value;
-
-    if (organismVal) {
-      filters.push({ field: "scientific_name", type: "like", value: organismVal });
-    }
-
-    if (techVal) {
-      filters.push({ field: "instrument_platform", type: "=", value: techVal });
-    }
-
-    if (ampliconVal) {
-      if (ampliconVal === 'AMPLICON') {
-        filters.push({ field: "library_strategy", type: "=", value: "AMPLICON" });
-      } else if (ampliconVal === 'NON_AMPLICON') {
-        filters.push({ field: "library_strategy", type: "!=", value: "AMPLICON" });
-      }
-    }
-
-    table.setFilter(filters);
-  }
-
-  // Debounce organism input (300ms) to avoid thrashing on every keystroke
-  organismFilter.addEventListener("input", debounce(updateFilters, 300));
-  techFilter.addEventListener("change", updateFilters);
-  ampliconFilter.addEventListener("change", updateFilters);
-
-  table.on("dataFiltered", function(filters, rows) {
-    const filteredData = rows.map(row => row.getData());
-    summarize(filteredData);
-    createBoxPlot(filteredData, "reads-plot", "read_count", "Number of Reads per Organism");
-    createBoxPlot(filteredData, "bases-plot", "base_count", "Number of Bases per Organism");
-  });
-
-  const initialSource = dataType === 'wgs' ? 'bacteria' : 'metagenome';
-  loadData(initialSource);
-
-  document.getElementById("download-tsv").addEventListener("click", () => table.download("tsv", "data.tsv"));
-  document.getElementById("download-xlsx").addEventListener("click", () => table.download("xlsx", "data.xlsx", { sheetName: "My Data" }));
+const table = new Tabulator("#genome-table", {
+  data: [],
+  layout: "fitColumns",
+  responsiveLayout: "hide",
+  height: "640px",
+  pagination: true,
+  paginationSize: 25,
+  paginationSizeSelector: [25, 50, 100, 250],
+  paginationCounter: "rows",
+  movableColumns: true,
+  placeholder: "No samples match the current filters",
+  columnDefaults: { headerMenu: columnVisibilityMenu, tooltip: true, resizable: "header" },
+  columns: [
+    { title: "Run", field: "sample_id", formatter: (c) => enaLink(c.getValue()), width: 130, minWidth: 110 },
+    { title: "Organism", field: "scientific_name", formatter: (c) => `<em>${escapeHtml(c.getValue())}</em>`, minWidth: 180 },
+    { title: "Technology", field: "instrument_platform", formatter: techFormatter, width: 120, hozAlign: "center" },
+    { title: "Instrument", field: "instrument_model", minWidth: 130 },
+    { title: "Library", field: "library_strategy", width: 120 },
+    { title: "Reads", field: "read_count", formatter: numberFormatter, sorter: "number", hozAlign: "right", width: 120, cssClass: "num" },
+    { title: "Bases", field: "base_count", formatter: numberFormatter, sorter: "number", hozAlign: "right", width: 150, cssClass: "num" },
+    { title: "Study", field: "study_accession", formatter: (c) => enaLink(c.getValue()), width: 130 },
+    { title: "Sample", field: "sample_accession", formatter: (c) => enaLink(c.getValue()), width: 140, visible: false },
+    { title: "Source", field: "source", width: 90, visible: false },
+  ],
 });
 
-function summarize(data) {
-  const organisms = {};
-  const techCounts = { "OXFORD_NANOPORE": 0, "PACBIO_SMRT": 0 };
-  let ampliconCount = 0;
-  let nonAmpliconCount = 0;
+table.on("dataFiltered", (filters, rows) => {
+  filteredData = rows.map((r) => r.getData());
+  updateCounts();
+  summarize(filteredData);
+  renderPlots(filteredData);
+});
 
-  data.forEach(item => {
-    organisms[item.scientific_name] = (organisms[item.scientific_name] || 0) + 1;
-    if (techCounts[item.instrument_platform] !== undefined) techCounts[item.instrument_platform]++;
-    if (item.library_strategy === 'AMPLICON') {
-      ampliconCount++;
-    } else {
-      nonAmpliconCount++;
-    }
-  });
+/* ------------------------------------------------------------
+   Filters
+   ------------------------------------------------------------ */
 
-  const topOrganisms = Object.entries(organisms)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
-
-  const topOrganismsPills = topOrganisms
-    .map(([org, count]) => `<li>${org}<span class="org-count">(${count.toLocaleString()})</span></li>`)
-    .join('');
-
-  document.getElementById("stats").innerHTML = `
-    <div class="stat-card accent-1">
-      <div class="stat-value">${data.length.toLocaleString()}</div>
-      <div class="stat-label">Total Samples</div>
-    </div>
-    <div class="stat-card accent-2">
-      <div class="stat-value">${techCounts["OXFORD_NANOPORE"].toLocaleString()}</div>
-      <div class="stat-label">Oxford Nanopore</div>
-    </div>
-    <div class="stat-card accent-3">
-      <div class="stat-value">${techCounts["PACBIO_SMRT"].toLocaleString()}</div>
-      <div class="stat-label">PacBio</div>
-    </div>
-    <div class="stat-card accent-4">
-      <div class="stat-value">${ampliconCount.toLocaleString()}</div>
-      <div class="stat-label">Amplicon</div>
-    </div>
-    <div class="stat-card accent-2">
-      <div class="stat-value">${nonAmpliconCount.toLocaleString()}</div>
-      <div class="stat-label">Non-Amplicon</div>
-    </div>
-    <div class="stat-card top-organisms">
-      <div class="stat-label">Top Organisms</div>
-      <ul class="top-organisms-list">${topOrganismsPills}</ul>
-    </div>
-  `;
+function applyFilters() {
+  const filters = [];
+  const organism = els.organism.value.trim();
+  if (organism) filters.push({ field: "scientific_name", type: "like", value: organism });
+  if (els.tech.value) filters.push({ field: "instrument_platform", type: "=", value: els.tech.value });
+  if (els.amplicon.value === "AMPLICON") filters.push({ field: "library_strategy", type: "=", value: "AMPLICON" });
+  else if (els.amplicon.value === "NON_AMPLICON") filters.push({ field: "library_strategy", type: "!=", value: "AMPLICON" });
+  table.setFilter(filters);
 }
 
-// Pre-aggregate box plot statistics to avoid passing 100K+ raw points to Plotly
-function computeBoxTraces(data, field) {
-  // Group values by organism + technology
-  const groups = {};
+function resetFilters(refresh = true) {
+  els.organism.value = "";
+  els.tech.value = "";
+  els.amplicon.value = "";
+  if (refresh) table.clearFilter(true);
+}
+
+els.organism.addEventListener("input", debounce(applyFilters, 250));
+els.tech.addEventListener("change", applyFilters);
+els.amplicon.addEventListener("change", applyFilters);
+els.reset.addEventListener("click", () => resetFilters());
+
+function updateCounts() {
+  const shown = filteredData.length;
+  const total = allData.length;
+  els.count.innerHTML = shown === total
+    ? `<strong>${fmtInt(total)}</strong> samples`
+    : `<strong>${fmtInt(shown)}</strong> of ${fmtInt(total)} samples`;
+  els.tableCount.textContent = shown === total ? "" : `${fmtInt(shown)} of ${fmtInt(total)}`;
+}
+
+/* ------------------------------------------------------------
+   Stats
+   ------------------------------------------------------------ */
+
+function summarize(data) {
+  const organisms = new Map();
+  let ont = 0, pacbio = 0, amplicon = 0;
   for (const d of data) {
-    const key = d.instrument_platform;
-    if (!groups[key]) groups[key] = {};
-    if (!groups[key][d.scientific_name]) groups[key][d.scientific_name] = [];
-    groups[key][d.scientific_name].push(d[field]);
+    organisms.set(d.scientific_name, (organisms.get(d.scientific_name) || 0) + 1);
+    if (d.instrument_platform === "OXFORD_NANOPORE") ont++;
+    else if (d.instrument_platform === "PACBIO_SMRT") pacbio++;
+    if (d.library_strategy === "AMPLICON") amplicon++;
+  }
+  const total = data.length;
+  const share = (n) => total ? ((n / total) * 100).toFixed(0) + "%" : "0%";
+
+  const top = [...organisms.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const pills = top.map(([org, n]) =>
+    `<li data-organism="${escapeHtml(org)}" title="Filter by ${escapeHtml(org)}"><em>${escapeHtml(org)}</em><span class="org-count">${fmtInt(n)}</span></li>`
+  ).join("");
+
+  const card = (cls, value, label, shareVal) => `
+    <div class="stat-card ${cls}">
+      <div class="stat-value">${value}</div>
+      <div class="stat-label">${label}</div>
+      ${shareVal !== undefined ? `<div class="stat-share" aria-hidden="true"><span style="--share:${shareVal}"></span></div>` : ""}
+    </div>`;
+
+  els.stats.innerHTML = [
+    card("accent-1", fmtInt(total), "Samples"),
+    card("accent-2", fmtInt(ont), `Nanopore · ${share(ont)}`, share(ont)),
+    card("accent-3", fmtInt(pacbio), `PacBio · ${share(pacbio)}`, share(pacbio)),
+    card("accent-4", fmtInt(amplicon), `Amplicon · ${share(amplicon)}`, share(amplicon)),
+    card("accent-2", fmtInt(total - amplicon), `Non-amplicon · ${share(total - amplicon)}`, share(total - amplicon)),
+    card("accent-1", fmtInt(organisms.size), "Distinct organisms"),
+    `<div class="stat-card top-organisms">
+       <div class="stat-label">Top organisms</div>
+       <ul class="top-organisms-list">${pills || '<li style="cursor:default">No samples</li>'}</ul>
+     </div>`,
+  ].join("");
+}
+
+els.stats.addEventListener("click", (e) => {
+  const li = e.target.closest("li[data-organism]");
+  if (!li) return;
+  els.organism.value = li.dataset.organism;
+  applyFilters();
+  els.organism.focus();
+});
+
+/* ------------------------------------------------------------
+   Plots
+   ------------------------------------------------------------ */
+
+function quantile(sorted, q) {
+  if (!sorted.length) return null;
+  const pos = (sorted.length - 1) * q;
+  const base = Math.floor(pos);
+  const rest = pos - base;
+  return sorted[base + 1] !== undefined ? sorted[base] + rest * (sorted[base + 1] - sorted[base]) : sorted[base];
+}
+
+function computeBoxTraces(data, field, t) {
+  // Restrict to the most frequent organisms so the chart stays readable.
+  const counts = new Map();
+  for (const d of data) counts.set(d.scientific_name, (counts.get(d.scientific_name) || 0) + 1);
+  const topOrgs = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP_N_ORGANISMS_PLOT).map(([o]) => o);
+  const topSet = new Set(topOrgs);
+
+  const groups = { OXFORD_NANOPORE: new Map(), PACBIO_SMRT: new Map() };
+  for (const d of data) {
+    if (!topSet.has(d.scientific_name)) continue;
+    const g = groups[d.instrument_platform];
+    if (!g) continue;
+    const v = Number(d[field]);
+    if (!Number.isFinite(v) || v <= 0) continue;
+    if (!g.has(d.scientific_name)) g.set(d.scientific_name, []);
+    g.get(d.scientific_name).push(v);
   }
 
+  const meta = {
+    OXFORD_NANOPORE: { name: "Oxford Nanopore", color: t.c2 },
+    PACBIO_SMRT: { name: "PacBio", color: t.c3 },
+  };
+
   const traces = [];
-  for (const [tech, organisms] of Object.entries(groups)) {
-    const x = [];
-    const q1 = [], median = [], q3 = [], lowerfence = [], upperfence = [];
-
-    for (const [orgName, values] of Object.entries(organisms)) {
+  for (const [tech, orgs] of Object.entries(groups)) {
+    const x = [], q1 = [], median = [], q3 = [], lowerfence = [], upperfence = [], text = [];
+    for (const org of topOrgs) {
+      const values = orgs.get(org);
+      if (!values || !values.length) continue;
       values.sort((a, b) => a - b);
-      const n = values.length;
-      if (n === 0) continue;
-
-      const med = values[Math.floor(n / 2)];
-      const q1Val = values[Math.floor(n * 0.25)];
-      const q3Val = values[Math.floor(n * 0.75)];
-      const iqr = q3Val - q1Val;
-      const lf = q1Val - 1.5 * iqr;
-      const uf = q3Val + 1.5 * iqr;
-
-      x.push(orgName);
-      q1.push(q1Val);
-      median.push(med);
-      q3.push(q3Val);
-      lowerfence.push(Math.max(values[0], lf));
-      upperfence.push(Math.min(values[n - 1], uf));
+      const a = quantile(values, 0.25), m = quantile(values, 0.5), b = quantile(values, 0.75);
+      const iqr = b - a;
+      x.push(org);
+      q1.push(a); median.push(m); q3.push(b);
+      lowerfence.push(Math.max(values[0], a - 1.5 * iqr));
+      upperfence.push(Math.min(values[values.length - 1], b + 1.5 * iqr));
+      text.push(`n = ${fmtInt(values.length)}`);
     }
-
+    if (!x.length) continue;
     traces.push({
-      type: 'box',
-      name: tech,
-      x,
-      q1, median, q3, lowerfence, upperfence,
-      boxpoints: 'outliers',
-      jitter: 0.3,
-      pointpos: -1.5,
+      type: "box",
+      name: meta[tech].name,
+      x, q1, median, q3, lowerfence, upperfence, text,
+      marker: { color: meta[tech].color },
+      line: { color: meta[tech].color, width: 1.5 },
+      fillcolor: meta[tech].color + "33",
+      hoverinfo: "x+y+name+text",
     });
   }
   return traces;
 }
 
-function createBoxPlot(data, elementId, field, title) {
-  const traces = computeBoxTraces(data, field);
-
+function renderBoxPlot(data, elementId, field, title, yLabel) {
+  const t = tokens();
+  const traces = computeBoxTraces(data, field, t);
+  const base = plotlyBase(t);
   const layout = {
-    title: { text: title, font: { family: 'Inter, sans-serif', size: 14, color: '#1a1d23' } },
-    yaxis: {
-      title: field === 'read_count' ? 'Number of Reads' : 'Number of Bases',
-      gridcolor: '#e2e4e9',
-    },
-    xaxis: { gridcolor: '#e2e4e9' },
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    font: { family: 'Inter, sans-serif', size: 12, color: '#5f6368' },
-    margin: { t: 40, r: 16, b: 40, l: 60 },
+    ...base,
+    title: { text: title, x: 0.02, xanchor: "left", font: { family: t.font, size: 14, color: t.text } },
+    boxmode: "group",
+    xaxis: { ...base.xaxis, tickangle: -40, tickfont: { size: 10, color: t.text2 }, automargin: true },
+    yaxis: { ...base.yaxis, type: "log", title: { text: yLabel, font: { color: t.text3 } }, tickformat: "~s" },
+    legend: { orientation: "h", x: 1, xanchor: "right", y: 1.14, font: { color: t.text2 } },
+    margin: { t: 56, r: 12, b: 110, l: 60 },
+    height: 420,
   };
-
-  // Use Plotly.react for efficient updates when the plot already exists
-  Plotly.react(elementId, traces, layout);
+  if (!traces.length) {
+    layout.annotations = [{ text: "No data for the current filters", showarrow: false, font: { color: t.text3, size: 13 } }];
+  }
+  Plotly.react(elementId, traces, layout, PLOTLY_CONFIG);
 }
+
+function renderPlots(data) {
+  // Plotly falls back to a fixed 700px width if it measures a hidden container, so wait until visible.
+  if (!window.Plotly || els.plots.classList.contains("hidden")) return;
+  renderBoxPlot(data, "reads-plot", "read_count", `Reads per run · top ${TOP_N_ORGANISMS_PLOT} organisms`, "Reads (log scale)");
+  renderBoxPlot(data, "bases-plot", "base_count", `Bases per run · top ${TOP_N_ORGANISMS_PLOT} organisms`, "Bases (log scale)");
+}
+
+onThemeChange(() => { if (allData.length) renderPlots(filteredData); });
+
+// Keep charts sized to their cards when the layout (not just the window) changes.
+if ("ResizeObserver" in window) {
+  const resizePlots = debounce(() => {
+    for (const id of ["reads-plot", "bases-plot"]) {
+      const el = document.getElementById(id);
+      if (el && el._fullLayout && window.Plotly) Plotly.Plots.resize(el);
+    }
+  }, 120);
+  new ResizeObserver(resizePlots).observe(els.plots);
+}
+
+/* ------------------------------------------------------------
+   Dataset switching + loading
+   ------------------------------------------------------------ */
+
+function applyTypeToPage() {
+  const ds = DATASETS[activeType];
+  document.title = `${ds.label} samples · LR-seq Data`;
+  els.title.textContent = ds.title;
+  els.desc.textContent = ds.desc;
+  els.tabs.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === activeType)));
+  setActiveNav(activeType);
+}
+
+async function loadDataset() {
+  const ds = DATASETS[activeType];
+  applyTypeToPage();
+  loader.show();
+  els.plots.classList.add("hidden");
+  try {
+    const data = await loadGzippedJSON(ds.file, loader);
+    await whenTableBuilt(table);
+    await yieldToMain();
+    loader.update(88, "Rendering table…", `${fmtInt(data.length)} rows`);
+    allData = data;
+    resetFilters(false);
+    table.clearFilter(true);
+    // Unhide the chart cards before rendering so Plotly measures their real width.
+    els.plots.classList.remove("hidden");
+    await table.setData(allData);
+    await yieldToMain();
+    loader.update(96, "Drawing charts…", "");
+    // dataFiltered fires from setData and paints stats/plots; make sure they exist even if it didn't.
+    if (!filteredData.length && allData.length) {
+      filteredData = allData.slice();
+      updateCounts();
+      summarize(filteredData);
+      renderPlots(filteredData);
+    }
+    loader.update(100, "Done", "");
+    await loader.hide();
+  } catch (err) {
+    console.error("Failed to load dataset:", err);
+    loader.fail(err && err.message ? err.message : String(err), loadDataset);
+  }
+}
+
+els.tabs.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (btn.dataset.type === activeType) return;
+    activeType = btn.dataset.type;
+    const url = new URL(window.location);
+    url.searchParams.set("type", activeType);
+    window.history.replaceState({}, "", url);
+    loadDataset();
+  });
+});
+
+/* ------------------------------------------------------------
+   Exports
+   ------------------------------------------------------------ */
+
+document.getElementById("download-tsv").addEventListener("click", () => {
+  downloadTSV(table, `${DATASETS[activeType].exportName}.tsv`);
+});
+document.getElementById("download-xlsx").addEventListener("click", () => {
+  table.download("xlsx", `${DATASETS[activeType].exportName}.xlsx`, { sheetName: `${DATASETS[activeType].label} samples` });
+});
+
+/* ------------------------------------------------------------
+   Boot
+   ------------------------------------------------------------ */
+
+fetchLatestCounts().then(renderUpdated);
+loadDataset();
