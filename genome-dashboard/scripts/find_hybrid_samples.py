@@ -60,8 +60,7 @@ def fetch_ena_platform(platform: str, tax_id: str, retries: int = 3) -> list:
             wait = 5 * (attempt + 1)
             logger.warning(f"  {platform} attempt {attempt + 1} failed: {exc}. Retrying in {wait}s...")
             time.sleep(wait)
-    logger.error(f"  {platform}: all {retries} attempts failed — skipping.")
-    return []
+    raise RuntimeError(f"{platform}: all {retries} ENA attempts failed; refusing to write partial output")
 
 
 def index_by_sample(runs: list) -> dict:
