@@ -33,10 +33,20 @@ jobs:
     - name: Find hybrid MGx biosamples
       run: python genome-dashboard/scripts/find_hybrid_samples.py --type mgx --output-dir genome-dashboard --long-reads-file genome-dashboard/data_metagenome.json.gz
 
+    - name: Check data was not truncated
+      run: python genome-dashboard/scripts/check_data.py
+
     - name: Generate plot
       run: python genome-dashboard/generate_plot.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+
+    - name: Write provenance manifest
+      run: python genome-dashboard/scripts/make_manifest.py
+      env:
+        GITHUB_SHA: ${{ github.sha }}
+        GITHUB_RUN_ID: ${{ github.run_id }}
         GITHUB_REPOSITORY: ${{ github.repository }}
 
     - name: Commit and push updated data

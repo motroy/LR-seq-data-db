@@ -36,8 +36,7 @@ def fetch_ena(platform, tax_id):
             time.sleep(5)
 
     if data is None:
-        print(f"❌ Failed to retrieve data for {platform}")
-        return []
+        raise SystemExit(f"❌ Failed to retrieve data for {platform}; refusing to write partial output")
 
     for item in data:
         results.append({

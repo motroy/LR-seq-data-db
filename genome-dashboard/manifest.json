@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-10-11T06:34:40Z",
+  "repository": null,
+  "commit": null,
+  "workflow_run": null,
+  "upstream": {
+    "name": "European Nucleotide Archive (ENA) Portal API",
+    "endpoint": "https://www.ebi.ac.uk/ena/portal/api/search",
+    "result": "read_run",
+    "note": "Data is retrieved live at generation time; ENA content changes over time."
+  },
+  "files": {
+    "data_bacteria.json.gz": {
+      "description": "Long-read bacterial runs (WGS dashboard)",
+      "script": "genome-dashboard/extract_ena_genomes.py",
+      "ena_queries": [
+        "instrument_platform=\"OXFORD_NANOPORE\" AND tax_tree(2)",
+        "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(2)"
+      ],
+      "records": 132599,
+      "bytes": 3166246,
+      "sha256": "333ae0288f71aa1a6d375c7aafaf10bb914b7a9fbec94446a384726e8679eb98"
+    },
+    "data_metagenome.json.gz": {
+      "description": "Long-read metagenomic runs (MGx dashboard)",
+      "script": "genome-dashboard/extract_ena_genomes.py",
+      "ena_queries": [
+        "instrument_platform=\"OXFORD_NANOPORE\" AND tax_tree(408169)",
+        "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(408169)"
+      ],
+      "records": 253664,
+      "bytes": 4598406,
+      "sha256": "1ba0386775e717bc7910c20090e8b2fba6833ae6d1484e25608f8da2db8a3016"
+    },
+    "hybrid_wgs.json.gz": {
+      "description": "Biosamples with both long- and short-read runs (WGS)",
+      "script": "genome-dashboard/scripts/find_hybrid_samples.py",
+      "ena_queries": [
+        "instrument_platform=\"OXFORD_NANOPORE\" AND tax_tree(2)",
+        "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(2)",
+        "instrument_platform=\"ILLUMINA\" AND tax_tree(2)",
+        "instrument_platform=\"ION_TORRENT\" AND tax_tree(2)",
+        "instrument_platform=\"BGISEQ\" AND tax_tree(2)",
+        "instrument_platform=\"LS454\" AND tax_tree(2)",
+        "instrument_platform=\"COMPLETE_GENOMICS\" AND tax_tree(2)"
+      ],
+      "records": 41025,
+      "bytes": 800554,
+      "sha256": "2f2e51dea31e5fad42da3942b68eea90f81c71c84089d45b25ed6610e5c4de3f"
+    },
+    "hybrid_mgx.json.gz": {
+      "description": "Biosamples with both long- and short-read runs (MGx)",
+      "script": "genome-dashboard/scripts/find_hybrid_samples.py",
+      "ena_queries": [
+        "instrument_platform=\"OXFORD_NANOPORE\" AND tax_tree(408169)",
+        "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(408169)",
+        "instrument_platform=\"ILLUMINA\" AND tax_tree(408169)",
+        "instrument_platform=\"ION_TORRENT\" AND tax_tree(408169)",
+        "instrument_platform=\"BGISEQ\" AND tax_tree(408169)",
+        "instrument_platform=\"LS454\" AND tax_tree(408169)",
+        "instrument_platform=\"COMPLETE_GENOMICS\" AND tax_tree(408169)"
+      ],
+      "records": 10372,
+      "bytes": 171173,
+      "sha256": "ecd349551ee1a955b319cdce4ee120555f773effbf5992382b4eb9d7e1614ced"
+    },
+    "sample_counts.csv": {
+      "description": "Weekly totals appended by generate_plot.py",
+      "script": "genome-dashboard/generate_plot.py",
+      "records": null,
+      "bytes": 2304,
+      "sha256": "2be018406027584511e7c8bcd99e07cadf2e4539a968da35e5cf0cb204853046"
+    }
+  }
+}
