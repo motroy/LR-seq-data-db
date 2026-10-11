@@ -3,8 +3,15 @@ name: deploy
 on:
    push:
       branches: [ main ]
+   # Pushes made with GITHUB_TOKEN (the weekly data refresh) do not trigger
+   # other workflows, so deploy explicitly when the refresh finishes.
+   workflow_run:
+      workflows: ["Refresh genome dashboard data"]
+      types: [completed]
+   workflow_dispatch:
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
     runs-on: ubuntu-latest
