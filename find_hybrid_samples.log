@@ -869,3 +869,31 @@
 2026-10-11 04:52:17,955 - INFO - Hybrid biosamples (long ∩ short): 9,825
 2026-10-11 04:52:18,462 - INFO - Results saved to genome-dashboard/hybrid_mgx.json.gz
 2026-10-11 04:52:18,462 - INFO - Done in 2969.4s — 9,825 hybrid biosamples written.
+2026-10-11 06:41:44,349 - INFO - Loading long-read data from local file: genome-dashboard/data_bacteria.json.gz
+2026-10-11 06:41:44,624 - INFO -   Loaded 132,599 long-read runs (0 skipped — no biosample ID)
+2026-10-11 06:41:44,725 - INFO - Long-read: 132,599 runs across 110,682 unique biosamples
+2026-10-11 06:41:44,725 - INFO - Fetching short-read runs for tax_id=2...
+2026-10-11 06:48:46,991 - WARNING -   ILLUMINA attempt 1 failed: Expecting property name enclosed in double quotes: line 2085960 column 201 (char 246903079). Retrying in 5s...
+2026-10-11 07:15:20,008 - INFO -   ILLUMINA: 3,994,854 runs fetched
+2026-10-11 07:16:34,489 - INFO -   ION_TORRENT: 13,733 runs fetched
+2026-10-11 07:16:46,155 - INFO -   BGISEQ: 9,827 runs fetched
+2026-10-11 07:17:07,095 - INFO -   LS454: 21,963 runs fetched
+2026-10-11 07:17:08,184 - INFO -   COMPLETE_GENOMICS: 1,242 runs fetched
+2026-10-11 07:17:13,381 - INFO - Short-read: 4,041,619 runs across 3,832,091 unique biosamples
+2026-10-11 07:17:13,755 - INFO - Hybrid biosamples (long ∩ short): 42,057
+2026-10-11 07:17:14,927 - INFO - Results saved to genome-dashboard/hybrid_wgs.json.gz
+2026-10-11 07:17:14,928 - INFO - Done in 2130.6s — 42,057 hybrid biosamples written.
+2026-10-11 07:17:15,803 - INFO - Loading long-read data from local file: genome-dashboard/data_metagenome.json.gz
+2026-10-11 07:17:16,296 - INFO -   Loaded 253,664 long-read runs (0 skipped — no biosample ID)
+2026-10-11 07:17:16,523 - INFO - Long-read: 253,664 runs across 218,530 unique biosamples
+2026-10-11 07:17:16,523 - INFO - Fetching short-read runs for tax_id=408169...
+2026-10-11 07:24:04,149 - WARNING -   ILLUMINA attempt 1 failed: Invalid control character at: line 2012318 column 112 (char 235641891). Retrying in 5s...
+2026-10-11 08:09:18,401 - INFO -   ILLUMINA: 9,285,697 runs fetched
+2026-10-11 08:10:53,218 - INFO -   ION_TORRENT: 206,895 runs fetched
+2026-10-11 08:11:21,180 - INFO -   BGISEQ: 37,250 runs fetched
+2026-10-11 08:14:42,688 - INFO -   LS454: 305,586 runs fetched
+2026-10-11 08:15:05,557 - INFO -   COMPLETE_GENOMICS: 670 runs fetched
+2026-10-11 08:15:18,380 - INFO - Short-read: 9,836,098 runs across 8,483,913 unique biosamples
+2026-10-11 08:15:19,200 - INFO - Hybrid biosamples (long ∩ short): 10,744
+2026-10-11 08:15:19,533 - INFO - Results saved to genome-dashboard/hybrid_mgx.json.gz
+2026-10-11 08:15:19,533 - INFO - Done in 3483.7s — 10,744 hybrid biosamples written.

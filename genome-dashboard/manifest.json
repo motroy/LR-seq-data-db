@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-11T06:34:40Z",
-  "repository": null,
-  "commit": null,
-  "workflow_run": null,
+  "generated_at": "2026-10-11T08:15:27Z",
+  "repository": "https://github.com/motroy/LR-seq-data-db",
+  "commit": "7626f29cbb27359a0899064e22fabb4797901f04",
+  "workflow_run": "https://github.com/motroy/LR-seq-data-db/actions/runs/38118690267",
   "upstream": {
     "name": "European Nucleotide Archive (ENA) Portal API",
     "endpoint": "https://www.ebi.ac.uk/ena/portal/api/search",
@@ -18,8 +18,8 @@
         "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(2)"
       ],
       "records": 132599,
-      "bytes": 3166246,
-      "sha256": "333ae0288f71aa1a6d375c7aafaf10bb914b7a9fbec94446a384726e8679eb98"
+      "bytes": 3166357,
+      "sha256": "e899e2ef1fb97eea2c4ccb2c0fe3f1ad95ba4e6326ee35df7384bf27b12e114f"
     },
     "data_metagenome.json.gz": {
       "description": "Long-read metagenomic runs (MGx dashboard)",
@@ -29,8 +29,8 @@
         "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(408169)"
       ],
       "records": 253664,
-      "bytes": 4598406,
-      "sha256": "1ba0386775e717bc7910c20090e8b2fba6833ae6d1484e25608f8da2db8a3016"
+      "bytes": 4598050,
+      "sha256": "9cf7a74e37d7013067a8f3fa981a2bdd223707d7e7a9bdefbd197e4073139c6a"
     },
     "hybrid_wgs.json.gz": {
       "description": "Biosamples with both long- and short-read runs (WGS)",
@@ -44,9 +44,9 @@
         "instrument_platform=\"LS454\" AND tax_tree(2)",
         "instrument_platform=\"COMPLETE_GENOMICS\" AND tax_tree(2)"
       ],
-      "records": 41025,
-      "bytes": 800554,
-      "sha256": "2f2e51dea31e5fad42da3942b68eea90f81c71c84089d45b25ed6610e5c4de3f"
+      "records": 42057,
+      "bytes": 816667,
+      "sha256": "43556aebb6672d870ee7b41370a1d9aa8b00261e660227233cca0f23acb1a5e1"
     },
     "hybrid_mgx.json.gz": {
       "description": "Biosamples with both long- and short-read runs (MGx)",
@@ -60,16 +60,16 @@
         "instrument_platform=\"LS454\" AND tax_tree(408169)",
         "instrument_platform=\"COMPLETE_GENOMICS\" AND tax_tree(408169)"
       ],
-      "records": 10372,
-      "bytes": 171173,
-      "sha256": "ecd349551ee1a955b319cdce4ee120555f773effbf5992382b4eb9d7e1614ced"
+      "records": 10744,
+      "bytes": 176211,
+      "sha256": "888871461eacbbfa405606f591ede3ac67897de7eb3c972fbb86c1b8e16efab5"
     },
     "sample_counts.csv": {
       "description": "Weekly totals appended by generate_plot.py",
       "script": "genome-dashboard/generate_plot.py",
       "records": null,
-      "bytes": 2304,
-      "sha256": "2be018406027584511e7c8bcd99e07cadf2e4539a968da35e5cf0cb204853046"
+      "bytes": 2315,
+      "sha256": "21fc2bd503120ac54c3df090e9695d2ea6bc8a59771e61066d7a2578db0c73bf"
     }
   }
 }
