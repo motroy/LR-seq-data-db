@@ -40,6 +40,19 @@ python3 -m http.server 8000
 # then open http://localhost:8000/
 ```
 
+## Command-line queries
+
+`genome-dashboard/scripts/query.py` filters the data files without a browser:
+
+```bash
+cd genome-dashboard
+python3 scripts/query.py runs --type wgs --organism "Escherichia coli" --platform OXFORD_NANOPORE
+python3 scripts/query.py runs --type wgs --count-by scientific_name --limit 10
+python3 scripts/query.py hybrid --type wgs --long-platform PACBIO_SMRT --short-platform ILLUMINA --count
+```
+
+Run with `-h` for all filters; output formats are `tsv` (default), `csv` and `json`.
+
 ## Data pipeline
 
 `.github/workflows/update_samples.yml` runs every Sunday (and on demand) and:
