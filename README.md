@@ -74,7 +74,9 @@ Run with `-h` for all filters; output formats are `tsv` (default), `csv` and `js
 3. `generate_plot.py` appends the new totals to `sample_counts.csv` and
    regenerates `assets/sample_plot.png` and `assets/organism_bubble_plot.png`.
 4. `scripts/make_manifest.py` writes `manifest.json` (provenance and checksums).
-5. The updated data, manifest and figures are committed, which triggers the Pages deploy.
+5. The updated data, manifest and figures are committed. `deploy.yml` runs when this
+   workflow completes successfully (pushes made with `GITHUB_TOKEN` do not trigger
+   other workflows on their own) and publishes the site to Pages.
 
 `sample_counts.csv` is the source for the overview page's headline numbers and
 growth chart; `sample_plot.png` is kept as a no-JavaScript fallback.
