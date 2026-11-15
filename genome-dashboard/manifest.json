@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-08T04:13:12Z",
+  "generated_at": "2026-11-15T04:36:04Z",
   "repository": "https://github.com/motroy/LR-seq-data-db",
-  "commit": "2c593f1beea6bfab2a55a118bd914cfd09bf51d3",
-  "workflow_run": "https://github.com/motroy/LR-seq-data-db/actions/runs/42444824900",
+  "commit": "900fe323c3093baf0a3355732af46e04b941cc18",
+  "workflow_run": "https://github.com/motroy/LR-seq-data-db/actions/runs/43676810846",
   "upstream": {
     "name": "European Nucleotide Archive (ENA) Portal API",
     "endpoint": "https://www.ebi.ac.uk/ena/portal/api/search",
@@ -17,9 +17,9 @@
         "instrument_platform=\"OXFORD_NANOPORE\" AND tax_tree(2)",
         "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(2)"
       ],
-      "records": 133280,
-      "bytes": 3211855,
-      "sha256": "0d51de01771090db1f7c9d00855ee747c55f6247e2acc3ee03fbcc5f2908a986"
+      "records": 133333,
+      "bytes": 3213364,
+      "sha256": "4a7e0ad8d3580f89bfe983ca014dab7844d98ced84cc797c9cd4b9604561114f"
     },
     "data_metagenome.json.gz": {
       "description": "Long-read metagenomic runs (MGx dashboard)",
@@ -28,9 +28,9 @@
         "instrument_platform=\"OXFORD_NANOPORE\" AND tax_tree(408169)",
         "instrument_platform=\"PACBIO_SMRT\" AND tax_tree(408169)"
       ],
-      "records": 258516,
-      "bytes": 4714066,
-      "sha256": "34e26b00b1254896e41759393646be845d092b4631a378242e6812307b30ab23"
+      "records": 259670,
+      "bytes": 4767915,
+      "sha256": "5a5c465b4b333cad903cbe4a696b0e74af656d2f3ad29c079a04d21a330c1388"
     },
     "hybrid_wgs.json.gz": {
       "description": "Biosamples with both long- and short-read runs (WGS)",
@@ -44,9 +44,9 @@
         "instrument_platform=\"LS454\" AND tax_tree(2)",
         "instrument_platform=\"COMPLETE_GENOMICS\" AND tax_tree(2)"
       ],
-      "records": 42232,
-      "bytes": 821070,
-      "sha256": "2ae42dbd52520464b52daba637ce2bde9608c75e2601b77fe7b7b1dc8a0554be"
+      "records": 42260,
+      "bytes": 821801,
+      "sha256": "71d443f436f650478d468529abaec37722a58e26482c68fdd43509dce73710b4"
     },
     "hybrid_mgx.json.gz": {
       "description": "Biosamples with both long- and short-read runs (MGx)",
@@ -60,16 +60,16 @@
         "instrument_platform=\"LS454\" AND tax_tree(408169)",
         "instrument_platform=\"COMPLETE_GENOMICS\" AND tax_tree(408169)"
       ],
-      "records": 10834,
-      "bytes": 177334,
-      "sha256": "30eee697d9c91a3f8d32cb7055392e0e6ac3095821d35032d8042b8a391d2e66"
+      "records": 10844,
+      "bytes": 177659,
+      "sha256": "3c30b1da2a71de071602443339f36359743305a0f492e754f979b899d98195fc"
     },
     "sample_counts.csv": {
       "description": "Weekly totals appended by generate_plot.py",
       "script": "genome-dashboard/generate_plot.py",
       "records": null,
-      "bytes": 2519,
-      "sha256": "901c4b3985f57487e53be16dda39c8ea283c4b7e6e5e334f2c33e5a0fe7f8edc"
+      "bytes": 2570,
+      "sha256": "ce22db5931afac11f8c6cd775a4a628285f7f36d0b6b829ce498a67c6795d7d0"
     }
   }
 }
